@@ -10,7 +10,7 @@ An anime-inspired learning adventure connecting reactive transaction concepts to
 - Sepolia character NFTs, Rabby connection, mint receipt verification and current-ownership access checks.
 - Diren's conditional-buy simulation: explicit budget, price cap, expiry, cancellation and execution checks.
 - Guided experiments, a visible rule timeline and explanations that connect outcomes to the lesson.
-- Local Gemini drafting and Latch proposal checks. The public website does not expose these credential-backed APIs.
+- Hosted Gemini drafts and Latch proposal checks with a persistent shared free-preview quota. Credentials remain on the server; applying a draft and confirming the simulation are separate actions.
 
 NFT minting is on Sepolia, not Rialo. Purchases and balances in the vault are fictional. The test NFT contract does not verify gameplay; local completion gates only the app's mint flow. Eric's scheduled tool is an experimental implementation with development currently paused.
 
@@ -51,6 +51,6 @@ The pure scheduled simulation can be checked with `node output/selection/vault/s
 
 ## Development direction
 
-Refine Diren's complete learning → quiz → NFT → vault journey before expanding other character tools. Hosted AI/Latch access needs shared request controls; real Rialo execution requires separately verified network, wallet, data and transaction integration.
+Refine Diren's complete learning → quiz → NFT → vault journey before expanding other character tools. Hosted AI/Latch access now has shared request limits; real Rialo execution requires separately verified network, wallet, data and transaction integration.
 
 Independent community prototype. No profit guarantees, mainnet execution or security-audit claims. No open-source license has been selected yet; publishing the repository does not grant unrestricted rights to its code or artwork.
