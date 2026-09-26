@@ -2,8 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.2.0 — 21 September 2026
-Deployment: dpl_5XuFkdBuXDafojFNXnCFfDvggHRm
+Release: 0.3.0 — hosted proposal-service integration
 
 ## Update workflow
 
@@ -20,9 +19,9 @@ The Vercel project link stays in `output/vercel-site/.vercel/`; keep it private.
 - English landing page, release notes, education and four-question Diren quiz.
 - Rabby read-only access checks and Sepolia mint UI. Mint requires user wallet approval and test ETH; no public-chain transaction was sent during deployment verification.
 - Diren vault simulation and guided experiments. Eric development is paused and its tool is not included in this release.
-- AI and Latch credential-backed calls remain local. The public build replaces those modules with clear availability notices and disables AI entry; it has no `/api` backend or credentials. Local source features remain unchanged.
+- AI and Latch endpoints run in server-only Python functions when RESONANCE_HOSTED_SERVICES=enabled. The same build flag enables their interface. Missing configuration keeps the public UI disabled. Credentials never enter the public assets.
 - Browser saves are scoped to the origin. Localhost saves do not migrate automatically; wallet NFTs remain on Sepolia.
 
-The build is a static Vercel project, separate from the existing `resonance-proposal-guard` service. No paid add-on, custom domain purchase, or AI billing was enabled.
+The project combines static public assets and two Python proposal-only endpoints. It is separate from the existing `resonance-proposal-guard` service. Deploy from the repository root through the Git integration; deploying only `output/vercel-site` does not include the backend.
 
-Next hosted integration needs a shared request budget and abuse controls before exposing model and Latch service credentials through a server. Local process counters are not a global serverless quota.
+The shared Upstash quota admits at most 20 AI drafts and 100 Latch checks per 24-hour counter window, with global cooldowns. Quota/storage failure prevents provider calls; manual simulation remains available. This is not wallet authentication or a per-user allowance. See `integrations/hosted/README.md` for configuration and limitations.

@@ -23,8 +23,23 @@
           "value": "public, max-age=0, must-revalidate"
         }
       ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "private, no-store"
+        }
+      ]
     }
   ],
   "buildCommand": "python3 integrations/web/build.py",
-  "installCommand": ""
+  "installCommand": "",
+  "functions": {
+    "api/**/*.py": {
+      "maxDuration": 40,
+      "excludeFiles": "{output/**,contracts/**,sources/**,.private/**,**/.private/**,.env*,**/.env*,**/.vercel/**,**/test_*.py,**/check_*.py,integrations/latch/vercel/**}"
+    }
+  }
 }

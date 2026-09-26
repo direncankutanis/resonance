@@ -30,17 +30,18 @@ def validate_plan(plan):
         raise ValueError('Invalid explanation')
     return dict(plan)
 
-def generate_plan(prompt):
+def generate_plan(prompt, api_key=None):
     if type(prompt) is not str or not 1 <= len(prompt.strip()) <= 800:
         raise ValueError('Write a request between 1 and 800 characters')
     global _last, _count
     if not _gate.acquire(blocking=False):
         raise AIUnavailable('busy')
     try:
-        if (_last is not None and time.monotonic() - _last < 10) or _count >= 20:
+        # Hosted calls have already passed the durable shared admission check.
+        if api_key is None and ((_last is not None and time.monotonic() - _last < 10) or _count >= 20):
             raise AIUnavailable('local_limit')
         try:
-            key = KEY_FILE.read_text().strip()
+            key = api_key.strip() if api_key is not None else KEY_FILE.read_text().strip()
         except OSError:
             raise AIUnavailable('not_configured') from None
         if not key or any(c.isspace() for c in key):
