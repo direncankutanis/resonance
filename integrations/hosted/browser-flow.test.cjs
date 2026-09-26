@@ -10,7 +10,7 @@ const root=path.resolve(__dirname,'../../output/vercel-site/public');
   let limited=true;
   await page.route('**/api/ai/plan',route=>route.fulfill({status:limited?429:200,contentType:'application/json',body:JSON.stringify(limited?{code:'shared_limit',executed:false}:{executed:false,plan:{action:'buy',asset:'DEMO',budgetMinor:1500,limitMinor:800,expirySteps:5,explanation:'Buy DEMO only when the price is at most 8 Demo RLO.'}})}));
   await page.route('**/api/latch/check',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({decision:'allow',amountMinor:1500,executed:false})}));
-  await page.goto(`http://127.0.0.1:${server.address().port}/vault/index.html`);
+  await page.goto(process.env.RESONANCE_TEST_URL || `http://127.0.0.1:${server.address().port}/vault/index.html`);
   await page.evaluate(()=>{window.resonanceVaultAuthorize=async()=>true;document.getElementById('workspace').hidden=false;});
   await page.locator('[data-entry=ai]').click();
   await page.locator('#ai-intent').fill('Spend 15 Demo RLO at price 8, expiry 5 steps.');

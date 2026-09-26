@@ -38,6 +38,21 @@ class ServiceTests(unittest.TestCase):
         with patch.dict(os.environ,env,clear=True),patch.object(s,'json_request',return_value=(200,{'result':[True,0]})):
             with self.assertRaises(s.Unavailable):s.admit('ai')
 
+class ModelResponseTests(unittest.TestCase):
+    def test_checked_response_and_truncation(self):
+        import io, json
+        from integrations.latch import ai_plans as ai
+        plan = {'action':'buy','asset':'DEMO','budgetMinor':1500,'limitMinor':800,'expirySteps':5,'explanation':'Buy at the stated price.'}
+        response = {'candidates':[{'finishReason':'STOP','content':{'parts':[{'thought':True,'text':'not the answer'},{'text':json.dumps(plan)}]}}]}
+        with patch.object(ai.urllib.request, 'urlopen', return_value=io.BytesIO(json.dumps(response).encode())) as provider:
+            self.assertEqual(ai.generate_plan('15 RLO, price 8, expiry 5', api_key='test'), plan)
+            payload = json.loads(provider.call_args.args[0].data)
+            self.assertEqual(payload['generationConfig']['thinkingConfig']['thinkingLevel'], 'minimal')
+        response['candidates'][0]['finishReason'] = 'MAX_TOKENS'
+        with patch.object(ai.urllib.request, 'urlopen', return_value=io.BytesIO(json.dumps(response).encode())):
+            with self.assertRaises(ai.AIUnavailable) as error: ai.generate_plan('test', api_key='test')
+            self.assertEqual(error.exception.code, 'invalid_response')
+
 class HTTPTests(unittest.TestCase):
     def test_http_boundary(self):
         import threading
