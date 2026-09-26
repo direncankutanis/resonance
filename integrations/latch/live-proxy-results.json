@@ -1,0 +1,14 @@
+[
+  {
+    "case": "within_cap",
+    "status": 200,
+    "expected": 200,
+    "passed": true
+  },
+  {
+    "case": "over_cap",
+    "status": 403,
+    "expected": 403,
+    "passed": true
+  }
+]

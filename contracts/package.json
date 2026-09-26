@@ -1,0 +1,1 @@
+{"name":"resonance-test-rewards","version":"0.1.0","private":true,"scripts":{"test":"node test/rewards.cjs"},"dependencies":{"@openzeppelin/contracts":"5.4.0","solc":"0.8.30","ethers":"6.15.0","ganache":"7.9.2"}}

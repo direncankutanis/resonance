@@ -1,0 +1,17 @@
+const fs=require('fs'),path=require('path'),crypto=require('crypto'),solc=require('solc'),{ethers}=require('ethers');
+(async()=>{const root=__dirname,out=path.join(root,'../output/selection/deploy'),meta=path.join(root,'../output/nft-v2');
+const uris=JSON.parse(fs.readFileSync(path.join(meta,'constructor-uris.json'))),report=JSON.parse(fs.readFileSync(path.join(meta,'publication-verification.json')));
+if(!report.metadataVerified||uris.length!==4)throw Error('Verified metadata required');
+report.characters.forEach((c,i)=>{if(c.characterId!==i||c.uri!==uris[i])throw Error('URI order mismatch');const local=fs.readFileSync(path.join(meta,'metadata',c.character.toLowerCase()+'.json'));if(crypto.createHash('sha256').update(local).digest('hex')!==c.metadataSha256)throw Error('Metadata changed since verification');});
+const sources={'ReactiveMaster.sol':{content:fs.readFileSync(path.join(root,'ReactiveMaster.sol'),'utf8')}};
+const settings={evmVersion:'shanghai',optimizer:{enabled:true,runs:200},outputSelection:{'*':{'*':['abi','evm.bytecode.object','evm.deployedBytecode.object']}}};
+const compiled=JSON.parse(solc.compile(JSON.stringify({language:'Solidity',sources,settings}),{import:p=>{const content=fs.readFileSync(path.join(root,'node_modules',p),'utf8');sources[p]={content};return {contents:content};}}));
+const errors=(compiled.errors||[]).filter(e=>e.severity==='error');if(errors.length)throw Error(JSON.stringify(errors));
+const a=compiled.contracts['ReactiveMaster.sol'].ReactiveMaster;
+const tx=await new ethers.ContractFactory(a.abi,a.evm.bytecode.object).getDeployTransaction(uris);
+const data={chainId:'0xaa36a7',compiler:solc.version(),uris,abi:a.abi,creationData:tx.data,runtimeHash:ethers.keccak256('0x'+a.evm.deployedBytecode.object),creationHash:ethers.keccak256(tx.data),value:'0x0',metadataVerifiedAt:report.verifiedAt};
+fs.writeFileSync(path.join(out,'deployment-config.js'),'window.RESONANCE_DEPLOYMENT='+JSON.stringify(data)+';\n');
+fs.writeFileSync(path.join(out,'compiler-input.json'),JSON.stringify({language:'Solidity',sources,settings},null,2));
+fs.writeFileSync(path.join(out,'constructor-arguments.txt'),ethers.AbiCoder.defaultAbiCoder().encode(['string[4]'],[uris]).slice(2)+'\n');
+fs.copyFileSync(path.join(root,'node_modules/ethers/dist/ethers.umd.min.js'),path.join(out,'ethers.umd.min.js'));
+console.log('Prepared Sepolia deployment data from verified v2 URIs. No transaction sent.');})();

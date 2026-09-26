@@ -1,0 +1,43 @@
+{
+  "verifiedAt": "2026-09-20T05:35:27.812781+00:00",
+  "metadataVersion": 2,
+  "layout": "individual-file-cids",
+  "metadataVerified": true,
+  "pinRetentionVerified": false,
+  "walletRenderingVerified": false,
+  "publicDeployment": false,
+  "characters": [
+    {
+      "characterId": 0,
+      "character": "Diren",
+      "uri": "ipfs://bafybeif2h4cth3xe4pz2rqjb5ru3acinbkeg27rj2dkesos7gwv2nq5plq",
+      "gatewayVerified": "https://gateway.pinata.cloud/ipfs/bafybeif2h4cth3xe4pz2rqjb5ru3acinbkeg27rj2dkesos7gwv2nq5plq",
+      "metadataSha256": "eac1230e0221d56b4f49ea9b6afb6a22f1f69cb0c317a5bb165eb642313e9bda",
+      "artworkSha256": "5454bb54f205fad60dfb8f9ae1cab5cf536425e698a5ecd06c447c2a51cd10f0"
+    },
+    {
+      "characterId": 1,
+      "character": "Ece",
+      "uri": "ipfs://bafybeicxsrb6apyzuuqn66src6xxvq3456qdm446ha3pml52esd3qazgj4",
+      "gatewayVerified": "https://gateway.pinata.cloud/ipfs/bafybeicxsrb6apyzuuqn66src6xxvq3456qdm446ha3pml52esd3qazgj4",
+      "metadataSha256": "52ef8b962fa57d4a359ebcd427c49b26601c674c2faa13529f6e26a83e6983b7",
+      "artworkSha256": "e7d5112e46a5db7865c36b992dee96f06b9479d243552998665bf5bfa1a67215"
+    },
+    {
+      "characterId": 2,
+      "character": "Eric",
+      "uri": "ipfs://bafybeiahoukhq77ykiormaqvdxih4zqtqbpgc6xdlvc7223cn4nwayeari",
+      "gatewayVerified": "https://gateway.pinata.cloud/ipfs/bafybeiahoukhq77ykiormaqvdxih4zqtqbpgc6xdlvc7223cn4nwayeari",
+      "metadataSha256": "8dd74230a207eefd73e3bc6306a7da1f5401d701911c328dd4b1b48f29378873",
+      "artworkSha256": "088722770035bb959f2a8e5d1d9e43674612728bdd89fa6fd6c5b2896a42d333"
+    },
+    {
+      "characterId": 3,
+      "character": "Ade",
+      "uri": "ipfs://bafybeicgwwogoohqaerlmxbs4mts7h6ulqngwdv5d4ly4qh6togfuvvvk4",
+      "gatewayVerified": "https://gateway.pinata.cloud/ipfs/bafybeicgwwogoohqaerlmxbs4mts7h6ulqngwdv5d4ly4qh6togfuvvvk4",
+      "metadataSha256": "05dcad5e923b4e76e9673065b48cd53d9a3d2e23894b71a26b97b71118c2028c",
+      "artworkSha256": "cdbfa63e56437af7d9dff9ceb3c7a854fa6a20b8130bfeb0071325ccf8ad8140"
+    }
+  ]
+}

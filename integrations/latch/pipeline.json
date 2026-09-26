@@ -1,0 +1,59 @@
+[
+  {
+    "type": "method",
+    "name": "Proposals use POST",
+    "allowed": [
+      "POST"
+    ]
+  },
+  {
+    "type": "endpoint",
+    "name": "Proposal endpoint only",
+    "mode": "allowlist",
+    "patterns": [
+      "/proposals"
+    ]
+  },
+  {
+    "type": "body_size",
+    "name": "Small structured proposal",
+    "maxBytes": 4096
+  },
+  {
+    "type": "payload",
+    "name": "Diren practice-plan limits",
+    "rules": [
+      {
+        "path": "action",
+        "operator": "equals",
+        "value": "buy"
+      },
+      {
+        "path": "asset",
+        "operator": "equals",
+        "value": "DEMO"
+      },
+      {
+        "path": "amountMinor",
+        "operator": "type_is",
+        "value": "number"
+      },
+      {
+        "path": "amountMinor",
+        "operator": "greater_than",
+        "value": 10
+      },
+      {
+        "path": "amountMinor",
+        "operator": "less_than_or_equal",
+        "value": 2000
+      }
+    ]
+  },
+  {
+    "type": "custom_code",
+    "name": "Strict proposal shape",
+    "language": "javascript",
+    "code": "const b = ctx.body; if (!b || typeof b !== 'object' || Array.isArray(b)) return deny('Expected an object'); if (Object.keys(b).some(k => !['action','asset','amountMinor'].includes(k))) return deny('Unexpected field'); if (!Number.isSafeInteger(b.amountMinor)) return deny('Amount must be integer minor units'); return allow();"
+  }
+]

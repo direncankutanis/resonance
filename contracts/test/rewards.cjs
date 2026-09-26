@@ -1,0 +1,48 @@
+const fs=require('fs'),path=require('path'),assert=require('node:assert/strict');const solc=require('solc'),ganache=require('ganache');const{ethers}=require('ethers');
+(async()=>{const root=path.resolve(__dirname,'..');const input={language:'Solidity',sources:{'ReceiverProbe.sol':{content:fs.readFileSync(path.join(root,'test/ReceiverProbe.sol'),'utf8')},'ReactiveMaster.sol':{content:fs.readFileSync(path.join(root,'ReactiveMaster.sol'),'utf8')}},settings:{evmVersion:'shanghai',optimizer:{enabled:true,runs:200},outputSelection:{'*':{'*':['abi','evm.bytecode.object']}}}};const output=JSON.parse(solc.compile(JSON.stringify(input),{import:p=>({contents:fs.readFileSync(path.join(root,'node_modules',p),'utf8')})}));const errors=output.errors?.filter(x=>x.severity==='error')||[];assert.equal(errors.length,0,JSON.stringify(errors));const artifact=output.contracts['ReactiveMaster.sol'].ReactiveMaster;fs.mkdirSync(path.join(root,'artifacts'),{recursive:true});fs.writeFileSync(path.join(root,'artifacts','ReactiveMaster.json'),JSON.stringify(artifact,null,2));
+const rpc=ganache.provider({chain:{chainId:11155111},logging:{quiet:true}});
+const p=new ethers.BrowserProvider(rpc);p.pollingInterval=10;
+const a=await p.getSigner(0),b=await p.getSigner(1),other=await p.getSigner(2);
+const aa=await a.getAddress(),bb=await b.getAddress();
+const factory=new ethers.ContractFactory(artifact.abi,artifact.evm.bytecode.object,a);
+const uris=['diren','ece','eric','ade'].map(n=>'ipfs://TEST_ONLY/'+n+'.json');
+const c=await factory.deploy(uris);await c.waitForDeployment();
+async function rejectsTransaction(send){await assert.rejects(async()=>{const tx=await send();await tx.wait();});}
+for(let character=0;character<4;character++){
+ const receipt=await(await c.claim(character)).wait();
+ const event=receipt.logs.map(x=>{try{return c.interface.parseLog(x)}catch{return null}}).find(x=>x?.name==='RewardClaimed');
+ assert.equal(event.args.character,BigInt(character));assert.equal(event.args.player,aa);
+ const id=character+1;
+ assert.equal(await c.ownerOf(id),aa);assert.equal(await c.characterOf(id),BigInt(character));assert.equal(await c.tokenURI(id),uris[character]);
+ assert.equal(await c.hasClaimed(aa,character),true);assert.equal(await c.balanceOfCharacter(aa,character),1n);
+ await rejectsTransaction(()=>c.claim(character));
+}
+assert.equal(await c.totalClaimed(),4n);
+await assert.rejects(c.characterOf(0));await assert.rejects(c.characterOf(99));await assert.rejects(c.tokenURI(99));
+await rejectsTransaction(()=>c.connect(other).transferFrom(aa,bb,1));
+await(await c.transferFrom(aa,bb,1)).wait();
+assert.equal(await c.balanceOfCharacter(aa,0),0n);assert.equal(await c.balanceOfCharacter(bb,0),1n);
+assert.equal(await c.hasClaimed(aa,0),true);assert.equal(await c.hasClaimed(bb,0),false);await rejectsTransaction(()=>c.claim(0));
+await(await c.connect(b).claim(0)).wait();assert.equal(await c.balanceOfCharacter(bb,0),2n);
+await(await c.connect(b).transferFrom(bb,bb,1)).wait();assert.equal(await c.balanceOfCharacter(bb,0),2n);
+await(await c.connect(b).transferFrom(bb,aa,1)).wait();assert.equal(await c.balanceOfCharacter(bb,0),1n);assert.equal(await c.balanceOfCharacter(aa,0),1n);
+await rejectsTransaction(()=>c.connect(b).claim(4));await rejectsTransaction(()=>c.connect(b).claim(1,{value:1}));
+await assert.rejects(factory.deploy(['','','','']));await assert.rejects(factory.deploy([uris[0],uris[1],'',uris[3]]));
+const probeArtifact=output.contracts['ReceiverProbe.sol'].ReceiverProbe;
+const probeFactory=new ethers.ContractFactory(probeArtifact.abi,probeArtifact.evm.bytecode.object,a);
+const probe=await probeFactory.deploy(await c.getAddress());await probe.waitForDeployment();
+await(await probe.claim(0)).wait();
+assert.equal(await probe.nestedClaimSucceeded(),false);assert.equal(await probe.observedCharacter(),0n);assert.equal(await probe.observedURI(),uris[0]);assert.equal(await probe.observedBalance(),1n);
+assert.equal(await c.hasClaimed(await probe.getAddress(),1),false);
+await(await probe.claim(1)).wait();assert.equal(await c.balanceOfCharacter(await probe.getAddress(),1),1n);
+const rejecting=await probeFactory.deploy(await c.getAddress());await rejecting.waitForDeployment();await(await rejecting.setReject(true)).wait();
+const total=await c.totalClaimed();
+await assert.rejects(async()=>{const tx=await rejecting.claim(2,{gasLimit:1000000});await tx.wait();});
+assert.equal(await c.hasClaimed(await rejecting.getAddress(),2),false);assert.equal(await c.balanceOfCharacter(await rejecting.getAddress(),2),0n);assert.equal(await c.totalClaimed(),total);
+await assert.rejects(c.characterOf(total+1n));
+await(await rejecting.setReject(false)).wait();await(await rejecting.claim(2,{gasLimit:1000000})).wait();assert.equal(await c.ownerOf(total+1n),await rejecting.getAddress());assert.equal(await c.tokenURI(total+1n),uris[2]);
+await rpc.disconnect();
+const wrong=ganache.provider({chain:{chainId:1},logging:{quiet:true}});const wp=new ethers.BrowserProvider(wrong);
+await assert.rejects(new ethers.ContractFactory(artifact.abi,artifact.evm.bytecode.object,await wp.getSigner()).deploy(uris));await wrong.disconnect();
+console.log('PASS: four character claims, per-character duplicates, readable character/URI/events, transfer holdings vs claim history, self-transfer, unauthorized transfer, invalid character/payment/URI/network, callback state, cross-character reentrancy, rejected receiver rollback and retry. No public deployment.');
+})().catch(e=>{console.error(e);process.exit(1)});

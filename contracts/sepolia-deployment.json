@@ -1,0 +1,22 @@
+{
+  "hash": "0x7613fe1e54f3235ff8ae7133624480cb0dd340425080b191b95b6eeebeebedb9",
+  "from": "0x4e364d825e648586f4c25a5eeb4f70608ea3b5ec",
+  "chainId": "0xaa36a7",
+  "creationHash": "0x49f353797c6b93a1538ee1fb933595a0249942576505a4cbfd9517bbbcbaba5e",
+  "status": "verified",
+  "contractAddress": "0x8618f31e0c60ba53dcdffbb6de1e91ecd693bf1d",
+  "blockNumber": "0xb32cde",
+  "confirmations": 12,
+  "runtimeHash": "0x28a12148d7bc8da822ca9cb4a5612e68c9957d8bf8f0c57f6e7b37ac1fda52d8",
+  "uris": [
+    "ipfs://bafybeif2h4cth3xe4pz2rqjb5ru3acinbkeg27rj2dkesos7gwv2nq5plq",
+    "ipfs://bafybeicxsrb6apyzuuqn66src6xxvq3456qdm446ha3pml52esd3qazgj4",
+    "ipfs://bafybeiahoukhq77ykiormaqvdxih4zqtqbpgc6xdlvc7223cn4nwayeari",
+    "ipfs://bafybeicgwwogoohqaerlmxbs4mts7h6ulqngwdv5d4ly4qh6togfuvvvk4"
+  ],
+  "verifiedAt": "2026-09-20T05:45:50.982Z",
+  "independentRPC": "https://ethereum-sepolia-rpc.publicnode.com",
+  "name": "Resonance - Chapter Rewards",
+  "totalClaimed": "0",
+  "explorerSourceVerified": false
+}

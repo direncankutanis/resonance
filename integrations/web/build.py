@@ -1,0 +1,34 @@
+"""Allowlisted public build. Never reads secrets, credentials or server files."""
+from pathlib import Path
+import shutil, json, subprocess
+ROOT=Path(__file__).resolve().parents[2]
+SOURCE=ROOT/'output/selection'
+DEST=ROOT/'output/vercel-site'
+subprocess.run(['python3',str(SOURCE/'build.py')],check=True)
+DEST.mkdir(parents=True,exist_ok=True)
+# Preserve Vercel's project link across builds; replace only our public directory.
+PUBLIC=DEST/'public'
+if PUBLIC.exists(): shutil.rmtree(PUBLIC)
+PUBLIC.mkdir()
+files=['resonance-playable-v1.html','nft-artwork.js','diren.jpg','deploy/ethers.umd.min.js','mint/index.html','mint/mint.js','mint/mint-config.js']
+files += ['vault/'+name for name in ['index.html','gate.js','policy.js','progress.js','vault.js','lesson-bridge.js','latch-check.js','ai-guide.js','outcome.js','scenarios.js','entry.js']]
+for name in files:
+ target=PUBLIC/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(SOURCE/name,target)
+# Public release deliberately has no credential-backed endpoints.
+p=PUBLIC/'vault/latch-check.js'
+p.write_text("""(()=>{const panel=document.createElement('p');panel.className='muted';panel.textContent='Live Latch checks are available in the local development preview. This public release runs the simulation without a live policy-service check.';document.getElementById('rule-form').append(panel);})();""")
+p=PUBLIC/'vault/ai-guide.js'
+p.write_text("""(()=>{const box=document.createElement('section');box.id='ai-guide';box.hidden=true;document.getElementById('lesson-bridge').after(box);})();""")
+p=PUBLIC/'vault/entry.js';s=p.read_text().replace("  select('practice');", "  const ai=chooser.querySelector('[data-entry=ai]');ai.disabled=true;ai.textContent='AI guide · Local preview only';\n  select('practice');");p.write_text(s)
+p=PUBLIC/'vault/lesson-bridge.js';s=p.read_text().replace('The AI guide can translate your stated limits into a draft plan.', 'In the local development preview, the AI guide can translate your stated limits into a draft plan.').replace('Live Latch checking is available in the plan form.', 'Live Latch checking is available in the local development preview.');p.write_text(s)
+p=PUBLIC/'vault/scenarios.js';s=p.read_text().replace('Optionally check it with Latch, then confirm.', 'Then confirm to reserve the demo budget.');p.write_text(s)
+for name in ['resonance-playable-v1.html','mint/index.html','vault/index.html']:
+ p=PUBLIC/name;s=p.read_text();s=s.replace('<body>', '<body><a href="/" style="display:block;padding:10px 20px;background:#0c161e;color:#cce4d9;font:14px system-ui;text-decoration:none">← Resonance home · Public preview 0.2.0</a>',1)
+ p.write_text(s)
+shutil.copyfile(Path(__file__).with_name('home.html'),PUBLIC/'index.html')
+(PUBLIC/'robots.txt').write_text('User-agent: *\nAllow: /\n')
+(PUBLIC/'404.html').write_text('<!doctype html><html lang="en"><meta charset="utf-8"><title>Resonance · Page not found</title><body style="background:#0c161e;color:#eee9de;font:20px system-ui;padding:40px"><h1>This path is not open yet.</h1><a href="/" style="color:#b6dfcc">Return to Resonance</a></body></html>')
+config={'$schema':'https://openapi.vercel.sh/vercel.json','framework':None,'outputDirectory':'public','headers':[{'source':'/(.*)','headers':[{'key':'X-Content-Type-Options','value':'nosniff'},{'key':'Referrer-Policy','value':'strict-origin-when-cross-origin'},{'key':'X-Frame-Options','value':'DENY'},{'key':'Cache-Control','value':'public, max-age=0, must-revalidate'}]}]}
+(DEST/'vercel.json').write_text(json.dumps(config,indent=2)+'\n')
+(DEST/'.vercelignore').write_text('.vercel\n.env*\n.private\n')
+print('Built public release:',len(files),'allowlisted app files. No backend or credentials included.')

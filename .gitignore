@@ -1,0 +1,30 @@
+# Credentials and machine state
+.env
+.env.*
+**/.env
+**/.env.*
+.private/
+**/.private/
+.vercel/
+**/.vercel/
+*.pem
+*.key
+.DS_Store
+__pycache__/
+*.pyc
+node_modules/
+**/node_modules/
+# Read-only synced references and local assistant instructions
+sources/
+AGENTS.md
+# Generated releases, test screenshots and old exploratory artifacts
+output/vercel-site/
+output/selection/resonance-playable-v1.html
+output/selection/**/*.png
+output/selection/*.png
+output/defense-lab/
+output/nft-v1/
+contracts/artifacts/
+# Local planning notes (not product source)
+/*.md
+!/README.md

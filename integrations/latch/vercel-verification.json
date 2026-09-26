@@ -1,0 +1,21 @@
+{
+  "url": "https://resonance-proposal-guard.vercel.app",
+  "tests": [
+    {
+      "case": "valid",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "case": "over-cap",
+      "status": 422,
+      "expected": 422
+    },
+    {
+      "case": "unauthorized",
+      "status": 401,
+      "expected": 401
+    }
+  ],
+  "latchConnected": false
+}
