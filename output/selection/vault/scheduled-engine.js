@@ -8,7 +8,7 @@
   function register(s, plan) {
     if (active(s) || !validate(plan,s.available)) throw Error('Choose 2–10 purchases, 1–10 steps apart, and an affordable total budget.');
     const budget=plan.amount*plan.count;
-    return {...s,available:s.available-budget,reserved:budget,state:'running',plan:{...plan,start:s.step},attempts:0,purchases:0,skips:0,events:[...s.events,`Registered ${plan.count} opportunities. Reserved ${(budget/100).toFixed(2)} demo credits.`]};
+    return {...s,available:s.available-budget,reserved:budget,state:'running',plan:{...plan,start:s.step},attempts:0,purchases:0,skips:0,events:[...s.events,`Registered ${plan.count} opportunities. Reserved ${(budget/100).toFixed(2)} Demo RLO.`]};
   }
   function cancel(s) {
     if (!active(s)) return s;
@@ -22,7 +22,7 @@
     if(step<next) return {...s,step};
     const reason=s.state==='paused'?'schedule paused':!fresh?'stale price data':price>s.plan.limit?'price above limit':null;
     const amount=s.plan.amount, attempts=s.attempts+1;
-    const event=reason?`Step ${step}: skipped (${reason}). ${(amount/100).toFixed(2)} credits returned. No catch-up purchase.`:`Step ${step}: bought ${((amount-10)/price).toFixed(4)} demo units for ${(amount/100).toFixed(2)} credits including a 0.10 fee.`;
+    const event=reason?`Step ${step}: skipped (${reason}). ${(amount/100).toFixed(2)} RLO returned. No catch-up purchase.`:`Step ${step}: bought ${((amount-10)/price).toFixed(4)} demo units for ${(amount/100).toFixed(2)} RLO including a 0.10 Demo RLO fee.`;
     return {...s,step,attempts,reserved:s.reserved-amount,available:s.available+(reason?amount:0),spent:s.spent+(reason?0:amount),units:s.units+(reason?0:(amount-10)/price),purchases:s.purchases+(reason?0:1),skips:s.skips+(reason?1:0),state:attempts===s.plan.count?'finished':s.state,events:[...s.events,event]};
   }
   const api={initial,validate,active,register,cancel,pause,advance};

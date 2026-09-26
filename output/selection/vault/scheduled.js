@@ -18,15 +18,15 @@
     $('results').textContent=state.plan?state.purchases+' purchased · '+state.skips+' skipped · '+(state.plan.count-state.attempts)+' unused opportunities'+(state.state==='cancelled'?' (cancelled).':'.'):'';
     $('history').replaceChildren(...state.events.map(text=>{const li=document.createElement('li');li.textContent=text;return li;}));
     $('outcome').hidden=active||!state.plan;
-    $('outcome').textContent=state.state==='cancelled'?'Schedule cancelled. Remaining credits returned. Previous purchases cannot be undone.':state.state==='finished'?'All scheduled opportunities have passed. Time determined when to attempt a purchase; fresh data and your price limit determined whether it could run. Skipped amounts were returned, never accumulated for a larger later purchase.':'';
+    $('outcome').textContent=state.state==='cancelled'?'Schedule cancelled. Remaining RLO returned. Previous purchases cannot be undone.':state.state==='finished'?'All scheduled opportunities have passed. Time determined when to attempt a purchase; fresh data and your price limit determined whether it could run. Skipped amounts were returned, never accumulated for a larger later purchase.':'';
   }
   $('enter-demo').onclick=async()=>{if(!await window.resonanceVaultAuthorize())return;$('workspace').hidden=false;$('amount').focus();};
   $('schedule-form').onsubmit=async event=>{
     event.preventDefault();if(!await window.resonanceVaultAuthorize()||engine.active(state)||draft)return;
     const plan={amount:amount('amount'),count:Number($('count').value),interval:Number($('interval').value),limit:amount('limit')};
-    if(!engine.validate(plan,state.available)){$('feedback').textContent='Use 2–10 opportunities, 1–10 steps apart, and a total budget within your available credits. Price limit: 1–200; each purchase: at least 1 credit.';return;}
+    if(!engine.validate(plan,state.available)){$('feedback').textContent='Use 2–10 opportunities, 1–10 steps apart, and a total budget within your available RLO. Price limit: 1–200; each purchase: at least 1 Demo RLO.';return;}
     draft=plan;$('feedback').textContent='';
-    $('review-text').textContent='Reserve '+money(plan.amount*plan.count)+' credits for '+plan.count+' opportunities of '+money(plan.amount)+' each, every '+plan.interval+' steps. First: step '+(state.step+plan.interval)+'; last: step '+(state.step+plan.interval*plan.count)+'. Each successful purchase includes a 0.10 fee. Buy only at or below '+money(plan.limit)+'. Paused, stale or over-limit opportunities are skipped and refunded, with no catch-up.';
+    $('review-text').textContent='Reserve '+money(plan.amount*plan.count)+' RLO for '+plan.count+' opportunities of '+money(plan.amount)+' each, every '+plan.interval+' steps. First: step '+(state.step+plan.interval)+'; last: step '+(state.step+plan.interval*plan.count)+'. Each successful purchase includes a 0.10 Demo RLO fee. Buy only at or below '+money(plan.limit)+'. Paused, stale or over-limit opportunities are skipped and refunded, with no catch-up.';
     render();$('confirm').focus();
   };
   $('edit').onclick=()=>{draft=null;render();$('amount').focus();};
