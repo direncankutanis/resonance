@@ -12,7 +12,7 @@
   function render() {
     const d = snapshot;
     const price = Number($('price').value);
-    const valid = $('price').value.trim() !== '' && Number.isFinite(price) && price >= 1 && price <= 200;
+    const valid = /^\d+(?:\.\d{1,2})?$/.test($('price').value.trim()) && Number.isFinite(price) && price >= 1 && price <= 200;
     const stale = $('stale').checked;
     const phase = terminal(d.state) ? 'result' : d.state === 'idle' ? 'reserve' : d.state;
     for (const item of panel.querySelectorAll('[data-phase]')) {
@@ -26,7 +26,7 @@
     let reason;
     if (d.state === 'idle') reason = d.reviewing ? 'Review your limits. Nothing is reserved until you confirm.' : 'Start by reviewing a rule. No budget is reserved yet.';
     else if (terminal(d.state)) reason = { completed: 'Purchased once. This rule cannot spend again.', failed: 'Execution stopped. The reserved budget was returned.', expired: 'The deadline arrived. The reserved budget was returned.', cancelled: 'Cancelled before execution. The reserved budget was returned.' }[d.state];
-    else if (!valid) reason = 'Enter a price from 1 to 200 before advancing. Invalid input does not advance time.';
+    else if (!valid) reason = 'Enter a price from 1 to 200 with at most two decimal places. Invalid input does not advance time.';
     else if (d.step + 1 >= d.expires) reason = 'The next advance reaches the deadline. This rule will expire without buying.';
     else if (stale) reason = 'Price data is marked stale. The next advance will skip evaluation and execution, but time still advances.';
     else if (d.state === 'waiting') reason = Math.round(price * 100) <= d.limit ? 'The displayed price meets your limit. Advance to evaluate the condition and queue the purchase; no purchase happens yet.' : 'The displayed price is above your limit. Advancing will keep the rule waiting.';
