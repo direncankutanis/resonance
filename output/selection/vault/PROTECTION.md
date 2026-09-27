@@ -25,3 +25,5 @@ Learning templates: Weekly pacing sets a 20 RLO cap in the crowded scenario (60 
 Every decision has an optional numeric breakdown using the balance and weekly spend immediately before that order. Rejected orders keep their prior balance; accepted orders include the fee once. Diren has an event-driven next-step coach for registration, queueing and terminal outcomes.
 
 Journey: current lesson completion links to the matching tool, where current NFT ownership is verified. A verified missing pass exposes the matching mint link. The optional three-step guide follows draft/review/active/finished states, and its repeat action returns to editable settings without starting a new run. No access or learning completion is inferred from the guide.
+
+Custom scenarios: 1–8 events, days 1–28 in nondecreasing order, 1–5 orders per event, price 1–200 RLO and quote age 0–1440 minutes. Apply preserves current validated policy and never starts a run. Event editing is disabled during review/running. Only identical event sequences share a comparison history. Reports include events. All events remain fictional and page-local.

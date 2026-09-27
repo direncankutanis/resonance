@@ -19,6 +19,8 @@
   function preview(){try{$('policy-preview').textContent=sentence(values());$('form-error').textContent='';}catch(e){$('policy-preview').textContent='Adjust your boundaries to see the plan.';$('form-error').textContent=e.message;}}
   function controls(){
     for(const id of fields)$(id).disabled=mode!=='draft'||busy;
+    document.querySelectorAll('#custom-scenario input,#custom-scenario button').forEach(b=>b.disabled=mode!=='draft'||busy);
+    $('custom-add').disabled=mode!=='draft'||busy||$('custom-events').children.length>=8;
     document.querySelectorAll('[data-template]').forEach(b=>b.disabled=mode!=='draft'||busy);
     document.querySelectorAll('.scenario').forEach(b=>{b.disabled=mode==='active'||busy;b.setAttribute('aria-pressed',String(b.dataset.scenario===selected.id));});
     $('review-protection').disabled=mode!=='draft'||busy;
@@ -58,6 +60,32 @@
     const title=document.createElement('strong'),text=document.createElement('span');title.textContent=s.name;text.textContent=s.description;b.append(title,text);
     b.onclick=()=>{if(mode!=='active'&&!busy)select(s);};$('scenarios').append(b);
   }
+  function addEventRow(){
+    if($('custom-events').children.length>=8)return;
+    const row=document.createElement('fieldset');row.className='form-grid';
+    row.innerHTML='<legend>Market event</legend><label>Day<input data-event="day" type="number" min="1" max="28" step="1" value="1"></label><label>Proposed orders<input data-event="orders" type="number" min="1" max="5" step="1" value="5"></label><label>Price per asset · Demo RLO<input data-event="price" type="number" min="1" max="200" step="0.01" value="7.50"></label><label>Quote age · minutes<input data-event="age" type="number" min="0" max="1440" step="1" value="2"></label><button type="button" class="secondary">Remove event</button>';
+    row.querySelector('button').onclick=()=>{row.remove();customChanged();controls();};
+    row.addEventListener('input',customChanged);$('custom-events').append(row);customChanged();controls();
+  }
+  function customChanged(){$('custom-status').textContent='Event draft changed. Use this scenario to apply it; the currently selected rehearsal has not changed.';}
+  $('custom-add').onclick=()=>{if(mode==='draft'&&!busy)addEventRow();};
+  $('custom-use').onclick=()=>authorized(()=>{
+    if(mode!=='draft')return;
+    try{
+      const policy=values(),rows=[...$('custom-events').children];
+      if(!rows.length||rows.length>8)throw Error('Add 1–8 events.');
+      let last=0;
+      const events=rows.map((row,i)=>{
+        const e={id:'custom-'+i};
+        for(const k of ['day','orders','price','age']){const raw=row.querySelector('[data-event="'+k+'"]').value.trim();if(!(k==='price'?/^\d+(?:\.\d{1,2})?$/:/^\d+$/).test(raw))throw Error('Event '+(i+1)+': use whole numbers, or up to two decimals for price.');e[k]=k==='price'?Math.round(Number(raw)*100):Number(raw);}
+        if(e.day<1||e.day>28||e.day<last||e.orders<1||e.orders>5||e.price<100||e.price>20000||e.age<0||e.age>1440)throw Error('Event '+(i+1)+': days 1–28 in order, 1–5 orders, price 1–200, age 0–1440.');
+        last=e.day;return e;
+      });
+      select({id:'custom:'+JSON.stringify(events),name:'Your custom scenario',description:events.length+' custom events · '+events.reduce((n,e)=>n+e.orders,0)+' proposed orders · days '+events[0].day+'–'+last+'. Your protection settings are preserved.',policy,events});
+      $('custom-status').textContent='Custom scenario applied. Review protection and confirm to start. Changing the event draft alone does not change this scenario.';
+    }catch(e){$('custom-status').textContent=e.message;}
+  });
+  addEventRow();
   const templateNotes={
     crowded:'Weekly pacing · With 100 RLO, a 40 reserve and a 20 weekly cap, only two 10 RLO orders fit each week. Complete this scenario: 60 RLO remains. Then try a 30 cap on the same scenario and compare: 40 remains. More cash means fewer assets, not more profit.',
     reserve:'Keep a buffer · Start with 100 RLO, keep 40, allow 80 per week and spend 10 per order. Six orders fit; later orders stop at the reserve even though the weekly cap has room. Expected remaining balance: 40 RLO.',
@@ -80,7 +108,7 @@
   $('enter-demo').onclick=()=>authorized(()=>{$('workspace').hidden=false;$('balance').focus();});
   $('protection-form').onsubmit=e=>{e.preventDefault();authorized(()=>{
     if(mode!=='draft')return;
-    try{draft=values();$('form-error').textContent='';$('review-copy').textContent=sentence(draft)+' The rehearsal starts from '+money(draft.balance)+' fictional RLO.';mode='review';controls();$('confirm-protection').focus();}
+    try{draft=values();$('form-error').textContent='';$('review-copy').textContent=sentence(draft)+' Scenario: '+selected.name+' ('+selected.events.length+' events). The rehearsal starts from '+money(draft.balance)+' fictional RLO.';mode='review';controls();$('confirm-protection').focus();}
     catch(e){$('form-error').textContent=e.message;}
   });};
   $('edit-protection').onclick=()=>{revision++;draft=null;mode='draft';controls();$('balance').focus();};
@@ -122,7 +150,7 @@
   window.resonanceVaultCancel=()=>{previousRuns.clear();comparison=null;$('policy-comparison').hidden=true;revision++;draft=null;mode='draft';$('run-status').textContent='Wallet access changed. The rehearsal stopped; review again after checking ownership.';controls();};
   $('download-report').onclick=()=>{
     if(!state||mode!=='finished')return;
-    const report={type:'ece-local-rehearsal',version:1,onchain:false,latchVerified:false,realFunds:false,scenario:selected.id,policy:state.policy,result:state,previousPolicyComparison:comparison};
+    const report={type:'ece-local-rehearsal',version:1,onchain:false,latchVerified:false,realFunds:false,scenario:selected.id,events:selected.events,policy:state.policy,result:state,previousPolicyComparison:comparison};
     const url=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='ece-rehearsal.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   };
   function checkedPolicy(record){

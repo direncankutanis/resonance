@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.4.5 — Academy-to-tool journey
+Release: 0.4.6 — Custom Ece scenarios
 
 ## Update workflow
 
