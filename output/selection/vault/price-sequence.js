@@ -11,4 +11,14 @@ window.addEventListener('resonance:vault-state',({detail:d})=>{locked=d.state!==
 window.addEventListener('resonance:vault-reset',()=>{prices=null;cursor=0;$('price').disabled=false;$('sequence-status').textContent='New practice: choose a price sequence again or use manual prices.';});
 // Selecting a guided template returns to its manual-price instructions.
 for(const b of document.querySelectorAll('[data-scenario],#guide-plan'))b.addEventListener('click',()=>{if(!locked){prices=null;cursor=0;$('price').disabled=false;$('sequence-status').textContent='Guided template selected; manual prices are active.';}});
+function validateSaved(data){
+ if(!data||!['budget','limit','expiry'].every(k=>Number.isSafeInteger(data[k]))||data.budget<100||data.budget>10000||data.limit<100||data.limit>20000||data.expiry<2||data.expiry>20||!Array.isArray(data.prices)||data.prices.length<2||data.prices.length>12||data.prices.some(n=>!Number.isSafeInteger(n)||n<100||n>20000)||typeof data.stale!=='boolean')throw Error('Invalid saved rule or price sequence.');
+ return {budget:data.budget,limit:data.limit,expiry:data.expiry,prices:[...data.prices],stale:data.stale};
+}
+window.resonanceScenarioLibrary={
+ editable:()=>!locked,
+ validate:validateSaved,
+ capture:()=>{if(!prices)throw Error('Apply a price sequence before saving. Manual price steps are not recorded.');const amounts={};for(const k of ['budget','limit']){const raw=$(k).value.trim();if(!/^\d+(?:\.\d{1,2})?$/.test(raw))throw Error('Use amounts with at most two decimals.');amounts[k]=Math.round(Number(raw)*100);}return validateSaved({...amounts,expiry:Number($('expiry').value),prices:prices.map(n=>Math.round(n*100)),stale:$('stale').checked});},
+ load:data=>{if(locked)throw Error('Finish or edit your current rule first.');const d=validateSaved(data);for(const k of ['budget','limit','expiry']){$(k).value=k==='expiry'?String(d[k]):(d[k]/100).toFixed(2);$(k).dispatchEvent(new Event('input',{bubbles:true}));}prices=d.prices.map(n=>n/100);cursor=0;$('sequence-values').value=prices.join(', ');$('stale').checked=d.stale;$('stale').dispatchEvent(new Event('change',{bubbles:true}));show();}
+};
 })();

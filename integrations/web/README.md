@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.4.7 — Custom Diren price sequences
+Release: 0.4.8 — Named scenario libraries
 
 ## Update workflow
 
@@ -28,3 +28,5 @@ The project combines static public assets and Python proposal-only endpoints. It
 The shared Upstash quota admits at most 20 AI drafts and 100 Latch checks per 24-hour counter window, with global cooldowns. Quota/storage failure prevents provider calls; manual simulation remains available. This is not wallet authentication or a per-user allowance. See `integrations/hosted/README.md` for configuration and limitations.
 
 Diren price sequences accept 2–12 fictional prices (1–200 RLO). Applying only prepares data. Review locks the sequence; each authorized advance consumes one price. Exhaustion never invents a new quote or step; cancel to return a waiting reserve. The stale-data switch and normal deadline still apply. New practice resets the sequence. Covered by price-sequence.test.cjs.
+
+Named libraries: up to 20 scenarios per character, stored only in localStorage. Diren stores applied prices, current limits and stale flag; Ece stores applied events and current protection settings. Loading validates and fills fields without approval, execution or balance refill. Records can be copied, replaced and deleted. Invalid/unavailable storage fails without overwriting existing records. The legacy Ece single-policy save remains intact. Tests: scenario-library.test.cjs.

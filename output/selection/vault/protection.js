@@ -197,6 +197,18 @@
   try{const p=JSON.parse(sessionStorage.getItem('resonance.diren-plan.v1')||'null');if(p?.version===1&&Number.isSafeInteger(p.budget)&&p.budget>=100&&p.budget<=10000&&Number.isSafeInteger(p.limit)&&p.limit>=100&&p.limit<=20000)imported=p;}catch{}
   if(imported){$('import-diren').hidden=false;$('import-status').textContent='A reviewed Diren plan is available in this browser tab. Only its order amount and price limit can be copied.';}
   $('import-diren').onclick=()=>{if(mode!=='draft'||!imported)return;revision++;$('order').value=money(imported.budget);$('limit').value=money(imported.limit);preview();$('import-status').textContent='Diren’s amount and price copied. Set Ece’s weekly cap and reserve yourself. Diren’s expiry and execution state were not imported.';};
+  function validateScenario(data){
+    if(!data||!Array.isArray(data.events)||data.events.length<1||data.events.length>8)throw Error('Invalid saved events.');
+    const policy=engine.validate(data.policy);let last=0;
+    const events=data.events.map((e,i)=>{if(!e||!Number.isInteger(e.day)||e.day<last||e.day<1||e.day>28||!Number.isInteger(e.orders)||e.orders<1||e.orders>5||!Number.isSafeInteger(e.price)||e.price<100||e.price>20000||!Number.isInteger(e.age)||e.age<0||e.age>1440)throw Error('Invalid saved event.');last=e.day;return {id:'custom-'+i,day:e.day,orders:e.orders,price:e.price,age:e.age};});
+    return {policy,events};
+  }
+  window.resonanceScenarioLibrary={
+    editable:()=>mode==='draft'&&!busy,
+    validate:validateScenario,
+    capture:()=>validateScenario({policy:values(),events:selected.events}),
+    load:data=>{if(mode!=='draft'||busy)throw Error('Finish or edit your current rehearsal first.');const {policy,events}=validateScenario(data);select({id:'custom:'+JSON.stringify(events),name:'Saved scenario',description:'Loaded events and protection settings. Review and confirm to begin a fresh rehearsal.',policy,events});$('custom-events').replaceChildren();for(const e of events){addEventRow();const row=$('custom-events').lastElementChild;for(const k of ['day','orders','price','age'])row.querySelector('[data-event="'+k+'"]').value=k==='price'?money(e[k]):String(e[k]);}$('custom-status').textContent='Saved events loaded and applied. Edit them here and apply again to change this scenario.';}
+  };
   select(selected);
   readSaved();
 })();
