@@ -3,6 +3,8 @@
   const $=id=>document.getElementById(id), engine=window.EceProtection;
   const fields=['balance','floor','weekly','order','limit','freshness'];
   const money=n=>(n/100).toFixed(2);
+  const SAVE_KEY='resonance.ece-policy.v1', previousRuns=new Map();
+  let savedPolicy=null, comparison=null;
   let selected=engine.scenarios[0], state=null, draft=null, cursor=0, mode='draft', busy=false, revision=0;
   function values(){
     const p={};
@@ -19,11 +21,14 @@
     for(const id of fields)$(id).disabled=mode!=='draft'||busy;
     document.querySelectorAll('.scenario').forEach(b=>{b.disabled=mode==='active'||busy;b.setAttribute('aria-pressed',String(b.dataset.scenario===selected.id));});
     $('review-protection').disabled=mode!=='draft'||busy;
+    $('download-report').disabled=mode!=='finished'||busy;
     $('confirm-protection').disabled=busy;
     $('advance-protection').disabled=mode!=='active'||busy;
     $('revise-protection').disabled=mode==='draft'||busy;
     $('import-diren').disabled=mode!=='draft'||busy;
     $('policy-review').hidden=mode!=='review';
+    $('save-policy').disabled=mode!=='draft'||busy;
+    $('load-policy').disabled=mode!=='draft'||busy||!savedPolicy;
     window.dispatchEvent(new CustomEvent('resonance:protection-context',{detail:{revision,editable:mode==='draft'&&!busy}}));
   }
   function chart(s){
@@ -38,6 +43,7 @@
     $('event-preview').textContent=e?`Next: day ${e.day} · ${e.orders} proposed ${e.orders===1?'order':'orders'} · price ${money(e.price)} RLO · quote age ${e.age} min.`:'All market events processed.';
   }
   function select(s){
+    comparison=null;$('policy-comparison').hidden=true;
     revision++;selected=s;state=null;draft=null;cursor=0;mode='draft';
     for(const id of fields)$(id).value=id==='freshness'?s.policy[id]:money(s.policy[id]);
     $('scenario-description').textContent=s.description;$('run-status').textContent='Review your protection to begin.';
@@ -66,6 +72,7 @@
   $('confirm-protection').onclick=()=>authorized(()=>{
     if(mode!=='review'||!draft)return;
     state=engine.create(draft);draft=null;cursor=0;mode='active';
+    comparison=null;$('policy-comparison').hidden=true;
     $('decision-trail').replaceChildren();$('result-summary').hidden=true;$('download-report').hidden=true;
     chart(state);nextEvent();$('run-status').textContent='Protection confirmed for this rehearsal. No order processed yet.';
   });
@@ -89,18 +96,60 @@
     $('run-status').textContent=`Day ${state.day} complete. Each order used the updated shared balance and budget.`;
     if(cursor===selected.events.length){mode='finished';$('run-status').textContent='Rehearsal complete. Change your boundaries to compare a different policy.';$('result-summary').hidden=false;$('download-report').hidden=false;
       $('result-summary').textContent=`${state.blocked} orders stopped. ${money(state.baselineSpent-state.spent)} Demo RLO not spent compared with the unprotected run. You bought ${state.units.toFixed(4)} demo assets vs ${state.baselineUnits.toFixed(4)} without Ece. Fees paid with Ece: ${money(state.fees)} RLO. This is a policy comparison, not a profit estimate.`;
+      compareCompleted();
     }
   });
   $('revise-protection').onclick=()=>{revision++;draft=null;mode='draft';$('run-status').textContent='Previous rehearsal stopped. Edit your boundaries, then review to start from a fresh balance.';preview();controls();$('weekly').focus();};
-  window.resonanceVaultCancel=()=>{revision++;draft=null;mode='draft';$('run-status').textContent='Wallet access changed. The rehearsal stopped; review again after checking ownership.';controls();};
+  window.resonanceVaultCancel=()=>{previousRuns.clear();comparison=null;$('policy-comparison').hidden=true;revision++;draft=null;mode='draft';$('run-status').textContent='Wallet access changed. The rehearsal stopped; review again after checking ownership.';controls();};
   $('download-report').onclick=()=>{
     if(!state||mode!=='finished')return;
-    const report={type:'ece-local-rehearsal',version:1,onchain:false,latchVerified:false,realFunds:false,scenario:selected.id,policy:state.policy,result:state};
+    const report={type:'ece-local-rehearsal',version:1,onchain:false,latchVerified:false,realFunds:false,scenario:selected.id,policy:state.policy,result:state,previousPolicyComparison:comparison};
     const url=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='ece-rehearsal.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   };
+  function checkedPolicy(record){
+    if(!record||record.version!==1||!record.policy||typeof record.policy!=='object'||Array.isArray(record.policy)||Object.keys(record.policy).sort().join('|')!==[...fields].sort().join('|'))throw Error('Invalid saved policy');
+    return engine.validate(record.policy);
+  }
+  function readSaved(){
+    savedPolicy=null;
+    try{const raw=localStorage.getItem(SAVE_KEY);if(!raw){$('saved-policy-status').textContent='No saved policy on this browser yet.';}else{savedPolicy=checkedPolicy(JSON.parse(raw));$('saved-policy-status').textContent='Saved settings available. Loading fills the form only.';}}
+    catch{$('saved-policy-status').textContent='Saved settings could not be read or validated. Use the manual fields; nothing was loaded.';}
+    $('saved-policy-summary').textContent=savedPolicy?sentence(savedPolicy):'';
+    controls();
+  }
+  $('save-policy').onclick=()=>{
+    if(mode!=='draft'||busy)return;
+    try{const p=values();localStorage.setItem(SAVE_KEY,JSON.stringify({version:1,policy:Object.fromEntries(fields.map(k=>[k,p[k]]))}));savedPolicy=p;$('saved-policy-status').textContent='Current settings saved on this browser. Saving does not start or approve a rehearsal.';$('saved-policy-summary').textContent=sentence(p);controls();}
+    catch{$('saved-policy-status').textContent='Could not save these settings. Check your values and browser storage. Your current form remains available.';}
+  };
+  $('load-policy').onclick=()=>{
+    if(mode!=='draft'||busy)return;
+    // Read again: another tab may have updated or corrupted the stored record.
+    readSaved();if(!savedPolicy)return;
+    for(const id of fields)$(id).value=id==='freshness'?String(savedPolicy[id]):money(savedPolicy[id]);
+    for(const id of fields)$(id).dispatchEvent(new Event('input',{bubbles:true}));
+    $('saved-policy-status').textContent='Saved settings loaded. Review protection and confirm to start a fresh rehearsal.';$('review-protection').focus();
+  };
+  window.addEventListener('storage',e=>{if(e.key===SAVE_KEY||e.key===null)readSaved();});
+  function compareCompleted(){
+    const previous=previousRuns.get(selected.id);
+    if(previous){
+      comparison={scenario:selected.id,previous,current:state};
+      $('policy-comparison').hidden=false;$('comparison-context').textContent=selected.name+' · The previous completed rehearsal on this page versus the one you just finished.';
+      $('comparison-rows').replaceChildren();
+      const rows=[['Starting balance',money(previous.policy.balance),money(state.policy.balance)],['Remaining Demo RLO',money(previous.balance),money(state.balance)],['Total spent, including fees',money(previous.spent),money(state.spent)],['Fees paid',money(previous.fees),money(state.fees)],['Demo asset units',previous.units.toFixed(4),state.units.toFixed(4)],['Orders stopped',previous.blocked,state.blocked]];
+      for(const cells of rows){const tr=document.createElement('tr');cells.forEach((value,i)=>{const cell=document.createElement(i?'td':'th');if(!i)cell.scope='row';cell.textContent=String(value);tr.append(cell);});$('comparison-rows').append(tr);}
+      const labels={balance:'Starting balance',floor:'Protected reserve',weekly:'Weekly cap',order:'Order cost',limit:'Unit price limit',freshness:'Maximum quote age'};
+      const changed=fields.filter(k=>previous.policy[k]!==state.policy[k]).map(k=>labels[k]+': '+(k==='freshness'?previous.policy[k]+' → '+state.policy[k]+' min':money(previous.policy[k])+' → '+money(state.policy[k])+' Demo RLO'));
+      $('comparison-changes').textContent=changed.length?'Changed settings: '+changed.join(' · '):'The settings are identical. Deterministic inputs should produce identical results.';
+      if(previous.policy.balance!==state.policy.balance)$('comparison-changes').textContent+=' Starting balances differ; remaining cash alone is not a like-for-like measure.';
+    }else{$('result-summary').textContent+=' Edit your settings and finish this scenario again to compare both policies.';}
+    previousRuns.set(selected.id,state);
+  }
   let imported=null;
   try{const p=JSON.parse(sessionStorage.getItem('resonance.diren-plan.v1')||'null');if(p?.version===1&&Number.isSafeInteger(p.budget)&&p.budget>=100&&p.budget<=10000&&Number.isSafeInteger(p.limit)&&p.limit>=100&&p.limit<=20000)imported=p;}catch{}
   if(imported){$('import-diren').hidden=false;$('import-status').textContent='A reviewed Diren plan is available in this browser tab. Only its order amount and price limit can be copied.';}
   $('import-diren').onclick=()=>{if(mode!=='draft'||!imported)return;revision++;$('order').value=money(imported.budget);$('limit').value=money(imported.limit);preview();$('import-status').textContent='Diren’s amount and price copied. Set Ece’s weekly cap and reserve yourself. Diren’s expiry and execution state were not imported.';};
   select(selected);
+  readSaved();
 })();

@@ -9,7 +9,7 @@ An anime-inspired learning adventure connecting reactive transaction concepts to
 - Short character lessons; Diren and Ece each have a current four-question, four-option check.
 - Sepolia character NFTs, Rabby connection, mint receipt verification and current-ownership access checks.
 - Diren's conditional-buy simulation: explicit budget, price cap, expiry, cancellation and execution checks.
-- Ece's Reserve Studio: shared weekly cap, reserve floor and data-age checks, three stress scenarios, protected/unprotected comparisons and downloadable local reports.
+- Ece's Reserve Studio: shared weekly cap, reserve floor and data-age checks, three stress scenarios, protected/unprotected comparisons downloadable local reports, browser-saved settings and comparisons between completed policies.
 - Guided experiments, a visible rule timeline and explanations that connect outcomes to the lesson.
 - Hosted Gemini drafts for Diren and Ece, plus Diren’s Latch proposal checks with a persistent shared free-preview quota. Credentials remain on the server; applying a draft and confirming the simulation are separate actions.
 

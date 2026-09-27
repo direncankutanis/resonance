@@ -15,3 +15,7 @@ Tests: protection-engine.test.cjs; protection-ui.test.cjs (mock wallet); contrac
 Next integration: a server/contract must enforce cumulative budgets atomically with trusted timestamps and quotes before handling real funds. Extending the existing Latch single-proposal check is separate work.
 
 Optional AI helper: /api/ai/protection extracts all six explicitly stated boundaries. Same shared hosted AI quota as Diren; no separate allowance or paid fallback. Generated values require explicit application, review and confirmation. Changed input/context invalidates pending drafts. Gemini does not enforce rules or grant Latch approval.
+
+Saved settings: explicitly save one validated six-field policy to this browser’s local storage. Loading revalidates and fills the form; it never starts or resumes a rehearsal. Storage failures and corrupted records leave the form unchanged. No wallet or authorization is saved.
+
+Policy comparison: retain the last completed run per scenario in page memory. A second completed run shows both settings and outcomes; aborted runs do not replace the comparison. Different starting balances are disclosed. Comparisons reset on reload or wallet access changes and are included in the unsigned report. Remaining cash is not investment performance. Covered by protection-save.test.cjs (mock wallet).
