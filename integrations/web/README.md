@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.4.10 — Explained practice outcomes
+Release: 0.5.0 — Simplified first practice
 
 ## Update workflow
 
@@ -32,3 +32,5 @@ Diren price sequences accept 2–12 fictional prices (1–200 RLO). Applying onl
 Named libraries: up to 20 scenarios per character, stored only in localStorage. Diren stores applied prices, current limits and stale flag; Ece stores applied events and current protection settings. Loading validates and fills fields without approval, execution or balance refill. Records can be copied, replaced and deleted. Invalid/unavailable storage fails without overwriting existing records. The legacy Ece single-policy save remains intact. Tests: scenario-library.test.cjs.
 
 Library transfer: versioned character-specific JSON, maximum 128 KB and 20 scenarios total. Validate the whole file, preview names, then add copies with fresh IDs. Imports never overwrite records or load/start a practice. Export includes canonical demo settings and names only. No wallet, NFT, credential or approval transfer. Tests: library-transfer.test.cjs.
+
+First-use layout: guide and templates lead; libraries, custom editors and Ece AI/legacy saves are grouped below. Existing event handlers and approval semantics stay intact. USER_TEST_PLAN.md describes a 3–5 participant study; no human study results are claimed.
