@@ -30,7 +30,7 @@
     $('policy-review').hidden=mode!=='review';
     $('save-policy').disabled=mode!=='draft'||busy;
     $('load-policy').disabled=mode!=='draft'||busy||!savedPolicy;
-    window.dispatchEvent(new CustomEvent('resonance:protection-context',{detail:{revision,editable:mode==='draft'&&!busy}}));
+    window.dispatchEvent(new CustomEvent('resonance:protection-context',{detail:{revision,editable:mode==='draft'&&!busy,mode,cursor}}));
   }
   function chart(s){
     const p=s.policy;
