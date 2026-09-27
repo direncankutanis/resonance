@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.4.2 — Ece saved settings and policy comparison
+Release: 0.4.3 — Guided learning templates
 
 ## Update workflow
 

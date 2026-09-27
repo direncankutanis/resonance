@@ -19,6 +19,7 @@
   function preview(){try{$('policy-preview').textContent=sentence(values());$('form-error').textContent='';}catch(e){$('policy-preview').textContent='Adjust your boundaries to see the plan.';$('form-error').textContent=e.message;}}
   function controls(){
     for(const id of fields)$(id).disabled=mode!=='draft'||busy;
+    document.querySelectorAll('[data-template]').forEach(b=>b.disabled=mode!=='draft'||busy);
     document.querySelectorAll('.scenario').forEach(b=>{b.disabled=mode==='active'||busy;b.setAttribute('aria-pressed',String(b.dataset.scenario===selected.id));});
     $('review-protection').disabled=mode!=='draft'||busy;
     $('download-report').disabled=mode!=='finished'||busy;
@@ -44,6 +45,7 @@
   }
   function select(s){
     comparison=null;$('policy-comparison').hidden=true;
+    $('template-hint').textContent='Choose a learning template, or edit the scenario settings yourself.';
     revision++;selected=s;state=null;draft=null;cursor=0;mode='draft';
     for(const id of fields)$(id).value=id==='freshness'?s.policy[id]:money(s.policy[id]);
     $('scenario-description').textContent=s.description;$('run-status').textContent='Review your protection to begin.';
@@ -56,7 +58,20 @@
     const title=document.createElement('strong'),text=document.createElement('span');title.textContent=s.name;text.textContent=s.description;b.append(title,text);
     b.onclick=()=>{if(mode!=='active'&&!busy)select(s);};$('scenarios').append(b);
   }
-  for(const id of fields)$(id).addEventListener('input',()=>{if(mode==='draft'){revision++;preview();}});
+  const templateNotes={
+    crowded:'Weekly pacing · With 100 RLO, a 40 reserve and a 20 weekly cap, only two 10 RLO orders fit each week. Complete this scenario: 60 RLO remains. Then try a 30 cap on the same scenario and compare: 40 remains. More cash means fewer assets, not more profit.',
+    reserve:'Keep a buffer · Start with 100 RLO, keep 40, allow 80 per week and spend 10 per order. Six orders fit; later orders stop at the reserve even though the weekly cap has room. Expected remaining balance: 40 RLO.',
+    stale:'Fresh quotes · A 30-minute limit rejects the 90- and 60-minute-old quotes. Two fresh, qualifying orders execute; the price of 9 also fails the price limit of 8. Expected remaining balance: 80 RLO. Freshness alone does not make every order valid.'
+  };
+  for(const b of document.querySelectorAll('[data-template]'))b.onclick=()=>authorized(()=>{
+    if(mode!=='draft')return;
+    select(engine.scenarios.find(s=>s.id===b.dataset.template));
+    if(b.dataset.template==='crowded'){$('weekly').value='20';$('weekly').dispatchEvent(new Event('input',{bubbles:true}));}
+    $('template-hint').textContent=templateNotes[b.dataset.template]+' Review and confirm when ready.';
+    $('balance').focus();
+  });
+  for(const id of fields)$(id).addEventListener('input',()=>{if(mode==='draft'){revision++;preview();$('template-hint').textContent='Settings changed. Template outcomes no longer apply; review these values and rehearse to see their result.';}});
+
   async function authorized(action){
     if(busy)return;busy=true;const rev=revision;controls();
     try{if(await window.resonanceVaultAuthorize()&&rev===revision)action();}
