@@ -13,3 +13,5 @@ Diren’s confirmed order budget and price limit can be copied through same-tab 
 Tests: protection-engine.test.cjs; protection-ui.test.cjs (mock wallet); contracts/test/ece-gate.cjs (local chain); character lesson and mint regression checks.
 
 Next integration: a server/contract must enforce cumulative budgets atomically with trusted timestamps and quotes before handling real funds. Extending the existing Latch single-proposal check is separate work.
+
+Optional AI helper: /api/ai/protection extracts all six explicitly stated boundaries. Same shared hosted AI quota as Diren; no separate allowance or paid fallback. Generated values require explicit application, review and confirmation. Changed input/context invalidates pending drafts. Gemini does not enforce rules or grant Latch approval.

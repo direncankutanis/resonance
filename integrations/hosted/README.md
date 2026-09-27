@@ -2,7 +2,7 @@
 
 Status: live on resonance-learning-adventure.vercel.app; verified 26 September 2026. No real trading.
 
-Endpoints: POST /api/ai/plan and POST /api/latch/check. The browser never receives service credentials. AI drafts require explicit application and final review; Latch approval does not execute a purchase or prove NFT ownership.
+Endpoints: POST /api/ai/plan, POST /api/ai/protection and POST /api/latch/check. Ece and Diren AI requests use the same Redis counter, cooldown, model and key. The browser never receives service credentials. AI drafts require explicit application and final review; Latch approval does not execute a purchase or prove NFT ownership.
 
 Production configuration (completed for the current deployment):
 1. Create a permanent free Upstash Redis database in the project owner's account.
@@ -18,3 +18,5 @@ Validation: python3 -m unittest integrations.hosted.test_service uses mocked ext
 Live validation: `python3 -m integrations.hosted.check_redis_live` uses a unique expiring test prefix, not production counters. `browser-flow.test.cjs` checks draft/apply/check/final-confirm boundaries with mocked providers and NFT access.
 
 Production validation: AI returned the requested 15 Demo RLO / price 8 / 5-step rule; Latch allowed 15 and denied 30 Demo RLO; immediate repeated calls returned 429. Both APIs return private, no-store. Invalid origins/payloads were rejected. UI confirmation boundaries and mobile layout passed against production assets with mocked providers/NFT access. A first AI response failed validation; the application rejected it. Response schema and truncation handling were strengthened before the successful final test.
+
+Ece drafts require all six explicit policy fields. Server and browser reject inconsistent bounds. Order budget and unit price are independent; an order budget may exceed the unit price. The assistant does not start the rehearsal or enforce any live protection.

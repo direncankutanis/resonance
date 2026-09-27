@@ -6,6 +6,7 @@ from http.server import BaseHTTPRequestHandler
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 from integrations.latch.ai_plans import generate_plan, AIUnavailable
+from integrations.latch.protection_plans import generate_protection
 
 ORIGIN = 'https://resonance-learning-adventure.vercel.app'
 # Atomic across all function instances; no visitor identifiers or prompts stored.
@@ -65,12 +66,12 @@ def parse_body(raw, kind):
                 raise ValueError()
             result[k] = v
         return result
-    if kind not in ('ai', 'latch'):
+    if kind not in ('ai', 'protection', 'latch'):
         raise ValueError()
     body = json.loads(raw, object_pairs_hook=pairs)
     if type(body) is not dict:
         raise ValueError()
-    if kind == 'ai':
+    if kind in ('ai', 'protection'):
         if set(body) != {'prompt'} or type(body['prompt']) is not str or not 1 <= len(body['prompt'].strip()) <= 800:
             raise ValueError()
     elif set(body) != {'amountMinor'} or type(body['amountMinor']) is not int or not 100 <= body['amountMinor'] <= 10000:
@@ -81,13 +82,15 @@ def parse_body(raw, kind):
 def process(kind, body):
     if os.environ.get('RESONANCE_HOSTED_SERVICES') != 'enabled':
         return 503, {'code': 'not_configured', 'executed': False}, None
-    secret = os.environ.get('GEMINI_API_KEY' if kind == 'ai' else 'LATCH_TOKEN', '').strip()
+    secret = os.environ.get('GEMINI_API_KEY' if kind in ('ai', 'protection') else 'LATCH_TOKEN', '').strip()
     if not secret:
         return 503, {'code': 'not_configured', 'executed': False}, None
     try:
-        allowed, retry = admit(kind)
+        allowed, retry = admit('ai' if kind == 'protection' else kind)
         if not allowed:
             return 429, {'code': 'shared_limit', 'executed': False}, retry
+        if kind == 'protection':
+            return 200, {'plan': generate_protection(body['prompt'], api_key=secret), 'executed': False}, None
         if kind == 'ai':
             return 200, {'plan': generate_plan(body['prompt'], api_key=secret), 'executed': False}, None
         status, result = json_request('https://onlatch.com/proxy/proposals',

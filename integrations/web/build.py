@@ -11,11 +11,12 @@ PUBLIC=DEST/'public'
 if PUBLIC.exists(): shutil.rmtree(PUBLIC)
 PUBLIC.mkdir()
 files=['resonance-playable-v1.html','nft-artwork.js','diren.jpg','ece.jpg','deploy/ethers.umd.min.js','mint/index.html','mint/mint.js','mint/mint-config.js']
-files += ['vault/'+name for name in ['index.html','gate.js','policy.js','progress.js','vault.js','lesson-bridge.js','latch-check.js','ai-guide.js','outcome.js','scenarios.js','entry.js','protection.html','protection.css','protection.js','protection-engine.js']]
+files += ['vault/'+name for name in ['index.html','gate.js','policy.js','progress.js','vault.js','lesson-bridge.js','latch-check.js','ai-guide.js','outcome.js','scenarios.js','entry.js','protection.html','protection.css','protection.js','protection-engine.js','protection-ai.js']]
 for name in files:
  target=PUBLIC/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(SOURCE/name,target)
 # Credential-backed UI is opt-in; deployment must configure the guarded endpoints first.
 if os.environ.get('RESONANCE_HOSTED_SERVICES') != 'enabled':
+ p=PUBLIC/'vault/protection.html';p.write_text(p.read_text().replace('<details id="ece-ai"', '<details hidden id="ece-ai"'))
  # Public release deliberately has no credential-backed endpoints.
  p=PUBLIC/'vault/latch-check.js'
  p.write_text("""(()=>{const panel=document.createElement('p');panel.className='muted';panel.textContent='Live Latch checks are available in the local development preview. This public release runs the simulation without a live policy-service check.';document.getElementById('rule-form').append(panel);})();""")
@@ -25,11 +26,11 @@ if os.environ.get('RESONANCE_HOSTED_SERVICES') != 'enabled':
  p=PUBLIC/'vault/lesson-bridge.js';s=p.read_text().replace('The AI guide can translate your stated limits into a draft plan.', 'In the local development preview, the AI guide can translate your stated limits into a draft plan.').replace('Live Latch checking is available in the plan form.', 'Live Latch checking is available in the local development preview.');p.write_text(s)
  p=PUBLIC/'vault/scenarios.js';s=p.read_text().replace('Optionally check it with Latch, then confirm.', 'Then confirm to reserve the demo budget.');p.write_text(s)
 for name in ['resonance-playable-v1.html','mint/index.html','vault/index.html']:
- p=PUBLIC/name;s=p.read_text();s=s.replace('<body>', '<body><a href="/" style="display:block;padding:10px 20px;background:#0c161e;color:#cce4d9;font:14px system-ui;text-decoration:none">← Resonance home · Public preview 0.4.0</a>',1)
+ p=PUBLIC/name;s=p.read_text();s=s.replace('<body>', '<body><a href="/" style="display:block;padding:10px 20px;background:#0c161e;color:#cce4d9;font:14px system-ui;text-decoration:none">← Resonance home · Public preview 0.4.1</a>',1)
  p.write_text(s)
 home=Path(__file__).with_name('home.html').read_text()
 if os.environ.get('RESONANCE_HOSTED_SERVICES') != 'enabled':
- home=home.replace('Create an AI draft from your stated limits, apply its values, and check the proposal through Latch. Review and confirm separately to start the simulation.', 'AI and Latch are unavailable in this build. Guided examples and manual rules remain available.')
+ home=home.replace('Diren and Ece can draft your stated limits with AI. Diren also offers a live Latch proposal check. Apply the draft, then review and confirm separately. Ece’s cumulative protection rules run locally in the rehearsal.', 'AI and Latch are unavailable in this build. Guided examples and manual rules remain available.')
 (PUBLIC/'index.html').write_text(home)
 (PUBLIC/'robots.txt').write_text('User-agent: *\nAllow: /\n')
 (PUBLIC/'404.html').write_text('<!doctype html><html lang="en"><meta charset="utf-8"><title>Resonance · Page not found</title><body style="background:#0c161e;color:#eee9de;font:20px system-ui;padding:40px"><h1>This path is not open yet.</h1><a href="/" style="color:#b6dfcc">Return to Resonance</a></body></html>')

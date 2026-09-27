@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.4.0 — Ece Reserve Studio
+Release: 0.4.1 — Ece AI draft assistant
 
 ## Update workflow
 

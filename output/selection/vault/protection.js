@@ -24,6 +24,7 @@
     $('revise-protection').disabled=mode==='draft'||busy;
     $('import-diren').disabled=mode!=='draft'||busy;
     $('policy-review').hidden=mode!=='review';
+    window.dispatchEvent(new CustomEvent('resonance:protection-context',{detail:{revision,editable:mode==='draft'&&!busy}}));
   }
   function chart(s){
     const p=s.policy;

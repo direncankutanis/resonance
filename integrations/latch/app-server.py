@@ -32,7 +32,7 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_POST(self):
         global last_call
-        if self.path not in ('/api/latch/check', '/api/ai/plan'):
+        if self.path not in ('/api/latch/check', '/api/ai/plan', '/api/ai/protection'):
             return self.reply(404, {'error':'Unknown endpoint'})
         if self.headers.get('Host') != '127.0.0.1:8767' or self.headers.get('Origin') != ORIGIN or self.headers.get('X-Resonance-Request') != 'proposal-check':
             return self.reply(403, {'error':'Local application requests only'})
@@ -43,10 +43,10 @@ class Handler(SimpleHTTPRequestHandler):
             if not 0 < n <= 4096: raise ValueError()
             self.connection.settimeout(5)
             body = json.loads(self.rfile.read(n))
-            if self.path == '/api/ai/plan':
+            if self.path in ('/api/ai/plan', '/api/ai/protection'):
                 if type(body) is not dict or set(body) != {'prompt'}: raise ValueError()
                 try:
-                    plan = validate_plan(generate_plan(body['prompt']))
+                    plan = generate_plan(body['prompt'], _protection=self.path == '/api/ai/protection')
                 except AIUnavailable as e:
                     return self.reply(503, {'error':'AI draft unavailable', 'code':e.code})
                 return self.reply(200, {'plan':plan, 'executed':False})
