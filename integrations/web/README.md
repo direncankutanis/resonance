@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.4.6 — Custom Ece scenarios
+Release: 0.4.7 — Custom Diren price sequences
 
 ## Update workflow
 
@@ -26,3 +26,5 @@ The Vercel project link stays in `output/vercel-site/.vercel/`; keep it private.
 The project combines static public assets and Python proposal-only endpoints. It is separate from the existing `resonance-proposal-guard` service. Deploy from the repository root through the Git integration; deploying only `output/vercel-site` does not include the backend.
 
 The shared Upstash quota admits at most 20 AI drafts and 100 Latch checks per 24-hour counter window, with global cooldowns. Quota/storage failure prevents provider calls; manual simulation remains available. This is not wallet authentication or a per-user allowance. See `integrations/hosted/README.md` for configuration and limitations.
+
+Diren price sequences accept 2–12 fictional prices (1–200 RLO). Applying only prepares data. Review locks the sequence; each authorized advance consumes one price. Exhaustion never invents a new quote or step; cancel to return a waiting reserve. The stale-data switch and normal deadline still apply. New practice resets the sequence. Covered by price-sequence.test.cjs.
