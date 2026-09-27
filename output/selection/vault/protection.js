@@ -46,7 +46,7 @@
     $('event-preview').textContent=e?`Next: day ${e.day} · ${e.orders} proposed ${e.orders===1?'order':'orders'} · price ${money(e.price)} RLO · quote age ${e.age} min.`:'All market events processed.';
   }
   function select(s){
-    comparison=null;$('policy-comparison').hidden=true;
+    comparison=null;$('policy-comparison').hidden=true;$('decision-summary').hidden=true;
     $('template-hint').textContent='Choose a learning template, or edit the scenario settings yourself.';
     revision++;selected=s;state=null;draft=null;cursor=0;mode='draft';
     for(const id of fields)$(id).value=id==='freshness'?s.policy[id]:money(s.policy[id]);
@@ -115,7 +115,7 @@
   $('confirm-protection').onclick=()=>authorized(()=>{
     if(mode!=='review'||!draft)return;
     state=engine.create(draft);draft=null;cursor=0;mode='active';
-    comparison=null;$('policy-comparison').hidden=true;
+    comparison=null;$('policy-comparison').hidden=true;$('decision-summary').hidden=true;
     $('decision-trail').replaceChildren();$('result-summary').hidden=true;$('download-report').hidden=true;
     chart(state);nextEvent();$('run-status').textContent='Protection confirmed for this rehearsal. No order processed yet.';
   });
@@ -143,14 +143,14 @@
     $('run-status').textContent=`Day ${state.day} complete. Each order used the updated shared balance and budget.`;
     if(cursor===selected.events.length){mode='finished';$('run-status').textContent='Rehearsal complete. Change your boundaries to compare a different policy.';$('result-summary').hidden=false;$('download-report').hidden=false;
       $('result-summary').textContent=`${state.blocked} orders stopped. ${money(state.baselineSpent-state.spent)} Demo RLO not spent compared with the unprotected run. You bought ${state.units.toFixed(4)} demo assets vs ${state.baselineUnits.toFixed(4)} without Ece. Fees paid with Ece: ${money(state.fees)} RLO. This is a policy comparison, not a profit estimate.`;
-      compareCompleted();
+      explainCompleted();compareCompleted();
     }
   });
   $('revise-protection').onclick=()=>{revision++;draft=null;mode='draft';$('run-status').textContent='Previous rehearsal stopped. Edit your boundaries, then review to start from a fresh balance.';preview();controls();$('weekly').focus();};
-  window.resonanceVaultCancel=()=>{previousRuns.clear();comparison=null;$('policy-comparison').hidden=true;revision++;draft=null;mode='draft';$('run-status').textContent='Wallet access changed. The rehearsal stopped; review again after checking ownership.';controls();};
+  window.resonanceVaultCancel=()=>{previousRuns.clear();comparison=null;$('policy-comparison').hidden=true;$('decision-summary').hidden=true;revision++;draft=null;mode='draft';$('run-status').textContent='Wallet access changed. The rehearsal stopped; review again after checking ownership.';controls();};
   $('download-report').onclick=()=>{
     if(!state||mode!=='finished')return;
-    const report={type:'ece-local-rehearsal',version:1,onchain:false,latchVerified:false,realFunds:false,scenario:selected.id,events:selected.events,policy:state.policy,result:state,previousPolicyComparison:comparison};
+    const report={type:'ece-local-rehearsal',version:1,onchain:false,latchVerified:false,realFunds:false,scenario:selected.id,events:selected.events,summary:engine.summarize(state),policy:state.policy,result:state,previousPolicyComparison:comparison};
     const url=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='ece-rehearsal.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   };
   function checkedPolicy(record){
@@ -178,6 +178,14 @@
     $('saved-policy-status').textContent='Saved settings loaded. Review protection and confirm to start a fresh rehearsal.';$('review-protection').focus();
   };
   window.addEventListener('storage',e=>{if(e.key===SAVE_KEY||e.key===null)readSaved();});
+  function explainCompleted(){
+    const summary=engine.summarize(state),names={price:'Price above your limit',freshness:'Quote older than allowed',weekly:'Shared weekly budget exceeded',reserve:'Protected reserve would be spent'};
+    $('decision-summary').hidden=false;$('decision-totals').textContent=`${summary.total} proposed orders: ${summary.accepted} executed and ${summary.rejected} stopped. Remaining balance: ${money(state.balance)} Demo RLO.`;
+    $('decision-counts').replaceChildren();for(const [key,count] of Object.entries(summary.failedChecks)){const li=document.createElement('li');li.textContent=names[key]+': '+count+' failed checks';$('decision-counts').append(li);}
+    const failed=Object.entries(summary.failedChecks).filter(([,n])=>n>0).sort((a,b)=>b[1]-a[1]);
+    const prompts={price:'Inspect the prices that exceeded your chosen limit. A queued or attractive order still must meet the execution price.',freshness:'Compare with a fresh-data event while keeping the same budget. An old quote cannot establish the current price.',weekly:'Try a different weekly cap on the same events and compare both completed runs. More purchases use more of the balance.',reserve:'Inspect the balance after each proposed order. The reserve is a boundary you chose, not a promise against investment losses.'};
+    $('decision-next').textContent=failed.length?'A useful next experiment: '+prompts[failed[0][0]]:'Every proposal passed this time. Try adding an above-limit price or an old quote to see how your rule responds. Passing this rehearsal does not prove safety in real markets.';
+  }
   function compareCompleted(){
     const previous=previousRuns.get(selected.id);
     if(previous){

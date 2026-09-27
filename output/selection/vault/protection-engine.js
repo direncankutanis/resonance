@@ -46,7 +46,15 @@
     {id:'reserve',name:'An irresistible streak',description:'Every price qualifies. A generous weekly cap still must not consume your emergency reserve.',policy:{balance:10000,weekly:8000,floor:4000,order:1000,limit:800,freshness:30},events:[{id:'r1',day:1,price:750,age:2,orders:3},{id:'r2',day:2,price:720,age:2,orders:3},{id:'r3',day:3,price:680,age:2,orders:2}]},
     {id:'stale',name:'The quiet data outage',description:'An attractive quote can be too old. Fresh data lets the rule resume; a higher price still stops it.',policy:{balance:10000,weekly:3000,floor:4000,order:1000,limit:800,freshness:30},events:[{id:'s1',day:1,price:650,age:90,orders:2},{id:'s2',day:2,price:750,age:3,orders:1},{id:'s3',day:3,price:900,age:2,orders:1},{id:'s4',day:4,price:650,age:60,orders:2},{id:'s5',day:5,price:780,age:1,orders:1}]}
   ];
-  const api = {create,advance,validate,scenarios,FEE};
+  function summarize(state){
+    const counts={price:0,freshness:0,weekly:0,reserve:0};let accepted=0,rejected=0;
+    for(const entry of state.history)for(const decision of entry.decisions){
+      if(decision.allowed)accepted++;else rejected++;
+      for(const check of decision.checks)if(!check.ok)counts[check.key]++;
+    }
+    return {total:accepted+rejected,accepted,rejected,failedChecks:counts};
+  }
+  const api = {create,advance,validate,scenarios,FEE,summarize};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.EceProtection = api;
 })(typeof window === 'undefined' ? globalThis : window);

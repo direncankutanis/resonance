@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.4.9 — Scenario backup and transfer
+Release: 0.4.10 — Explained practice outcomes
 
 ## Update workflow
 

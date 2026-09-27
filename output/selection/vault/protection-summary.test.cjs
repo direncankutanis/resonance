@@ -1,0 +1,3 @@
+const assert=require('node:assert/strict'),e=require('./protection-engine.js');
+let s=e.create({balance:10000,floor:9000,weekly:1000,order:1000,limit:800,freshness:30});
+s=e.advance(s,{id:'first',day:1,price:750,age:2,orders:1});s=e.advance(s,{id:'second',day:1,price:900,age:90,orders:1});assert.deepEqual(e.summarize(s),{total:2,accepted:1,rejected:1,failedChecks:{price:1,freshness:1,weekly:1,reserve:1}});assert.equal(s.balance,9000);assert.deepEqual(e.summarize(e.create(s.policy)),{total:0,accepted:0,rejected:0,failedChecks:{price:0,freshness:0,weekly:0,reserve:0}});console.log('PASS summary: one rejected order with four failed checks, successful order, empty run and unchanged balance.');
