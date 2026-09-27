@@ -199,7 +199,7 @@
   $('import-diren').onclick=()=>{if(mode!=='draft'||!imported)return;revision++;$('order').value=money(imported.budget);$('limit').value=money(imported.limit);preview();$('import-status').textContent='Diren’s amount and price copied. Set Ece’s weekly cap and reserve yourself. Diren’s expiry and execution state were not imported.';};
   function validateScenario(data){
     if(!data||!Array.isArray(data.events)||data.events.length<1||data.events.length>8)throw Error('Invalid saved events.');
-    const policy=engine.validate(data.policy);let last=0;
+    const policy=engine.validate(Object.fromEntries(fields.map(k=>[k,data.policy?.[k]])));let last=0;
     const events=data.events.map((e,i)=>{if(!e||!Number.isInteger(e.day)||e.day<last||e.day<1||e.day>28||!Number.isInteger(e.orders)||e.orders<1||e.orders>5||!Number.isSafeInteger(e.price)||e.price<100||e.price>20000||!Number.isInteger(e.age)||e.age<0||e.age>1440)throw Error('Invalid saved event.');last=e.day;return {id:'custom-'+i,day:e.day,orders:e.orders,price:e.price,age:e.age};});
     return {policy,events};
   }
