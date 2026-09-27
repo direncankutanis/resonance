@@ -6,9 +6,10 @@ An anime-inspired learning adventure connecting reactive transaction concepts to
 
 ## What works today
 
-- Short character lessons; Diren's current check has four questions with four options each.
+- Short character lessons; Diren and Ece each have a current four-question, four-option check.
 - Sepolia character NFTs, Rabby connection, mint receipt verification and current-ownership access checks.
 - Diren's conditional-buy simulation: explicit budget, price cap, expiry, cancellation and execution checks.
+- Ece's Reserve Studio: shared weekly cap, reserve floor and data-age checks, three stress scenarios, protected/unprotected comparisons and downloadable local reports.
 - Guided experiments, a visible rule timeline and explanations that connect outcomes to the lesson.
 - Hosted Gemini drafts and Latch proposal checks with a persistent shared free-preview quota. Credentials remain on the server; applying a draft and confirming the simulation are separate actions.
 
@@ -23,7 +24,7 @@ python3 integrations/web/build.py
 python3 -m http.server 8767 --bind 127.0.0.1 --directory output/vercel-site/public
 ```
 
-Open http://127.0.0.1:8767. This build includes the landing page, game, mint screen and Diren vault. It deliberately excludes secrets, backend services and development screenshots.
+Open http://127.0.0.1:8767. This build includes the landing page, game, mint screen, Diren vault and Ece Reserve Studio. It deliberately excludes secrets, backend services and development screenshots.
 
 Browser progress is stored per origin. Existing localhost progress will not automatically appear on the live domain; NFTs remain in the wallet.
 
@@ -51,6 +52,6 @@ The pure scheduled simulation can be checked with `node output/selection/vault/s
 
 ## Development direction
 
-Refine Diren's complete learning → quiz → NFT → vault journey before expanding other character tools. Hosted AI/Latch access now has shared request limits; real Rialo execution requires separately verified network, wallet, data and transaction integration.
+Refine the connected Diren buying and Ece budget-protection journeys. Ece uses deterministic local rules; her cumulative protections are not enforced by the current hosted Latch service. Hosted AI/Latch access now has shared request limits; real Rialo execution requires separately verified network, wallet, data and transaction integration.
 
 Independent community prototype. No profit guarantees, mainnet execution or security-audit claims. No open-source license has been selected yet; publishing the repository does not grant unrestricted rights to its code or artwork.
