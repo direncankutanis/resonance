@@ -101,7 +101,11 @@
       const failed=d.checks.filter(c=>!c.ok).map(c=>({price:'Price exceeds your approved limit.',freshness:'Quote is too old. Wait for fresh data.',weekly:'This order would exceed the shared weekly cap.',reserve:'This order would consume your protected reserve.'}[c.key]));
       p.textContent=`Order ${d.number}: `+(d.allowed?'All four checks passed; demo order executed once.':failed.join(' '));
       small.textContent=`After this decision: ${money(d.balance)} RLO left · ${money(d.weeklySpent)} spent this week. Comparison: ${d.baselineAllowed?'bought without Ece’s guards':'did not buy'}.`;
-      body.append(p,small);row.append(badge,body);section.append(row);
+      const proof=document.createElement('details'),summary=document.createElement('summary'),numbers=document.createElement('p');
+      summary.textContent='Show the check with numbers';numbers.className='small';
+      const before=d.balance+(d.allowed?state.policy.order:0),spentBefore=d.weeklySpent-(d.allowed?state.policy.order:0),policy=state.policy;
+      numbers.textContent=`Price: ${money(entry.event.price)} ≤ ${money(policy.limit)}. Quote age: ${entry.event.age} ≤ ${policy.freshness} minutes. Weekly total if accepted: ${money(spentBefore)} + ${money(policy.order)} = ${money(spentBefore+policy.order)} ≤ ${money(policy.weekly)}. Balance if accepted: ${money(before)} − ${money(policy.order)} = ${money(before-policy.order)} ≥ ${money(policy.floor)} reserve. All four comparisons must be true. The order cost already includes the fee.`;
+      proof.append(summary,numbers);body.append(p,small,proof);row.append(badge,body);section.append(row);
     }
     $('decision-trail').prepend(section);
   }
