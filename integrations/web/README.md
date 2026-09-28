@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.7.4 — Eric saved budget library
+Release: 0.7.5 — Clearer first practice and tool navigation
 
 ## Update workflow
 
