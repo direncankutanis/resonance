@@ -32,5 +32,24 @@ function plan(input){
  if(startingTotal!==endingTotal)throw Error('Budget conservation failed');
  return {type:'eric-budget-proposal',version:1,onchain:false,paid:false,operating,savings:flexible,earmarked,goalAdded,savingsUsed:used,reserveDeficit,startingTotal,endingTotal,decisions};
 }
-const api={plan};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.EricBudget=api;
+function rehearse(input,options){
+ plan(input);if(!options||!Number.isInteger(options.months)||options.months<1||options.months>24)throw Error('Choose 1–24 months.');
+ const change=options.change;
+ if(change){if(!Number.isInteger(change.month)||change.month<1||change.month>options.months)throw Error('Change month must be inside the rehearsal.');if(change.income!==undefined)amount(change.income,'changed monthly income');if(change.billId!==undefined){if(!input.bills.some(b=>b.id===change.billId))throw Error('Choose an existing expense.');amount(change.billAmount,'changed expense');}else if(change.billAmount!==undefined)throw Error('Choose an expense for the changed amount.');}
+ let cash=input.cash,savings=input.savings,goals=input.goals.map(g=>({...g})),incomeTotal=0,expenseTotal=0;const rows=[],completed=Object.fromEntries(goals.filter(g=>g.balance===g.target).map(g=>[g.id,0]));
+ const initial=input.cash+input.savings+goals.reduce((n,g)=>n+g.balance,0);
+ for(let month=1;month<=options.months;month++){
+ const active=change&&month>=change.month,income=active&&change.income!==undefined?change.income:input.income;
+ const bills=input.bills.map(b=>({...b,amount:active&&b.id===change.billId?change.billAmount:b.amount}));
+ const result=plan({...input,cash,savings,goals,bills,income});incomeTotal+=income;expenseTotal+=result.earmarked;
+ cash=result.operating;savings=result.savings;goals=goals.map(g=>{const d=result.decisions.find(d=>d.kind==='goal'&&d.id===g.id);if(d.remaining===0&&completed[g.id]===undefined)completed[g.id]=month;return {...g,balance:d.balance};});
+ const retained=cash+savings+goals.reduce((n,g)=>n+g.balance,0);
+ if(initial+incomeTotal!==retained+expenseTotal)throw Error('Rehearsal conservation failed');
+ const blocked=result.reserveDeficit>0||result.decisions.some(d=>d.status==='unfunded');rows.push({month,income,expenseTotal,retained,blocked,result});
+ // Stop instead of silently erasing unpaid obligations or inventing debt handling.
+ if(blocked)break;
+ }
+ return {type:'eric-budget-rehearsal',version:1,onchain:false,paid:false,requestedMonths:options.months,completed,rows,stopped:rows.at(-1).blocked,initial,incomeTotal,expenseTotal,assumptions:'Monthly income and expenses repeat. Funded expenses leave the simulated budget each month; no real settlement. Goal balances, cash and savings carry forward; savings permission cap resets monthly. Stops at the first reserve or expense shortfall. Changes persist from their selected month. No interest, inflation, fees or debt resolution modeled.'};
+}
+const api={plan,rehearse};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.EricBudget=api;
 })(typeof window==='undefined'?globalThis:window);

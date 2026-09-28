@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.7.1 — Eric budget change comparison
+Release: 0.7.2 — Eric monthly budget rehearsal
 
 ## Update workflow
 
@@ -18,7 +18,7 @@ The Vercel project link stays in `output/vercel-site/.vercel/`; keep it private.
 
 - English landing page, release notes, education and four-question Diren quiz.
 - Rabby read-only access checks and Sepolia mint UI. Mint requires user wallet approval and test ETH; no public-chain transaction was sent during deployment verification.
-- Diren vault simulation, guided experiments and Ece’s NFT-gated Reserve Studio. Eric’s budget tool is a development preview; its updated education and multi-period planning are still pending.
+- Diren vault simulation, guided experiments and Ece’s NFT-gated Reserve Studio. Eric’s budget tool is a development preview; its updated education is still pending; monthly rehearsals are hypothetical and stop at unresolved shortfalls.
 - AI and Latch endpoints run in server-only Python functions when RESONANCE_HOSTED_SERVICES=enabled. The same build flag enables their interface. Missing configuration keeps the public UI disabled. Credentials never enter the public assets.
 - Ece settings can be saved and explicitly loaded for review. Completed-policy comparisons stay in page memory; no rehearsal auto-resumes.
 - Browser saves are scoped to the origin. Localhost saves do not migrate automatically; wallet NFTs remain on Sepolia.
