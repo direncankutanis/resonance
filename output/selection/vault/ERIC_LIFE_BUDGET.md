@@ -1,6 +1,6 @@
 # Eric · Life Budget Studio
 
-Status: development resumed. Phase 1 is a tested calculation foundation, not a released tool. English UI; all amounts fictional Demo RLO. No payments, transactions, provider calls or live Rialo integration.
+Status: development resumed. Single-period UI is released as a development preview. English UI; all amounts fictional Demo RLO. No payments, transactions, provider calls or live Rialo integration.
 
 ## Product promise
 Explain how a user-defined budget reacts when obligations change, while preserving protected cash and making shortfalls explicit. Never present allocation as payment. Never imply that an illustrative plan guarantees affordability.
@@ -31,3 +31,5 @@ D. Multi-period goals/deadlines, saved plans, short education and four-choice qu
 E. Whole-product review across Diren, Ece, Ade, Eric. User study remains pending.
 
 Foundation limits: single period, income supplied by user, due day 1–31 is ordering metadata, priority contributions only, no settlement or recurring schedule. No AI or Latch. Tests verify conservation, shortages, shared top-up limits, completed goals, reserve deficit, invalid input and input immutability.
+
+UI preview: eric.html uses existing character-2 NFT gate, rechecks before calculation, invalidates old reports on input and wallet changes, and offers ordinary / tuition increase / income reduction examples. Example selection resets permissions. No adoption, settlement or save library yet. Tests mock NFT authorization; no public transactions sent.
