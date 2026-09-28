@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.6.5 — Ade Plan Lab learning check
+Release: 0.6.6 — Ade guided experiments
 
 ## Update workflow
 
