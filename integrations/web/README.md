@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.6.6 — Ade guided experiments
+Release: 0.6.7 — Ade comparison explanations
 
 ## Update workflow
 

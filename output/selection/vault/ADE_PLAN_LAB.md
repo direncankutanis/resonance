@@ -27,3 +27,5 @@ Version 0.6.4: separate compound illustration includes contribution vs invested-
 Version 0.6.5 aligns Ade’s short lesson with Plan Lab: four questions, four choices, covering AND, cash reserves vs asset risk, contributions vs gain, and assumptions vs forecasts. New local Ade pass schema is quizVersion 1 / correctAnswers 4. Existing NFTs keep access. Old Ade quiz replays restart at question 1 with a backup; other learning passes remain. The test contract still does not verify lessons.
 
 Version 0.6.6 adds three one-variable guided comparisons (reserve, weekly cap, freshness). Loading replaces comparison inputs only, clears old results, preserves growth and saved records, and requires explicit comparison. The relevant disruption path is selected after calculation. Manual edits/import/library loads remove the guided context. No automatic execution or recommendations.
+
+Version 0.6.7 explains each selected comparison with changed boundaries, B-minus-A accounting, the first differing accept/stop decision and a next experiment. Multiple changes are not assigned single-cause attribution; later state dependence is explicit. No ranking or financial recommendation.
