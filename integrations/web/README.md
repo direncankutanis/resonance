@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.6.3 — Ade disruption scenarios
+Release: 0.6.4 — Ade growth breakdown
 
 ## Update workflow
 
