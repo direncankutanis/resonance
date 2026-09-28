@@ -1,0 +1,7 @@
+(()=>{'use strict';let serial=0;
+function clear(input){const id=input.dataset.errorHint;if(id){document.getElementById(id)?.remove();const remaining=(input.getAttribute('aria-describedby')||'').split(' ').filter(x=>x&&x!==id);if(remaining.length)input.setAttribute('aria-describedby',remaining.join(' '));else input.removeAttribute('aria-describedby');delete input.dataset.errorHint;}input.removeAttribute('aria-invalid');}
+window.resonanceFieldError=(input,message)=>{if(!input)throw Error(message);for(const old of document.querySelectorAll('[data-error-hint]'))clear(old);const hint=document.createElement('span');hint.id='field-error-'+(++serial);hint.className='field-error';hint.textContent=message;input.dataset.errorHint=hint.id;input.setAttribute('aria-invalid','true');input.setAttribute('aria-describedby',[(input.getAttribute('aria-describedby')||''),hint.id].filter(Boolean).join(' '));input.after(hint);for(let parent=input.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;input.focus();throw Error(message);};
+document.addEventListener('input',e=>{if(e.target.matches('input,select'))clear(e.target);});
+window.resonanceClearFieldErrors=()=>{for(const input of document.querySelectorAll('[data-error-hint]'))clear(input);};
+const style=document.createElement('style');style.textContent='[aria-invalid=true]{outline:2px solid #f0b5a9;outline-offset:2px}.field-error{display:block;color:#ffd0bd;font-size:14px;line-height:1.5;margin:7px 0;max-width:100%}';document.head.append(style);
+})();

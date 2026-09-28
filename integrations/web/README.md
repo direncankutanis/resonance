@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.7.5 — Clearer first practice and tool navigation
+Release: 0.7.6 — Actionable budget field feedback
 
 ## Update workflow
 
