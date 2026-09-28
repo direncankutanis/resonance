@@ -17,3 +17,5 @@ No AI inference, Latch enforcement, live Rialo transactions or real trading. Act
 Tests: ade-engine.test.cjs (fee accounting, stale data, bounds, contribution/growth separation); ade-ui.test.cjs (comparison/audits/invalidation/download/mobile); contracts/test/ade-gate.cjs (local-chain NFT grant/revoke, wrong character, read-only requests).
 
 Version 0.6.1 adds conditional whole-order capacity explanations (total, weekly, proposals per event, earliest depletion under qualifying conditions), an explicit stale-data warning, scenario-selectable charts beginning at initial equity, and per-week price/cash/value/decision tables. These capacities are not forecasts.
+
+Version 0.6.2: named analysis library (20 browser-local records) with model ade-v1. Each record contains validated A/B policies, common market parameters and independent compound assumptions. Loading clears prior results and requires explicit recalculation. Shared backup/import validates character/model, preserves existing records and transfers no access or approvals. Corrupt storage remains untouched. Test: ade-library.test.cjs plus shared Diren/Ece library regressions.
