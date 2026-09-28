@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.7.3 — Eric budget lesson and learning pass
+Release: 0.7.4 — Eric saved budget library
 
 ## Update workflow
 
