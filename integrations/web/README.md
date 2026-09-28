@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.5.0 — Simplified first practice
+Release: 0.6.0 — Ade Plan Lab preview
 
 ## Update workflow
 
@@ -34,3 +34,5 @@ Named libraries: up to 20 scenarios per character, stored only in localStorage. 
 Library transfer: versioned character-specific JSON, maximum 128 KB and 20 scenarios total. Validate the whole file, preview names, then add copies with fresh IDs. Imports never overwrite records or load/start a practice. Export includes canonical demo settings and names only. No wallet, NFT, credential or approval transfer. Tests: library-transfer.test.cjs.
 
 First-use layout: guide and templates lead; libraries, custom editors and Ece AI/legacy saves are grouped below. Existing event handlers and approval semantics stay intact. USER_TEST_PLAN.md describes a 3–5 participant study; no human study results are claimed.
+
+Ade Plan Lab: current Ade NFT access, validated saved-plan limits, two-policy comparisons on fictional price paths and a separate compound-growth model. See output/selection/vault/ADE_PLAN_LAB.md for accounting, import mappings and limitations. No live feeds or additional provider calls.
