@@ -33,3 +33,5 @@ E. Whole-product review across Diren, Ece, Ade, Eric. User study remains pending
 Foundation limits: single period, income supplied by user, due day 1–31 is ordering metadata, priority contributions only, no settlement or recurring schedule. No AI or Latch. Tests verify conservation, shortages, shared top-up limits, completed goals, reserve deficit, invalid input and input immutability.
 
 UI preview: eric.html uses existing character-2 NFT gate, rechecks before calculation, invalidates old reports on input and wallet changes, and offers ordinary / tuition increase / income reduction examples. Example selection resets permissions. No adoption, settlement or save library yet. Tests mock NFT authorization; no public transactions sent.
+
+Version 0.7.1: explicitly keep a calculated proposal as a tab-local reference, then compare changed inputs, bucket totals and item-level allocations/status/gaps. IDs preserve identity across edits; additions/removals are identified. Example selection and access revocation clear references. Downloads include both input/result snapshots; no adoption or settlement. Tests: eric-comparison.test.cjs.

@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.7.0 — Eric Life Budget Studio preview
+Release: 0.7.1 — Eric budget change comparison
 
 ## Update workflow
 
