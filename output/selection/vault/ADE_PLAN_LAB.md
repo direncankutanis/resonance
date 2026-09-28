@@ -15,3 +15,5 @@ Reads named libraries in this origin only. Ece imports six validated policy sett
 No AI inference, Latch enforcement, live Rialo transactions or real trading. Actual usability study remains pending per USER_TEST_PLAN.md. Next work should follow user feedback; do not imply forecast accuracy from deterministic test success.
 
 Tests: ade-engine.test.cjs (fee accounting, stale data, bounds, contribution/growth separation); ade-ui.test.cjs (comparison/audits/invalidation/download/mobile); contracts/test/ade-gate.cjs (local-chain NFT grant/revoke, wrong character, read-only requests).
+
+Version 0.6.1 adds conditional whole-order capacity explanations (total, weekly, proposals per event, earliest depletion under qualifying conditions), an explicit stale-data warning, scenario-selectable charts beginning at initial equity, and per-week price/cash/value/decision tables. These capacities are not forecasts.

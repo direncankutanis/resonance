@@ -4,3 +4,5 @@ r=E.run(p,[{id:'a',day:1,orders:3,price:800,age:90}]);assert.equal(r.ending.pnl,
 let g=E.compound({principal:60,reserve:40,monthly:10,rate:0,fee:0,months:12}).at(-1);assert.equal(g.total,220);assert.equal(g.gain,0);assert.equal(g.reserve,40);
 g=E.compound({principal:100,reserve:40,monthly:0,rate:12,fee:0,months:12}).at(-1);assert(Math.abs(g.invested-100*1.01**12)<1e-8);assert.equal(g.reserve,40);
 g=E.compound({principal:100,reserve:40,monthly:0,rate:-12,fee:1,months:12}).at(-1);assert(g.gain<0);assert(g.fees>0);console.log('PASS mark-to-market fee accounting, stale data, incompatible rules, path bounds, contributions vs gain, compounding and losses.');
+
+assert.deepEqual(E.capacity(p,3),{totalOrders:6,weeklyOrders:2,perEvent:2,earliestEvents:3,unusedAboveFloor:0});assert.deepEqual(E.capacity({...p,balance:10500},1),{totalOrders:6,weeklyOrders:2,perEvent:1,earliestEvents:6,unusedAboveFloor:500});assert.throws(()=>E.capacity(p,0));console.log('PASS total/weekly/proposal capacities, whole-order remainder and invalid proposal count.');
