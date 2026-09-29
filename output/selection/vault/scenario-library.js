@@ -54,5 +54,5 @@ window.addEventListener(eventName,()=>{if(!adapter.editable()){readVersion++;pen
 $('library-list').onchange=()=>{const r=records.find(r=>r.id===$('library-list').value);if(r)$('library-name').value=r.name;controls();};
 window.addEventListener(eventName,controls);
 window.addEventListener('storage',e=>{if(e.key===key||e.key===null)refresh($('library-list').value);});
-refresh();
+const requested=new URLSearchParams(location.search).get('plan');refresh(requested);if(requested){panel.open=true;const found=records.find(r=>r.id===requested);if(found){$('library-name').value=found.name;$('library-status').textContent='Saved plan selected. Check its unit, then load explicitly; nothing has started.';}else $('library-status').textContent='This saved plan is no longer available on this browser. Choose another plan.';}
 })();

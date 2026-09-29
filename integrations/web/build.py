@@ -10,7 +10,7 @@ DEST.mkdir(parents=True,exist_ok=True)
 PUBLIC=DEST/'public'
 if PUBLIC.exists(): shutil.rmtree(PUBLIC)
 PUBLIC.mkdir()
-files=['demo-unit.js','resonance-playable-v1.html','nft-artwork.js','diren.jpg','ece.jpg','ade.jpg','eric.jpg','deploy/ethers.umd.min.js','mint/index.html','mint/mint.js','mint/mint-config.js']
+files=['my/index.html','my/dashboard.css','my/dashboard.js','demo-unit.js','resonance-playable-v1.html','nft-artwork.js','diren.jpg','ece.jpg','ade.jpg','eric.jpg','deploy/ethers.umd.min.js','mint/index.html','mint/mint.js','mint/mint-config.js']
 files += ['vault/'+name for name in ['index.html','gate.js','policy.js','progress.js','vault.js','lesson-bridge.js','latch-check.js','ai-guide.js','outcome.js','scenarios.js','entry.js','protection.html','protection.css','protection.js','protection-engine.js','protection-ai.js','journey.js','price-sequence.js','scenario-library.js','experience.js','ade.html','ade.js','ade-engine.js','eric.html','eric.js','eric-engine.js','orientation.js','form-feedback.js']]
 for name in files:
  target=PUBLIC/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(SOURCE/name,target)
@@ -26,7 +26,7 @@ if os.environ.get('RESONANCE_HOSTED_SERVICES') != 'enabled':
  p=PUBLIC/'vault/lesson-bridge.js';s=p.read_text().replace('The AI guide can translate your stated limits into a draft plan.', 'In the local development preview, the AI guide can translate your stated limits into a draft plan.').replace('Live Latch checking is available in the plan form.', 'Live Latch checking is available in the local development preview.');p.write_text(s)
  p=PUBLIC/'vault/scenarios.js';s=p.read_text().replace('Optionally check it with Latch, then confirm.', 'Then confirm to reserve the demo budget.');p.write_text(s)
 for name in ['resonance-playable-v1.html','mint/index.html','vault/index.html']:
- p=PUBLIC/name;s=p.read_text();s=s.replace('<body>', '<body><a href="/" style="display:block;padding:10px 20px;background:#0c161e;color:#cce4d9;font:14px system-ui;text-decoration:none">← Resonance home · Public preview 0.7.8</a>',1)
+ p=PUBLIC/name;s=p.read_text();s=s.replace('<body>', '<body><a href="/" style="display:block;padding:10px 20px;background:#0c161e;color:#cce4d9;font:14px system-ui;text-decoration:none">← Resonance home · Public preview 0.7.9</a>',1)
  p.write_text(s)
 home=Path(__file__).with_name('home.html').read_text()
 if os.environ.get('RESONANCE_HOSTED_SERVICES') != 'enabled':
