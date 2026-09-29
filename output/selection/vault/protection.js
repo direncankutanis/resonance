@@ -3,7 +3,7 @@
   const $=id=>document.getElementById(id), engine=window.EceProtection;
   const fields=['balance','floor','weekly','order','limit','freshness'];
   const money=n=>(n/100).toFixed(2);
-  const SAVE_KEY='resonance.ece-policy.v1', previousRuns=new Map();
+  const SAVE_KEY=window.ResonanceUnit.storageKey('resonance.ece-policy.v1'), previousRuns=new Map();
   let savedPolicy=null, comparison=null;
   let selected=engine.scenarios[0], state=null, draft=null, cursor=0, mode='draft', busy=false, revision=0;
   function values(){
@@ -151,7 +151,7 @@
   $('download-report').onclick=()=>{
     if(!state||mode!=='finished')return;
     const report={type:'ece-local-rehearsal',version:1,onchain:false,latchVerified:false,realFunds:false,scenario:selected.id,events:selected.events,summary:engine.summarize(state),policy:state.policy,result:state,previousPolicyComparison:comparison};
-    const url=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='ece-rehearsal.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    const url=URL.createObjectURL(new Blob([JSON.stringify(window.ResonanceUnit.record(report),null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='ece-rehearsal.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   };
   function checkedPolicy(record){
     if(!record||record.version!==1||!record.policy||typeof record.policy!=='object'||Array.isArray(record.policy)||Object.keys(record.policy).sort().join('|')!==[...fields].sort().join('|'))throw Error('Invalid saved policy');
@@ -166,7 +166,7 @@
   }
   $('save-policy').onclick=()=>{
     if(mode!=='draft'||busy)return;
-    try{const p=values();localStorage.setItem(SAVE_KEY,JSON.stringify({version:1,policy:Object.fromEntries(fields.map(k=>[k,p[k]]))}));savedPolicy=p;$('saved-policy-status').textContent='Current settings saved on this browser. Saving does not start or approve a rehearsal.';$('saved-policy-summary').textContent=sentence(p);controls();}
+    try{const p=values();localStorage.setItem(SAVE_KEY,JSON.stringify({version:1,demoUnit:window.ResonanceUnit.get(),policy:Object.fromEntries(fields.map(k=>[k,p[k]]))}));savedPolicy=p;$('saved-policy-status').textContent='Current settings saved on this browser. Saving does not start or approve a rehearsal.';$('saved-policy-summary').textContent=sentence(p);controls();}
     catch{$('saved-policy-status').textContent='Could not save these settings. Check your values and browser storage. Your current form remains available.';}
   };
   $('load-policy').onclick=()=>{
@@ -202,7 +202,7 @@
     previousRuns.set(selected.id,state);
   }
   let imported=null;
-  try{const p=JSON.parse(sessionStorage.getItem('resonance.diren-plan.v1')||'null');if(p?.version===1&&Number.isSafeInteger(p.budget)&&p.budget>=100&&p.budget<=10000&&Number.isSafeInteger(p.limit)&&p.limit>=100&&p.limit<=20000)imported=p;}catch{}
+  try{const p=JSON.parse(sessionStorage.getItem('resonance.diren-plan.v1')||'null');if(p)window.ResonanceUnit.require(p.demoUnit);if(p?.version===1&&Number.isSafeInteger(p.budget)&&p.budget>=100&&p.budget<=10000&&Number.isSafeInteger(p.limit)&&p.limit>=100&&p.limit<=20000)imported=p;}catch{}
   if(imported){$('import-diren').hidden=false;$('import-status').textContent='A reviewed Diren plan is available in this browser tab. Only its order amount and price limit can be copied.';}
   $('import-diren').onclick=()=>{if(mode!=='draft'||!imported)return;revision++;$('order').value=money(imported.budget);$('limit').value=money(imported.limit);preview();$('import-status').textContent='Diren’s amount and price copied. Set Ece’s weekly cap and reserve yourself. Diren’s expiry and execution state were not imported.';};
   function validateScenario(data){

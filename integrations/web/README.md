@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.7.7 — Four-character home and clearer tool discovery
+Release: 0.7.8 — Four-character home and clearer tool discovery
 
 ## Update workflow
 
@@ -36,3 +36,7 @@ Library transfer: versioned character-specific JSON, maximum 128 KB and 20 scena
 First-use layout: guide and templates lead; libraries, custom editors and Ece AI/legacy saves are grouped below. Existing event handlers and approval semantics stay intact. USER_TEST_PLAN.md describes a 3–5 participant study; no human study results are claimed.
 
 Ade Plan Lab: current Ade NFT access, validated saved-plan limits, two-policy comparisons on fictional price paths and a separate compound-growth model. See output/selection/vault/ADE_PLAN_LAB.md for accounting, import mappings and limitations. No live feeds or additional provider calls.
+
+### Demo budget units (0.7.8)
+Shared `demo-unit.js` provides Demo RLO (legacy default) and Demo rloUSDT. The latter is a fictional denomination, not a deployed token, peg or exchange rate. Changing it requires confirmation and reloads the current page, clearing unsaved simulation state. Numeric examples are unchanged; no FX is applied. Other open tabs retain their session unit until reload.
+Scenario records store `demoUnit`; legacy records mean RLO. Cross-unit loads and plan transfers are rejected. Ece's older single-policy storage is separated by denomination. Downloaded reports include the unit and false real-funds flag. AI uses the existing numerical demo schema (label normalization only); Latch checks amounts, not currencies, and its record explicitly states that limitation. NFT contracts, wallet networks and Sepolia ETH gas are unaffected.

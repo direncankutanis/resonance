@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict'),{rehearse}=require('./eric-engine.js');
+const input={cash:0,income:10000,reserve:0,savings:0,topUp:{enabled:false,cap:0,billIds:[]},bills:[],goals:[{id:'g',target:30000,balance:0,cap:10000,priority:1,deadline:3}]};
+assert.equal(rehearse(input,{months:6}).deadlines[0].gap,0);
+input.goals[0].deadline=2;
+let d=rehearse(input,{months:6}).deadlines[0];assert.equal(d.gap,10000);assert.equal(d.requiredAverage,15000);assert.equal(d.capSufficient,false);
+assert.equal(rehearse(input,{months:1}).deadlines[0].gap,null);
+input.bills=[{id:'b',amount:20000,priority:1,day:1}];assert.equal(rehearse(input,{months:6}).deadlines[0].status,'unresolved');
+input.goals[0].balance=30000;assert.equal(rehearse(input,{months:6}).deadlines[0].status,'reached');
+input.goals[0].deadline=25;assert.throws(()=>rehearse(input,{months:6}));
+console.log('PASS deadline snapshots, ceiling limits, horizon, stopped paths, complete goals and validation.');

@@ -10,7 +10,7 @@ function plan(input){
  if(!topUp||typeof topUp.enabled!=='boolean'||!Array.isArray(topUp.billIds))throw Error('Explicit savings permission required');amount(topUp.cap,'top-up cap');
  const bills=list(input.bills,'bills'),goals=list(input.goals,'goals');
  for(const b of bills){amount(b.amount,'bill amount');if(!Number.isInteger(b.day)||b.day<1||b.day>31)throw Error('Invalid due day');}
- for(const g of goals){amount(g.target,'goal target');amount(g.balance,'goal balance');amount(g.cap,'goal cap');if(g.balance>g.target)throw Error('Goal balance exceeds target');}
+ for(const g of goals){if(g.deadline!==undefined&&(!Number.isInteger(g.deadline)||g.deadline<1||g.deadline>24))throw Error('Goal deadline must be 1–24 months');amount(g.target,'goal target');amount(g.balance,'goal balance');amount(g.cap,'goal cap');if(g.balance>g.target)throw Error('Goal balance exceeds target');}
  if(new Set(topUp.billIds).size!==topUp.billIds.length||topUp.billIds.some(id=>!bills.some(b=>b.id===id)))throw Error('Unknown or duplicate savings permission');
  const order=(a,b)=>a.priority-b.priority||(a.day||0)-(b.day||0);
  let operating=cash+income,flexible=savings,used=0,earmarked=0,goalAdded=0;
@@ -49,7 +49,8 @@ function rehearse(input,options){
  // Stop instead of silently erasing unpaid obligations or inventing debt handling.
  if(blocked)break;
  }
- return {type:'eric-budget-rehearsal',version:1,onchain:false,paid:false,requestedMonths:options.months,completed,rows,stopped:rows.at(-1).blocked,initial,incomeTotal,expenseTotal,assumptions:'Monthly income and expenses repeat. Funded expenses leave the simulated budget each month; no real settlement. Goal balances, cash and savings carry forward; savings permission cap resets monthly. Stops at the first reserve or expense shortfall. Changes persist from their selected month. No interest, inflation, fees or debt resolution modeled.'};
+ const deadlines=input.goals.filter(g=>g.deadline!==undefined).map(g=>{const row=rows.find(r=>r.month===g.deadline),done=completed[g.id]!==undefined&&completed[g.id]<=g.deadline;const balance=done?g.target:row?row.result.decisions.find(d=>d.id===g.id&&d.kind==='goal').balance:null;return {id:g.id,month:g.deadline,status:done?'reached':row?'shortfall':'unresolved',balance,gap:balance===null?null:g.target-balance,requiredAverage:Math.ceil((g.target-g.balance)/g.deadline),capSufficient:g.cap*g.deadline>=g.target-g.balance};});
+ return {deadlines,type:'eric-budget-rehearsal',version:1,onchain:false,paid:false,requestedMonths:options.months,completed,rows,stopped:rows.at(-1).blocked,initial,incomeTotal,expenseTotal,assumptions:'Monthly income and expenses repeat. Funded expenses leave the simulated budget each month; no real settlement. Goal balances, cash and savings carry forward; savings permission cap resets monthly. Stops at the first reserve or expense shortfall. Changes persist from their selected month. No interest, inflation, fees or debt resolution modeled.'};
 }
 const api={plan,rehearse};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.EricBudget=api;
 })(typeof window==='undefined'?globalThis:window);

@@ -11,7 +11,7 @@
   new MutationObserver(()=>{if($('workspace').hidden){invalidate();$('ece-ai-status').textContent='Wallet access changed. Check ownership and draft again.';}buttons();}).observe($('workspace'),{attributes:true,attributeFilter:['hidden']});
   for(const id of fields)$(id).addEventListener('input',()=>{invalidate();$('ece-ai-status').textContent='Your manual values changed. Generate a new draft if needed.';});
   $('ece-intent').addEventListener('input',()=>{invalidate();$('ece-ai-status').textContent='Request changed. Draft again when ready.';});
-  $('ece-example').onclick=()=>{if(!editable())return;invalidate();$('ece-intent').value=`Start with ${$('balance').value} Demo RLO. Keep ${$('floor').value} untouched. Spend at most ${$('weekly').value} per demo week, in ${$('order').value} RLO orders including fees. Maximum price ${$('limit').value} RLO per asset. Reject quotes older than ${$('freshness').value} minutes.`;$('ece-ai-status').textContent='Current values copied into your request. Edit them before asking Ece; nothing has been sent.';};
+  $('ece-example').onclick=()=>{if(!editable())return;invalidate();$('ece-intent').value=window.ResonanceUnit.text(`Start with ${$('balance').value} Demo RLO. Keep ${$('floor').value} untouched. Spend at most ${$('weekly').value} per demo week, in ${$('order').value} RLO orders including fees. Maximum price ${$('limit').value} RLO per asset. Reject quotes older than ${$('freshness').value} minutes.`);$('ece-ai-status').textContent='Current values copied into your request. Edit them before asking Ece; nothing has been sent.';};
   $('ece-draft').onclick=async()=>{
     if(!editable()||pending)return;
     const prompt=$('ece-intent').value.trim();
@@ -21,7 +21,7 @@
     const controller=new AbortController();pending=controller;buttons();const timer=setTimeout(()=>controller.abort(),35000);
     $('ece-ai-status').textContent='Ece is translating your stated boundaries…';
     try{
-      const response=await fetch('/api/ai/protection',{method:'POST',headers:{'Content-Type':'application/json','X-Resonance-Request':'proposal-check'},body:JSON.stringify({prompt}),signal:controller.signal});
+      const response=await fetch('/api/ai/protection',{method:'POST',headers:{'Content-Type':'application/json','X-Resonance-Request':'proposal-check'},body:JSON.stringify({prompt:window.ResonanceUnit.prompt(prompt)}),signal:controller.signal});
       const data=await response.json();
       if(current!==version||snapshot!==fingerprint()||!editable())return;
       if(!response.ok){$('ece-ai-status').textContent=({clarify:'Please state all six limits clearly: balance, reserve, weekly cap, order cost, maximum price and quote age. Nothing changed.',shared_limit:'The shared free AI limit has been reached. Try later or use the manual fields.',quota:'The provider’s free quota is unavailable. Use the manual fields; no paid fallback.',not_configured:'AI is not enabled in this preview. Use the manual fields.'}[data.code]||'No valid draft was returned. Nothing changed; try later or use the manual fields.');return;}
