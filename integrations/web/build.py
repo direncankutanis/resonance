@@ -26,7 +26,7 @@ if os.environ.get('RESONANCE_HOSTED_SERVICES') != 'enabled':
  p=PUBLIC/'vault/lesson-bridge.js';s=p.read_text().replace('The AI guide can translate your stated limits into a draft plan.', 'In the local development preview, the AI guide can translate your stated limits into a draft plan.').replace('Live Latch checking is available in the plan form.', 'Live Latch checking is available in the local development preview.');p.write_text(s)
  p=PUBLIC/'vault/scenarios.js';s=p.read_text().replace('Optionally check it with Latch, then confirm.', 'Then confirm to reserve the demo budget.');p.write_text(s)
 for name in ['resonance-playable-v1.html','mint/index.html','vault/index.html']:
- p=PUBLIC/name;s=p.read_text();s=s.replace('<body>', '<body><a href="/" style="display:block;padding:10px 20px;background:#0c161e;color:#cce4d9;font:14px system-ui;text-decoration:none">← Resonance home · Public preview 0.8.3</a>',1)
+ p=PUBLIC/name;s=p.read_text();s=s.replace('<body>', '<body><a href="/" style="display:block;padding:10px 20px;background:#0c161e;color:#cce4d9;font:14px system-ui;text-decoration:none">← Resonance home · Public preview 0.8.4</a>',1)
  p.write_text(s)
 home=Path(__file__).with_name('home.html').read_text()
 if os.environ.get('RESONANCE_HOSTED_SERVICES') != 'enabled':

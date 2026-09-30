@@ -70,5 +70,61 @@
   [
     "^This rule: ([\\d.]+) Demo RLO spent · ([\\d.]+) returned · ([\\d.]+) demo units acquired\\.$",
     "Bu kural: $1 Demo RLO harcandı · $2 geri döndü · $3 demo varlık alındı."
+  ],
+  [
+    "^Reserve (.+?) RLO\\. Buy only at or below (.+?) per unit, before step (.+?)\\. The cap includes a 0\\.10 Demo RLO simulated fee\\. Unspent funds return on cancellation, failure or expiry\\.$",
+    "$1 RLO ayır. Birim başına en fazla $2 fiyatından, $3. adımdan önce al. Sınıra 0.10 Demo RLO örnek ücret dahildir. Harcanmayan tutar iptal, hata veya süre sonunda geri döner."
+  ],
+  [
+    "^Step (.+?): condition false at (.+?)\\.$",
+    "$1. adım: $2 fiyatında koşul sağlanmadı."
+  ],
+  [
+    "^Step (.+?): condition true at (.+?)\\. Purchase queued\\.$",
+    "$1. adım: $2 fiyatında koşul sağlandı. Alım sıraya alındı."
+  ],
+  [
+    "^Step (.+?): stale data; no condition evaluation or purchase\\.$",
+    "$1. adım: veri eski; koşul değerlendirilmedi ve alım yapılmadı."
+  ],
+  [
+    "^Registered: price ≤ (.+?)\\. Reserved (.+?) RLO\\.$",
+    "Kaydedildi: fiyat ≤ $1. $2 RLO ayrıldı."
+  ],
+  [
+    "^Bought (.+?) demo units at (.+?); total (.+?) including 0\\.10 Demo RLO fee\\.$",
+    "$2 fiyatından $1 demo varlık alındı; 0.10 Demo RLO ücret dahil toplam $3."
+  ],
+  [
+    "^Day (.+?) · Demo week (.+?) · (.+?) proposed orders$",
+    "Gün $1 · Demo hafta $2 · $3 emir önerisi"
+  ],
+  [
+    "^After this decision: (.+?) RLO left · (.+?) spent this week\\. Comparison: (.+?)\\.$",
+    "Bu karardan sonra: $1 RLO kaldı · bu hafta $2 harcandı. Karşılaştırma: $3."
+  ],
+  [
+    "^(.+?) proposed orders: (.+?) executed and (.+?) stopped\\. Remaining balance: (.+?) Demo RLO\\.$",
+    "$1 emir önerisi: $2 yürütüldü, $3 durduruldu. Kalan bakiye: $4 Demo RLO."
+  ],
+  [
+    "^Both plans are structurally valid, not certified safe\\. Starting spendable capacity: A (.+?) orders; B (.+?) orders\\. Actual purchases also depend on the prices, data and weekly limits\\. There are no additional deposits in these scenarios\\.$",
+    "İki planın yapısı da geçerli; bu bir güvenlik onayı değildir. Başlangıç harcama kapasitesi: A $1 emir; B $2 emir. Alımlar fiyat, veri ve haftalık sınırlara da bağlıdır. Bu senaryolarda ek para yatırılmaz."
+  ],
+  [
+    "^(.+?) whole orders fit above your reserve\\. Weekly cap allows (.+?); with (.+?) proposals per event, at most (.+?) can execute in an event with a fresh weekly allowance\\. In a reference schedule with one event per week and every check passing, capacity is used in (.+?) weekly events\\. (.+?) RLO above the reserve cannot fund another full order\\.$",
+    "Rezervin üzerinde $1 tam emir için kaynak var. Haftalık sınır $2 emre izin verir; olay başına $3 öneriyle, haftalık bütçe yeniyken en fazla $4 emir yürütülebilir. Haftada tek olay ve tüm kontrollerin geçmesi varsayımıyla kapasite $5 haftalık olayda kullanılır. Rezerv üzerindeki $6 RLO başka bir tam emri karşılayamaz."
+  ],
+  [
+    "^(.+?) · Plan (.+?): price (.+?), stale data (.+?), weekly cap (.+?), reserve (.+?) failed checks\\. One order may fail several checks\\.$",
+    "$1 · Plan $2: başarısız kontroller — fiyat $3, eski veri $4, haftalık sınır $5, rezerv $6. Bir emir birden fazla kontrolden kalabilir."
+  ],
+  [
+    "^Income (.+?); expenses leaving demo budget (.+?); cash (.+?); flexible savings (.+?); new goal allocations (.+?) RLO\\.$",
+    "Gelir $1; demo bütçesinden çıkan giderler $2; nakit $3; esnek birikim $4; hedeflere yeni ayrılan $5 RLO."
+  ],
+  [
+    "^Price: (.+?) ≤ (.+?)\\. Quote age: (.+?) ≤ (.+?) minutes\\. Weekly total if accepted: (.+?) \\+ (.+?) = (.+?) ≤ (.+?)\\. Balance if accepted: (.+?) − (.+?) = (.+?) ≥ (.+?) reserve\\. All four comparisons must be true\\. The order cost already includes the fee\\.$",
+    "Fiyat: $1 ≤ $2. Veri yaşı: $3 ≤ $4 dakika. Kabul edilirse haftalık toplam: $5 + $6 = $7 ≤ $8. Kabul edilirse bakiye: $9 − $10 = $11 ≥ $12 rezerv. Dört karşılaştırma da doğru olmalıdır. Emir maliyetine ücret zaten dahildir."
   ]
 ]
