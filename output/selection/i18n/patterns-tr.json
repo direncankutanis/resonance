@@ -66,5 +66,9 @@
   [
     "^(Diren|Ece|Eric|Ade)’s saved library could not be read\\.$",
     "$1 karakterinin kayıtlı kütüphanesi okunamadı."
+  ],
+  [
+    "^This rule: ([\\d.]+) Demo RLO spent · ([\\d.]+) returned · ([\\d.]+) demo units acquired\\.$",
+    "Bu kural: $1 Demo RLO harcandı · $2 geri döndü · $3 demo varlık alındı."
   ]
 ]

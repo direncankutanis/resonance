@@ -1452,5 +1452,19 @@
   "Review the policy below, confirm it, then use Advance next day for each event.": "Aşağıdaki kuralları incele, onayla, ardından her olay için sonraki günü ilerlet.",
   "Select Review budget proposal below. Read the expense allocations and remaining cash.": "Aşağıdan bütçe önerisini incele. Giderlere ayrılan tutarları ve kalan nakdi kontrol et.",
   "Select Check plans & compare scenarios below. Read cash and asset value separately.": "Aşağıdan planları kontrol edip senaryoları karşılaştır. Nakit ve varlık değerini ayrı incele.",
-  "Finish or cancel your current rule before preparing a new example.": "Yeni örnek hazırlamadan önce mevcut kuralı tamamla veya iptal et."
+  "Finish or cancel your current rule before preparing a new example.": "Yeni örnek hazırlamadan önce mevcut kuralı tamamla veya iptal et.",
+  "Wallet check temporarily unavailable. Your demo is preserved. Retry the same action; no step or funds moved.": "Cüzdan kontrolüne geçici olarak ulaşılamıyor. Denemen korundu. Aynı işlemi tekrar dene; adım ilerlemedi ve tutar hareket etmedi.",
+  "Your rule expired without buying.": "Kuralın alım yapmadan sona erdi.",
+  "Your rule executed once.": "Kuralın bir kez yürütüldü.",
+  "Your limits stopped the purchase.": "Belirlediğin sınırlar alımı durdurdu.",
+  "Your rule was cancelled.": "Kuralın iptal edildi.",
+  "A condition needs to be met early enough for execution. Waiting, including waiting for fresh data, does not extend the deadline.": "Koşul, yürütmeye zaman kalacak kadar erken sağlanmalıdır. Güncel veri beklemek dahil hiçbir bekleme sürenin sonunu uzatmaz.",
+  "A trigger is not a guarantee of execution. The price and available funds must still satisfy the rule when the action runs.": "Tetiklenmek yürütmeyi garanti etmez. İşlem çalışırken fiyat ve kullanılabilir bakiye hâlâ kurala uymalıdır.",
+  "Cancelling before execution returns the reserved budget. Registering a rule and spending its funds are different steps.": "Yürütmeden önce iptal etmek ayrılan bütçeyi geri verir. Kuralı kaydetmek ve bütçeyi harcamak farklı aşamalardır.",
+  "At the academy, a shield threshold triggered a reserve transfer. Here, a price threshold queued a purchase; the next step checked it again before spending.": "Akademide kalkan eşiği rezerv aktarımını tetikledi. Burada fiyat eşiği alımı sıraya aldı; sonraki adım harcamadan önce koşulu tekrar kontrol etti.",
+  "Next experiment: make the price qualify earlier in the sequence. Keep the same deadline and observe whether there is still a step left for execution.": "Sonraki deneme: fiyatı dizinin daha erken bir adımında koşula uygun hâle getir. Süre sınırını değiştirmeden yürütmeye bir adım kalıp kalmadığını gözlemle.",
+  "Next experiment: replay with a price that stays within the same limit through execution. Keep the budget unchanged so you can see what the price change did.": "Sonraki deneme: yürütme boyunca sınır içinde kalan bir fiyatla tekrar dene. Fiyat değişiminin etkisini görmek için bütçeyi aynı tut.",
+  "Next experiment: use the Price reversal template (limit 8, prices 8 then 9). The queued attempt should stop at execution. Compare the outcome, not just the units bought.": "Sonraki deneme: fiyatın tersine döndüğü şablonu kullan (sınır 8; önce 8, sonra 9). Sıradaki alım yürütme aşamasında durmalıdır. Yalnızca alınan miktarı değil, sonucu da karşılaştır.",
+  "Next experiment: review a fresh rule and decide whether to let it reach its condition. Cancellation returned only the reserved amount; it did not create new funds.": "Sonraki deneme: yeni bir kuralı incele ve koşuluna ulaşmasını bekleyip beklemeyeceğine karar ver. İptal yalnızca ayrılan tutarı geri verdi; yeni kaynak yaratmadı.",
+  "Try the guided purchase": "Rehberli alımı dene"
 }
