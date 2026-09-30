@@ -1,0 +1,70 @@
+[
+  [
+    "^Reserve ([\\d.]+) Demo RLO: ([\\d.]+) for the asset \\+ ([\\d.]+) Demo RLO execution fee\\. Available after reservation: ([\\d.]+)\\. Nothing moves until you confirm\\.$",
+    "$1 Demo RLO ayır: varlığa $2, yürütme ücretine $3 Demo RLO. Ayırdıktan sonra kullanılabilir: $4. Onaylamadan hiçbir tutar hareket etmez."
+  ],
+  [
+    "^Total accounted for: ([\\d.]+) RLO before = ([\\d.]+) RLO after allocation\\. The cash floor is inside operating cash, not an additional balance\\.$",
+    "Hesaba katılan toplam: dağılım öncesi $1 RLO = sonrası $2 RLO. Nakit tabanı kullanım nakdinin içindedir; ek bakiye değildir."
+  ],
+  [
+    "^Keep ([\\d.]+) Demo RLO untouched\\. Spend at most ([\\d.]+) per demo week, in ([\\d.]+) RLO orders including fees\\. Buy only at ([\\d.]+) or below, using quotes no older than (\\d+) minutes\\.$",
+    "$1 Demo RLO’ya dokunma. Demo haftada en fazla $2; ücret dahil emir başına $3 RLO harca. Yalnızca $4 veya altından, en fazla $5 dakikalık veriyle al."
+  ],
+  [
+    "^Next: day (\\d+) · (\\d+) proposed orders · price ([\\d.]+) RLO · quote age (\\d+) min\\.$",
+    "Sırada: gün $1 · $2 emir önerisi · fiyat $3 RLO · veri yaşı $4 dk."
+  ],
+  [
+    "^Day (\\d+) complete\\. Each order used the updated shared balance and budget\\.$",
+    "$1. gün tamamlandı. Her emir güncel ortak bakiye ve bütçeyi kullandı."
+  ],
+  [
+    "^(\\d+) orders stopped\\. ([\\d.]+) Demo RLO not spent compared with the unprotected run\\. You bought ([\\d.]+) demo assets vs ([\\d.]+) without Ece\\. Fees paid with Ece: ([\\d.]+) RLO\\. This is a policy comparison, not a profit estimate\\.$",
+    "$1 emir durduruldu. Korumasız denemeye göre $2 Demo RLO harcanmadı. Ece ile $3, Ece olmadan $4 demo varlık alındı. Ece ile ödenen ücret: $5 RLO. Bu politika karşılaştırmasıdır; kâr tahmini değildir."
+  ],
+  [
+    "^Plan B minus Plan A at the end: cash ([+\\d.−-]+) RLO; asset value ([+\\d.−-]+) RLO; total value ([+\\d.−-]+) RLO\\. Accepted orders: A (\\d+), B (\\d+)\\. Fees already reduce asset value; do not subtract them again\\.$",
+    "Bitişte Plan B − Plan A: nakit $1 RLO; varlık değeri $2 RLO; toplam değer $3 RLO. Kabul edilen emirler: A $4, B $5. Ücretler varlık değerini zaten azaltır; tekrar çıkarma."
+  ],
+  [
+    "^Under these assumptions only: invested value ([\\d.]+) RLO; contributions ([\\d.]+) RLO; modeled gain/loss ([-\\d.]+) RLO; fees deducted ([\\d.]+) RLO\\. Untouched reserve ([\\d.]+) RLO; combined total ([\\d.]+) RLO\\. This is separate from your trading scenario and is not a forecast\\.$",
+    "Yalnızca bu varsayımlarla: yatırım değeri $1 RLO; katkılar $2 RLO; hesaplanan kazanç/kayıp $3 RLO; düşülen ücretler $4 RLO. Korunan rezerv $5 RLO; birleşik toplam $6 RLO. Alım senaryosundan ayrıdır; tahmin değildir."
+  ],
+  [
+    "^No (Diren|Ece|Eric|Ade) NFT currently held\\. This tool requires its matching character pass\\.$",
+    "Cüzdanda şu anda $1 NFT’si yok. Araç, ilgili karakter NFT’sini gerektirir."
+  ],
+  [
+    "^([\\d.]+) RLO allocated\\. From savings: ([\\d.]+) RLO\\. Funding gap at this step: ([\\d.]+) RLO\\. (.*)$",
+    "$1 RLO ayrıldı. Birikimden kullanılan: $2 RLO. Bu adımdaki açık: $3 RLO. $4"
+  ],
+  [
+    "^([\\d.]+) RLO allocated\\. Remaining target: ([\\d.]+) RLO\\. (.*)$",
+    "$1 RLO ayrıldı. Kalan hedef: $2 RLO. $3"
+  ],
+  [
+    "^Open (.*) →$",
+    "$1 aç →"
+  ],
+  [
+    "^Use a whole number from 1 to (\\d+)\\.$",
+    "1 ile $1 arasında tam sayı kullan."
+  ],
+  [
+    "^Start (Diren|Ece|Eric|Ade)’s short lesson →$",
+    "$1 ile kısa derse başla →"
+  ],
+  [
+    "^Continue as (.+) →$",
+    "$1 olarak devam et →"
+  ],
+  [
+    "^Review (Diren|Ece|Eric|Ade) mint →$",
+    "$1 mint işlemini incele →"
+  ],
+  [
+    "^(Diren|Ece|Eric|Ade)’s saved library could not be read\\.$",
+    "$1 karakterinin kayıtlı kütüphanesi okunamadı."
+  ]
+]

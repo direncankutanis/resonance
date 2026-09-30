@@ -12,6 +12,7 @@ select.onchange=()=>{const next=select.value;if(next===unit)return;if(!confirm('
 // Render authored denomination labels, including later simulation output. Never touch scripts or entered values.
 const excluded=n=>n.parentElement?.closest('#demo-unit-control,script,style,textarea,input,[data-unit-fixed]');
 function render(root){if(root.nodeType===3){if(!excluded(root)&&root.data.includes('RLO'))root.data=text(root.data);return;}if(root.nodeType!==1||root.closest('#demo-unit-control,script,style,textarea,input,[data-unit-fixed]'))return;const walk=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);while(walk.nextNode())render(walk.currentNode);for(const e of root.querySelectorAll('[placeholder],[aria-label]')){if(e.closest('#demo-unit-control,[data-unit-fixed]'))continue;for(const attr of ['placeholder','aria-label'])if(e.hasAttribute(attr))e.setAttribute(attr,text(e.getAttribute(attr)));}}
+if(window.ResonanceI18n){window.ResonanceI18n.refresh();return;}
 if(unit!=='RLO'){render(document.body);new MutationObserver(changes=>{for(const c of changes){if(c.type==='characterData')render(c.target);else for(const n of c.addedNodes)render(n);}}).observe(document.body,{childList:true,subtree:true,characterData:true});}
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount,{once:true});else mount();
