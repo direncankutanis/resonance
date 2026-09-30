@@ -1417,5 +1417,17 @@
   "This lesson runs in your browser, not on Rialo. Energy and blocks are simulated. Most training rules run once. Queued actions execute in a later simulated step so each stage is visible. These are teaching choices, not universal Rialo protocol settings.": "Bu ders Rialo üzerinde değil, tarayıcında çalışır. Enerji ve bloklar simüledir. Eğitim kurallarının çoğu bir kez çalışır. Her aşama görülebilsin diye sıraya alınan işlemler sonraki bir simülasyon adımında yürütülür. Bunlar eğitim tercihidir; Rialo protokolünün genel ayarları değildir.",
   "Four characters. Four short lessons. Learn a rule, then explore its matching tool.": "Dört karakter. Dört kısa ders. Bir kural öğren, ardından ilgili aracı keşfet.",
   "Each character teaches a different concept and unlocks a matching tool through their NFT.": "Her karakter farklı bir kavram öğretir; karakterin NFT’si ilgili araca erişim sağlar.",
-  "Switch between English and Turkish without losing your lesson, inputs or saved plans.": "Dersini, girdiğin değerleri veya kayıtlı planlarını kaybetmeden İngilizce ve Türkçe arasında geçiş yap."
+  "Switch between English and Turkish without losing your lesson, inputs or saved plans.": "Dersini, girdiğin değerleri veya kayıtlı planlarını kaybetmeden İngilizce ve Türkçe arasında geçiş yap.",
+  "What you will learn": "Ne öğreneceksin?",
+  "Your mission": "Görevin",
+  "Real-world connection": "Gerçek hayattaki karşılığı",
+  "This is a learning simulation. No real funds move during the lesson.": "Bu bir eğitim simülasyonudur. Ders sırasında gerçek para hareketi olmaz.",
+  "I have read this and I am ready.": "Okudum, başlamaya hazırım.",
+  "Start lesson →": "Derse başla →",
+  "Return to lesson": "Derse dön",
+  "Lesson information": "Ders bilgisi",
+  "A threshold makes an action eligible. Registration, triggering and execution are separate steps.": "Bir eşik, işlemi yürütülmeye uygun hâle getirir. Kayıt, tetiklenme ve yürütme ayrı aşamalardır.",
+  "Combine a danger threshold with a protected reserve. A second request must respect the remaining budget.": "Tehlike eşiğini korunacak rezervle birleştir. İkinci bir istek de kalan bütçeye uymalıdır.",
+  "Fund essential needs first, protect a reserve, then consider optional goals. A priority does not create extra money.": "Önce temel ihtiyaçlara kaynak ayır, rezervi koru, sonra isteğe bağlı hedefleri değerlendir. Öncelik vermek ek para yaratmaz.",
+  "Check multiple conditions together. An acceptable price alone is not enough when budget or reserve limits fail.": "Birden fazla koşulu birlikte kontrol et. Bütçe veya rezerv sınırları aşılmışsa uygun fiyat tek başına yeterli değildir."
 }
