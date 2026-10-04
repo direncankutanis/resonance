@@ -1697,5 +1697,8 @@
   "Plan your Web3 commitments before spending.": "Harcamadan önce Web3 yükümlülüklerini planla.",
   "Prepare service renewals, protect operating reserves and allocate gas and protocol budgets.": "Hizmet yenilemelerini hazırla, kullanım rezervini koru, gas ve protokol bütçelerine kaynak ayır.",
   "RPC subscription rose by 200 RLO. Review first without savings; then explicitly permit RPC subscription and enable a capped fallback to compare.": "RPC aboneliği 200 RLO arttı. Önce birikim kullanmadan incele; sonra karşılaştırmak için RPC aboneliğine açık izin vererek sınırlı birikim desteğini aç.",
-  "These are fictional Web3 budget examples, not integrations with a payment provider or lending protocol. Gas is a planning allowance, not a live network fee estimate. Due days set allocation priority; they do not schedule onchain payments.": "Bunlar örnek Web3 bütçeleridir; ödeme sağlayıcısı veya borç protokolü entegrasyonu değildir. Gas tutarı planlama payıdır, canlı ağ ücreti tahmini değildir. Vade günleri kaynak ayırma önceliğini belirler; zincir üstü ödeme zamanlamaz."
+  "These are fictional Web3 budget examples, not integrations with a payment provider or lending protocol. Gas is a planning allowance, not a live network fee estimate. Due days set allocation priority; they do not schedule onchain payments.": "Bunlar örnek Web3 bütçeleridir; ödeme sağlayıcısı veya borç protokolü entegrasyonu değildir. Gas tutarı planlama payıdır, canlı ağ ücreti tahmini değildir. Vade günleri kaynak ayırma önceliğini belirler; zincir üstü ödeme zamanlamaz.",
+  "Your conditional purchase": "Koşullu alımın",
+  "Prepare → Review → Reserve → Observe": "Hazırla → İncele → Bütçe ayır → Sonucu izle",
+  "More examples, AI and saved plans": "Diğer örnekler, AI ve kayıtlı planlar"
 }
