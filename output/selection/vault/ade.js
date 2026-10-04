@@ -36,6 +36,7 @@ function inspectPath(){
 function explainComparison(selected){
  const [a,b]=selected.map(r=>r.run),box=$('ade-explanation');box.replaceChildren();
  const paragraph=text=>{const p=document.createElement('p');p.textContent=text;box.append(p);};
+ paragraph('Plan A is your first set of rules; Plan B is the alternative. Both face the same prices and requests. A difference in total value includes the modeled value of unsold assets, not realized profit.');
  const changed=keys.filter(k=>a.policy[k]!==b.policy[k]);
  paragraph(changed.length?'Changed boundaries: '+changed.map(k=>labels[keys.indexOf(k)]+': A '+(k==='freshness'?a.policy[k]+' min':money(a.policy[k])+' RLO')+', B '+(k==='freshness'?b.policy[k]+' min':money(b.policy[k])+' RLO')).join('; ')+'.':'Both plans have identical boundaries, so this deterministic test produces identical outcomes.');
  const signed=n=>(n>0?'+':'')+money(n);

@@ -51,7 +51,7 @@
     revision++;selected=s;state=null;draft=null;cursor=0;mode='draft';
     for(const id of fields)$(id).value=id==='freshness'?s.policy[id]:money(s.policy[id]);
     $('scenario-description').textContent=s.description;$('run-status').textContent='Review your protection to begin.';
-    $('result-summary').hidden=true;$('download-report').hidden=true;$('decision-trail').replaceChildren();
+    $('result-summary').hidden=true;$('download-report').hidden=true;$('ece-impact')?.remove();$('decision-trail').replaceChildren();
     const p=document.createElement('p');p.textContent='No orders evaluated yet.';$('decision-trail').append(p);
     chart(engine.create(s.policy));preview();nextEvent();controls();
   }
@@ -116,7 +116,7 @@
     if(mode!=='review'||!draft)return;
     state=engine.create(draft);draft=null;cursor=0;mode='active';
     comparison=null;$('policy-comparison').hidden=true;$('decision-summary').hidden=true;
-    $('decision-trail').replaceChildren();$('result-summary').hidden=true;$('download-report').hidden=true;
+    $('ece-impact')?.remove();$('decision-trail').replaceChildren();$('result-summary').hidden=true;$('download-report').hidden=true;
     chart(state);nextEvent();$('run-status').textContent='Protection confirmed for this rehearsal. No order processed yet.';
   });
   function trail(entry){
@@ -143,6 +143,9 @@
     $('run-status').textContent=`Day ${state.day} complete. Each order used the updated shared balance and budget.`;
     if(cursor===selected.events.length){mode='finished';$('run-status').textContent='Rehearsal complete. Change your boundaries to compare a different policy.';$('result-summary').hidden=false;$('download-report').hidden=false;
       $('result-summary').textContent=`${state.blocked} orders stopped. ${money(state.baselineSpent-state.spent)} Demo RLO not spent compared with the unprotected run. You bought ${state.units.toFixed(4)} demo assets vs ${state.baselineUnits.toFixed(4)} without Ece. Fees paid with Ece: ${money(state.fees)} RLO. This is a policy comparison, not a profit estimate.`;
+      const metrics=document.createElement('div');metrics.id='ece-impact';metrics.className='ledger';
+      for(const [label,value] of [['Cash retained with Ece',money(state.balance)+' RLO'],['Cash retained without Ece',money(state.baseline)+' RLO'],['Extra cash retained, not profit',money(state.balance-state.baseline)+' RLO'],['Assets acquired with Ece',state.units.toFixed(4)],['Assets acquired without Ece',state.baselineUnits.toFixed(4)]]){const item=document.createElement('article'),h=document.createElement('h3'),v=document.createElement('p');h.textContent=label;v.textContent=value;item.append(h,v);metrics.append(item);}
+      $('ece-impact')?.remove();$('result-summary').after(metrics);
       explainCompleted();compareCompleted();
     }
   });
