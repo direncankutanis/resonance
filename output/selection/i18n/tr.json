@@ -1700,5 +1700,9 @@
   "These are fictional Web3 budget examples, not integrations with a payment provider or lending protocol. Gas is a planning allowance, not a live network fee estimate. Due days set allocation priority; they do not schedule onchain payments.": "Bunlar örnek Web3 bütçeleridir; ödeme sağlayıcısı veya borç protokolü entegrasyonu değildir. Gas tutarı planlama payıdır, canlı ağ ücreti tahmini değildir. Vade günleri kaynak ayırma önceliğini belirler; zincir üstü ödeme zamanlamaz.",
   "Your conditional purchase": "Koşullu alımın",
   "Prepare → Review → Reserve → Observe": "Hazırla → İncele → Bütçe ayır → Sonucu izle",
-  "More examples, AI and saved plans": "Diğer örnekler, AI ve kayıtlı planlar"
+  "More examples, AI and saved plans": "Diğer örnekler, AI ve kayıtlı planlar",
+  "Your edited rule completed. Read the actual amounts in the result; the original example totals no longer apply.": "Düzenlediğin kural tamamlandı. Gerçekleşen tutarları sonuçtan oku; başlangıç örneğinin toplamları artık geçerli değil.",
+  "Your example was edited. Review the actual budget, limit and deadline in the confirmation panel.": "Örneği değiştirdin. Onay panelindeki güncel bütçeyi, fiyat sınırını ve süreyi incele.",
+  "Your example was edited. The current inputs determine the outcome; the original example prediction no longer applies.": "Örneği değiştirdin. Sonucu güncel değerler belirler; başlangıç örneğinin beklenen sonucu artık geçerli değil.",
+  "Advance current rule": "Mevcut kuralı ilerlet"
 }
