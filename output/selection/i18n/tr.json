@@ -1704,5 +1704,10 @@
   "Your edited rule completed. Read the actual amounts in the result; the original example totals no longer apply.": "Düzenlediğin kural tamamlandı. Gerçekleşen tutarları sonuçtan oku; başlangıç örneğinin toplamları artık geçerli değil.",
   "Your example was edited. Review the actual budget, limit and deadline in the confirmation panel.": "Örneği değiştirdin. Onay panelindeki güncel bütçeyi, fiyat sınırını ve süreyi incele.",
   "Your example was edited. The current inputs determine the outcome; the original example prediction no longer applies.": "Örneği değiştirdin. Sonucu güncel değerler belirler; başlangıç örneğinin beklenen sonucu artık geçerli değil.",
-  "Advance current rule": "Mevcut kuralı ilerlet"
+  "Advance current rule": "Mevcut kuralı ilerlet",
+  "Your reserve protection": "Rezerv koruman",
+  "Your Web3 budget": "Web3 bütçen",
+  "Your plan comparison": "Plan karşılaştırman",
+  "Saved plans and advanced tools": "Kayıtlı planlar ve gelişmiş araçlar",
+  "Review your inputs to see the result here. Nothing starts automatically.": "Sonucu burada görmek için değerlerini incele. Hiçbir işlem kendiliğinden başlamaz."
 }

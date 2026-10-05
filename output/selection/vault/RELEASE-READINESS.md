@@ -22,4 +22,4 @@ Updated library/template tests to open the advanced section introduced by the ne
 - Live AI/Latch availability and quota behavior require separate verification; local service tests do not establish live uptime.
 
 ## Next development
-After live acceptance, extend the default inline desk to Ece, Ade and Eric without changing their approval and calculation rules. Re-run relevant tests when each layout changes.
+Complete the live acceptance checks above. All four tools now use inline desks; layout tests cover completed demo examples, collapsed advanced sections and mobile overflow. Real wallet transactions remain unverified.
