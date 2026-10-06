@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.9.4 — English / Turkish interface
+Release: 0.9.5 — English / Turkish interface
 
 ## Update workflow
 
@@ -78,3 +78,8 @@ Read-only wallet RPC requests now time out after 10 seconds rather than locking 
 
 ### All tools inline (0.9.4)
 Ece, Ade and Eric now use a default two-column workspace: inputs on the left, review/results on the right. Advanced and saved-plan tools remain expandable. Existing authorization, approval and calculation handlers are retained. Mobile stacks the same controls vertically.
+
+### Outcome lifecycle and release checks (0.9.5, 6 October 2026)
+Ece clears old outcome cards and reports when revising a rehearsal and displays the fresh starting balance. Access revocation clears the old run and makes the first-example guide reusable for every tool. Eric uses the Web3 Budget Studio name in navigation and the personal dashboard.
+
+Build first, then run `python3 integrations/web/check_release.py` for the local regression suite (Node, Playwright/Chrome and contract dependencies required). Use `--match protection` to focus checks. The command writes a temporary JSON report and returns nonzero if a check fails. These checks use simulated providers/local chain; real Rabby/Sepolia acceptance and live AI/Latch remain separate.

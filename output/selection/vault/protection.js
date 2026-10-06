@@ -16,7 +16,11 @@
     return engine.validate(p);
   }
   function sentence(p){return `Keep ${money(p.floor)} Demo RLO untouched. Spend at most ${money(p.weekly)} per demo week, in ${money(p.order)} RLO orders including fees. Buy only at ${money(p.limit)} or below, using quotes no older than ${p.freshness} minutes.`;}
-  function preview(){try{$('policy-preview').textContent=sentence(values());$('form-error').textContent='';}catch(e){$('policy-preview').textContent='Adjust your boundaries to see the plan.';$('form-error').textContent=e.message;}}
+  function clearOutcome(){
+    $('result-summary').hidden=true;$('download-report').hidden=true;$('ece-impact')?.remove();
+    $('policy-comparison').hidden=true;$('decision-summary').hidden=true;comparison=null;
+  }
+  function preview(){try{const policy=values();if(mode==='draft')chart(engine.create(policy));$('policy-preview').textContent=sentence(policy);$('form-error').textContent='';}catch(e){$('policy-preview').textContent='Adjust your boundaries to see the plan.';$('form-error').textContent=e.message;}}
   function controls(){
     for(const id of fields)$(id).disabled=mode!=='draft'||busy;
     document.querySelectorAll('#custom-scenario input,#custom-scenario button').forEach(b=>b.disabled=mode!=='draft'||busy);
@@ -98,7 +102,7 @@
     $('template-hint').textContent=templateNotes[b.dataset.template]+' Review and confirm when ready.';
     $('balance').focus();
   });
-  for(const id of fields)$(id).addEventListener('input',()=>{if(mode==='draft'){revision++;preview();$('template-hint').textContent='Settings changed. Template outcomes no longer apply; review these values and rehearse to see their result.';}});
+  for(const id of fields)$(id).addEventListener('input',()=>{if(mode==='draft'){revision++;clearOutcome();preview();$('template-hint').textContent='Settings changed. Template outcomes no longer apply; review these values and rehearse to see their result.';}});
 
   async function authorized(action){
     if(busy)return;busy=true;const rev=revision;controls();
@@ -149,8 +153,8 @@
       explainCompleted();compareCompleted();
     }
   });
-  $('revise-protection').onclick=()=>{revision++;draft=null;mode='draft';$('run-status').textContent='Previous rehearsal stopped. Edit your boundaries, then review to start from a fresh balance.';preview();controls();$('weekly').focus();};
-  window.resonanceVaultCancel=()=>{previousRuns.clear();comparison=null;$('policy-comparison').hidden=true;$('decision-summary').hidden=true;revision++;draft=null;mode='draft';$('run-status').textContent='Wallet access changed. The rehearsal stopped; review again after checking ownership.';controls();};
+  $('revise-protection').onclick=()=>{revision++;draft=null;state=null;cursor=0;mode='draft';clearOutcome();$('decision-trail').replaceChildren();nextEvent();$('run-status').textContent='Previous rehearsal stopped. Edit your boundaries, then review to start from a fresh balance.';preview();controls();$('weekly').focus();};
+  window.resonanceVaultCancel=()=>{clearOutcome();state=null;cursor=0;$('decision-trail').replaceChildren();previousRuns.clear();comparison=null;$('policy-comparison').hidden=true;$('decision-summary').hidden=true;revision++;draft=null;mode='draft';$('run-status').textContent='Wallet access changed. The rehearsal stopped; review again after checking ownership.';preview();nextEvent();controls();};
   $('download-report').onclick=()=>{
     if(!state||mode!=='finished')return;
     const report={type:'ece-local-rehearsal',version:1,onchain:false,latchVerified:false,realFunds:false,scenario:selected.id,events:selected.events,summary:engine.summarize(state),policy:state.policy,result:state,previousPolicyComparison:comparison};

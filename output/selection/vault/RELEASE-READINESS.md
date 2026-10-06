@@ -1,4 +1,4 @@
-# Release readiness — 5 October 2026
+# Release readiness — 6 October 2026
 
 ## Scope
 Educational game + Sepolia NFT access + four local financial simulations. Live trading, Rialo execution, borrowing and payments are not implemented. Passing the tests below does not certify zero bugs or financial safety.
@@ -23,3 +23,10 @@ Updated library/template tests to open the advanced section introduced by the ne
 
 ## Next development
 Complete the live acceptance checks above. All four tools now use inline desks; layout tests cover completed demo examples, collapsed advanced sections and mobile overflow. Real wallet transactions remain unverified.
+
+## 0.9.5 audit
+- All 38 existing selection regression scripts passed across the initial run and focused reruns; updated obsolete disclosure/guide expectations to the current inline layout.
+- New result-lifecycle regression passed: Ece outcome removal and fresh balance on revision, fresh policy comparison, first-example recovery after access revocation.
+- Four Turkish lessons/quiz recovery and 12 hosted-service unit tests passed.
+- Local real-contract mint UI passed: receipt verification, duplicate guard, transfer, wrong network, rejection/retry and unknown-outcome lock. No public-chain transaction was submitted.
+- Real-user wallet acceptance is deferred at the user’s request. Live service availability is not established by local tests.
