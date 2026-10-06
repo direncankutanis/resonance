@@ -47,3 +47,13 @@
 }
 @media(max-width:360px){.workspace-page #workspace .form-grid,.workspace-page #workspace .ledger{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.workspace-page *{scroll-behavior:auto!important;transition:none!important}}
+
+.result-overview{border-left:3px solid #b5dac7;background:#20332f;padding:16px 18px;margin:16px 0;border-radius:0 10px 10px 0}
+.result-overview h3{font-size:20px;margin:0 0 10px;color:#e6f0e9}
+.result-overview p{margin:10px 0}
+#allocation-details,#ade-calculation-details,#outcome-learning{border:1px solid #42535a;border-radius:10px;padding:10px 14px;margin:18px 0}
+#ade-path-view{width:100%}
+.workspace-page #workspace .lab-table{overscroll-behavior-x:contain}
+@media(min-width:851px){.workspace-page #ade-explanation p{font-size:14px}}
+
+.workspace-page #tool-desk{scroll-margin-top:12px}

@@ -1716,5 +1716,20 @@
   "Checking wallet access. Your inputs are preserved.": "Cüzdan erişimi kontrol ediliyor. Girdiğin değerler korunuyor.",
   "Start with Web3 service renewals and review the expense and goal inputs.": "Web3 hizmet yenilemeleriyle başla; gider ve hedef alanlarını incele.",
   "Quick guide": "Kısa rehber",
-  "Read the three steps": "Üç adımı oku"
+  "Read the three steps": "Üç adımı oku",
+  "Proposal summary": "Öneri özeti",
+  "Amounts and allocation details": "Tutarlar ve dağılım ayrıntıları",
+  "Your reserve needs attention": "Korunan nakit tutarın eksik",
+  "Some expenses remain unfunded": "Bazı giderlere kaynak ayrılamadı",
+  "Your expenses fit this proposal": "Bu öneride giderlerin karşılanıyor",
+  "No expenses in this proposal": "Bu öneride gider bulunmuyor",
+  "Starting operating cash is below your protected floor. New goal allocations are paused.": "Başlangıçta kullanılabilir nakit, korumak istediğin tutarın altında. Hedeflere yeni kaynak ayrılmıyor.",
+  "Permitted funds cannot cover every expense. New goal allocations are paused; no partial expense payments are assumed.": "İzin verilen kaynaklar tüm giderlere yetmiyor. Hedeflere yeni kaynak ayrılmıyor; giderlerin kısmen ödendiği varsayılmıyor.",
+  "The proposal follows your expense priorities and savings permissions. Remaining eligible cash can go to goals.": "Öneri, gider önceliklerine ve birikim kullanım izinlerine uyuyor. Kalan uygun nakit hedeflere ayrılabilir.",
+  "Next: keep a reference, change one amount, then review again to compare. This proposal has not paid or moved any real funds.": "Sıradaki adım: bir referans sakla, tek bir tutarı değiştir ve karşılaştırmak için yeniden incele. Bu öneri gerçek bir ödeme veya para aktarımı yapmadı.",
+  "All scenarios and spending capacity": "Tüm senaryolar ve harcama kapasitesi",
+  "Understand this scenario": "Bu senaryoyu anla",
+  "Open All scenarios and spending capacity for the exact ending values.": "Kesin sonuç tutarlarını görmek için Tüm senaryolar ve harcama kapasitesi bölümünü aç.",
+  "Connect this result to the lesson": "Bu sonucun dersle bağlantısı",
+  "Scrollable calculation table": "Kaydırılabilir hesaplama tablosu"
 }

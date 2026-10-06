@@ -1,5 +1,9 @@
 [
   [
+    "^Expenses funded: (\\d+) / (\\d+) · New goal allocations: ([\\d.]+) RLO\\.$",
+    "Karşılanan gider: $1 / $2 · Hedeflere yeni ayrılan: $3 RLO."
+  ],
+  [
     "^Use a value from ([\\d.]+) to ([\\d.]+)\\.$",
     "$1 ile $2 arasında bir değer kullan."
   ],

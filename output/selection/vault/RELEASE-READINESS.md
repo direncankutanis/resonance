@@ -33,3 +33,6 @@ Complete the live acceptance checks above. All four tools now use inline desks; 
 
 ## 0.9.6 verification
 Full local release runner: 44/44 checks passed on 6 October 2026. Includes all selection regressions, 320/390px workspace layout, keyboard shortcuts, TR labels, pending access feedback, focused validation, lesson recovery, local-contract mint UI, home page and hosted-service unit suite (12 tests). Real Rabby/Sepolia acceptance and live AI/Latch uptime remain deferred.
+
+## 0.9.7 verification
+46 local checks passed across the complete run and focused reruns. Added result-summary branches, collapsed-detail access, keyboard-focusable tables, 320px layout, summary visibility below toolbar, and incremental translation checks. The initial denomination assertion was updated to open the new details disclosure; both summary and detail amounts are checked. Existing calculation engines are unchanged. No real wallet or live-service acceptance is claimed.

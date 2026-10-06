@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.9.6 — English / Turkish interface
+Release: 0.9.7 — English / Turkish interface
 
 ## Update workflow
 
@@ -86,3 +86,8 @@ Build first, then run `python3 integrations/web/check_release.py` for the local 
 
 ### Workspace polish (0.9.6)
 Shared responsive styles and keyboard-accessible shortcuts connect inputs, results and advanced tools. Eric examples and reference controls sit beside their corresponding form/result. Repeated guide steps are collapsible. New reviews reset the result pane scroll. Ade and Eric show pending access checks; transient warnings clear after successful verification. Ade price and duration validation focuses the invalid field. Additional Turkish guide copy is complete.
+
+### Clearer results and incremental translation (0.9.7)
+Eric shows an overview derived from calculated allocations, including reserve deficits and unfunded expenses. Numerical details remain expandable. Ade prioritizes selected-path explanation; aggregate tables and capacity are expandable. Ece’s decision explanation stays in the result column; Diren’s lesson recap is optional. Result navigation resets the nested pane and avoids obscuring the summary under the toolbar. Tables support keyboard focus.
+
+Routine translation updates now process changed nodes rather than scanning the entire document. Language/unit refresh remains explicit and full; regular-expression patterns are compiled once. Regression checks verify canonical English restoration, dynamic attributes, ignored custom content, numeric preservation and both demo units.

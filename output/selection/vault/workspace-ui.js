@@ -3,13 +3,16 @@
 const $=id=>document.getElementById(id),root=$('workspace'),who=Number(document.body.dataset.vaultCharacter||0);
 const desk=$(who===0?'diren-desk':'tool-desk');if(!root||!desk)return;
 document.body.classList.add('workspace-page');
+for(const table of root.querySelectorAll('.lab-table,.comparison-table-wrap')){table.tabIndex=0;table.setAttribute('role','region');table.setAttribute('aria-label','Scrollable calculation table');}
 const left=$(who===0?'diren-plan':'tool-plan'),right=$(who===0?'diren-result':'tool-result'),extra=$(who===0?'diren-extra':'tool-extra');
 const toolbar=document.createElement('nav');toolbar.className='workspace-shortcuts';toolbar.setAttribute('aria-label','Workspace navigation');
-function jump(target){if(target.tagName==='DETAILS')target.open=true;target.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});target.tabIndex=-1;target.focus({preventScroll:true});}
+function jump(target){if(target.tagName==='DETAILS')target.open=true;if(target===right)right.scrollTop=0;const anchor=target===right&&matchMedia('(min-width:851px)').matches?desk:target;anchor.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});target.tabIndex=-1;target.focus({preventScroll:true});}
 for(const [label,target] of [['Rules & budget',left],['Review & results',right],['Advanced tools',extra]]){const button=document.createElement('button');button.type='button';button.className='secondary';button.textContent=label;button.onclick=()=>jump(target);toolbar.append(button);}
 desk.prepend(toolbar);
 const status=document.createElement('p');status.id='workspace-status';status.className='workspace-status';status.setAttribute('role','status');status.hidden=true;toolbar.after(status);
 const guide=$('practice-guide');if(guide){const steps=guide.querySelector('ol');if(steps){const detail=document.createElement('details'),summary=document.createElement('summary');summary.textContent='Read the three steps';steps.before(detail);detail.append(summary,steps);}guide.querySelector('h2').textContent='Quick guide';}
+if(who===3){const detail=$('ade-calculation-details');$('ade-weekly').before(detail);}
+if(who===1){const explanation=$('decision-summary');if(explanation)right.append(explanation);}
 // Put Eric's examples next to the editable budget, and the reference next to its result.
 if(who===2){const examples=$('example-note')?.closest('section'),reference=$('reference-status')?.closest('section');if(examples)left.insertBefore(examples,$('budget-form'));if(reference)right.append(reference);}
 // A newly opened review/result must not inherit the scroll position of a long old result.
