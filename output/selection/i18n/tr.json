@@ -1691,7 +1691,7 @@
   "Review Web3 renewals: allocate service subscriptions first, then fund gas and protocol usage budgets. No payment is sent.": "Web3 yenilemelerini incele: önce hizmet aboneliklerine, sonra gas ve protokol kullanım bütçelerine kaynak ayır. Gerçek ödeme gönderilmez.",
   "Open transaction desk": "İşlem masasını aç",
   "Budget & rules": "Bütçe ve kurallar",
-  "Review & results": "İnceleme ve sonuçlar",
+  "Review & results": "Onay ve sonuçlar",
   "Close desk": "İşlem masasını kapat",
   "RESONANCE / WEB3 BUDGET STUDIO": "RESONANCE / WEB3 BÜTÇE ATÖLYESİ",
   "Plan your Web3 commitments before spending.": "Harcamadan önce Web3 yükümlülüklerini planla.",
@@ -1709,5 +1709,12 @@
   "Your Web3 budget": "Web3 bütçen",
   "Your plan comparison": "Plan karşılaştırman",
   "Saved plans and advanced tools": "Kayıtlı planlar ve gelişmiş araçlar",
-  "Review your inputs to see the result here. Nothing starts automatically.": "Sonucu burada görmek için değerlerini incele. Hiçbir işlem kendiliğinden başlamaz."
+  "Review your inputs to see the result here. Nothing starts automatically.": "Sonucu burada görmek için değerlerini incele. Hiçbir işlem kendiliğinden başlamaz.",
+  "Workspace navigation": "Çalışma alanı gezinmesi",
+  "Rules & budget": "Kurallar ve bütçe",
+  "Advanced tools": "Gelişmiş araçlar",
+  "Checking wallet access. Your inputs are preserved.": "Cüzdan erişimi kontrol ediliyor. Girdiğin değerler korunuyor.",
+  "Start with Web3 service renewals and review the expense and goal inputs.": "Web3 hizmet yenilemeleriyle başla; gider ve hedef alanlarını incele.",
+  "Quick guide": "Kısa rehber",
+  "Read the three steps": "Üç adımı oku"
 }

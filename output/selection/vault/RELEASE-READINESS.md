@@ -30,3 +30,6 @@ Complete the live acceptance checks above. All four tools now use inline desks; 
 - Four Turkish lessons/quiz recovery and 12 hosted-service unit tests passed.
 - Local real-contract mint UI passed: receipt verification, duplicate guard, transfer, wrong network, rejection/retry and unknown-outcome lock. No public-chain transaction was submitted.
 - Real-user wallet acceptance is deferred at the user’s request. Live service availability is not established by local tests.
+
+## 0.9.6 verification
+Full local release runner: 44/44 checks passed on 6 October 2026. Includes all selection regressions, 320/390px workspace layout, keyboard shortcuts, TR labels, pending access feedback, focused validation, lesson recovery, local-contract mint UI, home page and hosted-service unit suite (12 tests). Real Rabby/Sepolia acceptance and live AI/Latch uptime remain deferred.

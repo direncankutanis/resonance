@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.9.5 — English / Turkish interface
+Release: 0.9.6 — English / Turkish interface
 
 ## Update workflow
 
@@ -83,3 +83,6 @@ Ece, Ade and Eric now use a default two-column workspace: inputs on the left, re
 Ece clears old outcome cards and reports when revising a rehearsal and displays the fresh starting balance. Access revocation clears the old run and makes the first-example guide reusable for every tool. Eric uses the Web3 Budget Studio name in navigation and the personal dashboard.
 
 Build first, then run `python3 integrations/web/check_release.py` for the local regression suite (Node, Playwright/Chrome and contract dependencies required). Use `--match protection` to focus checks. The command writes a temporary JSON report and returns nonzero if a check fails. These checks use simulated providers/local chain; real Rabby/Sepolia acceptance and live AI/Latch remain separate.
+
+### Workspace polish (0.9.6)
+Shared responsive styles and keyboard-accessible shortcuts connect inputs, results and advanced tools. Eric examples and reference controls sit beside their corresponding form/result. Repeated guide steps are collapsible. New reviews reset the result pane scroll. Ade and Eric show pending access checks; transient warnings clear after successful verification. Ade price and duration validation focuses the invalid field. Additional Turkish guide copy is complete.

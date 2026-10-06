@@ -1,5 +1,9 @@
 [
   [
+    "^Use a value from ([\\d.]+) to ([\\d.]+)\\.$",
+    "$1 ile $2 arasında bir değer kullan."
+  ],
+  [
     "^Reserve ([\\d.]+) Demo RLO: ([\\d.]+) for the asset \\+ ([\\d.]+) Demo RLO execution fee\\. Available after reservation: ([\\d.]+)\\. Nothing moves until you confirm\\.$",
     "$1 Demo RLO ayır: varlığa $2, yürütme ücretine $3 Demo RLO. Ayırdıktan sonra kullanılabilir: $4. Onaylamadan hiçbir tutar hareket etmez."
   ],
