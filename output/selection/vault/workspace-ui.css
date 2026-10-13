@@ -57,3 +57,11 @@
 @media(min-width:851px){.workspace-page #ade-explanation p{font-size:14px}}
 
 .workspace-page #tool-desk{scroll-margin-top:12px}
+/* 0.9.8: clearer unavailable actions and a numbered access path. */
+.workspace-page button:disabled{opacity:1;background:transparent;color:#8d9ea4;border-style:dashed;border-color:#4a5d66;cursor:not-allowed;filter:none;box-shadow:none}
+.workspace-page #gate{counter-reset:gate-step}
+.workspace-page #gate :is(#gate-connect,#gate-switch,#gate-refresh,#enter-demo){counter-increment:gate-step;display:inline-flex;align-items:center;gap:8px}
+.workspace-page #gate :is(#gate-connect,#gate-switch,#gate-refresh,#enter-demo)::before{content:counter(gate-step);display:inline-grid;place-items:center;flex:none;width:20px;height:20px;border-radius:50%;border:1px solid currentColor;font-size:11px;line-height:1;opacity:.85}
+.workspace-page #gate-status{border-left:3px solid var(--workspace-accent);padding:4px 0 4px 12px}
+.workspace-page #workspace .panel{transition:border-color .2s}
+.workspace-page .tool-navigation a{transition:background .15s,border-color .15s}

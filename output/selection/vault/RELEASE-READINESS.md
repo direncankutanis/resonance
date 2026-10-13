@@ -36,3 +36,7 @@ Full local release runner: 44/44 checks passed on 6 October 2026. Includes all s
 
 ## 0.9.7 verification
 46 local checks passed across the complete run and focused reruns. Added result-summary branches, collapsed-detail access, keyboard-focusable tables, 320px layout, summary visibility below toolbar, and incremental translation checks. The initial denomination assertion was updated to open the new details disclosure; both summary and detail amounts are checked. Existing calculation engines are unchanged. No real wallet or live-service acceptance is claimed.
+
+## 0.9.8 verification
+Full local release runner: 47/47 checks passed on 13 October 2026, including the new site-bar.test.cjs (shared bar on seven pages, unit info toggle, TR labels, 320px width, WebP pass preview and an academy-size guard). dashboard.test.cjs now waits for the saved-plan link to finish loading before it touches the tool page; the previous race failed consistently on faster machines. Calculation engines, gates, approvals, wallet calls and contract code are unchanged. No real wallet or live-service acceptance is claimed.
+

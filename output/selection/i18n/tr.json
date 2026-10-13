@@ -1731,5 +1731,19 @@
   "Understand this scenario": "Bu senaryoyu anla",
   "Open All scenarios and spending capacity for the exact ending values.": "Kesin sonuç tutarlarını görmek için Tüm senaryolar ve harcama kapasitesi bölümünü aç.",
   "Connect this result to the lesson": "Bu sonucun dersle bağlantısı",
-  "Scrollable calculation table": "Kaydırılabilir hesaplama tablosu"
+  "Scrollable calculation table": "Kaydırılabilir hesaplama tablosu",
+  "Eric · Web3 Budget Studio": "Eric · Web3 Bütçe Atölyesi",
+  "Eric’s short city-budget mission and four-question check lead directly to Web3 Budget Studio through the character pass.": "Eric’in kısa şehir bütçesi görevi ve dört soruluk quizi, karakter NFT’si üzerinden Web3 Bütçe Atölyesi’ne açılır.",
+  "Priority budgets → Web3 Budget Studio": "Öncelikli bütçeler → Web3 Bütçe Atölyesi",
+  "Web3 Budget Studio allocates essential expenses before goals. Flexible savings require explicit permission and a shared limit. A proposed allocation is not a payment. Monthly rehearsals stop at the first unresolved expense or reserve deficit rather than erase it.": "Web3 Bütçe Atölyesi önce zorunlu giderlere, sonra hedeflere pay ayırır. Esnek birikim açık izin ve ortak sınır gerektirir. Bütçe payı önerisi ödeme değildir. Aylık deneme ilk çözülemeyen giderde veya rezerv açığında, açığı silmek yerine durur.",
+  "Use what you learned → Eric’s Web3 Budget Studio": "Öğrendiğini uygula → Eric’in Web3 Bütçe Atölyesi",
+  "Open Eric’s Web3 Budget Studio →": "Eric’in Web3 Bütçe Atölyesi’ni aç →",
+  "Site preferences": "Site tercihleri",
+  "About demo budget units": "Demo bütçe birimleri hakkında",
+  "Breadcrumb": "Gezinti yolu",
+  "Release notes / 13 October 2026": "Sürüm notları / 13 Ekim 2026",
+  "Pages open faster: the academy page shrank from 3.6 MB to under 200 KB, and pass artwork loads as compressed images.": "Sayfalar daha hızlı açılıyor: akademi sayfası 3,6 MB’tan 200 KB’ın altına indi, pass görselleri sıkıştırılmış olarak yükleniyor.",
+  "One compact bar at the top of every page holds the home link, demo budget unit and language.": "Her sayfanın üstündeki tek bir kompakt çubukta ana sayfa bağlantısı, demo bütçe birimi ve dil seçimi yer alıyor.",
+  "The mint page keeps your pass beside numbered steps, and unavailable actions now look clearly unavailable.": "Mint sayfası pass’ini numaralı adımların yanında gösteriyor; kullanılamayan işlemler artık açıkça kullanılamaz görünüyor.",
+  "Tool names and the Ece rehearsal layout are consistent across the academy, mint page and tools.": "Araç adları ve Ece’nin deneme düzeni akademi, mint sayfası ve araçlarda tutarlı."
 }

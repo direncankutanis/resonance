@@ -9,6 +9,8 @@ function move(id){const el=$(id);if(el)tools.append(el);}
 move('scenario-library');move(ece?'custom-scenario':'price-sequence');
 if(ece){
  const templates=$('template-heading').closest('section');const scenarios=$('scenarios');
+ // The rehearsal heading would otherwise stay behind, empty, once its scenarios move below.
+ const scenarioHeading=scenarios.previousElementSibling;if(scenarioHeading?.classList.contains('section-heading'))scenarioHeading.hidden=true;
  scenarios.before(templates);templates.style.marginBottom='16px';
  const alternatives=document.createElement('details');alternatives.id='alternate-scenarios';alternatives.className='panel';
  const summary=document.createElement('summary');summary.textContent='Choose a different scenario with its default settings';alternatives.append(summary);scenarios.before(alternatives);alternatives.append(scenarios);tools.append(alternatives);

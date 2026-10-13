@@ -2,7 +2,7 @@
 
 Production: https://resonance-learning-adventure.vercel.app
 Project: https://vercel.com/direncankutanis-projects/resonance-learning-adventure
-Release: 0.9.7 — English / Turkish interface
+Release: 0.9.8 — English / Turkish interface
 
 ## Update workflow
 
@@ -91,3 +91,10 @@ Shared responsive styles and keyboard-accessible shortcuts connect inputs, resul
 Eric shows an overview derived from calculated allocations, including reserve deficits and unfunded expenses. Numerical details remain expandable. Ade prioritizes selected-path explanation; aggregate tables and capacity are expandable. Ece’s decision explanation stays in the result column; Diren’s lesson recap is optional. Result navigation resets the nested pane and avoids obscuring the summary under the toolbar. Tables support keyboard focus.
 
 Routine translation updates now process changed nodes rather than scanning the entire document. Language/unit refresh remains explicit and full; regular-expression patterns are compiled once. Regression checks verify canonical English restoration, dynamic attributes, ignored custom content, numeric preservation and both demo units.
+
+### Faster pages and shared site bar (0.9.8, 13 October 2026)
+The academy no longer embeds images as base64: portraits load from the existing JPEG files and the four pass previews from `nft/*.webp` (about 50 KB each instead of 550 KB PNG). The academy page drops from 3.6 MB to about 180 KB and the public folder from 7.8 MB to under 2 MB. Minted metadata and IPFS artwork are unchanged. `nft/` and `deploy/` responses may be cached for a day; HTML and app scripts still revalidate on every load. Cache rules no longer overlap.
+
+`site-bar.js` loads first on every page and creates one compact bar with the home link, release, demo budget unit and language selector. The unit explanation sits behind the `?` button. Both controls keep their IDs, storage keys, confirmation and reload behavior; pages without the script fall back to the previous standalone controls. The bar also adds a favicon, shared keyboard focus outlines and reduced-motion support. The build no longer injects a separate home banner.
+
+The mint page shows the selected pass beside numbered steps. All four tools and My Resonance show unavailable actions as dashed outlines and number the wallet access steps. Ece no longer leaves an empty rehearsal heading after its scenarios move to the advanced tools. Eric's tool is called Web3 Budget Studio everywhere, including lessons and the mint page. No calculation engine, gate, approval or contract logic changed.
