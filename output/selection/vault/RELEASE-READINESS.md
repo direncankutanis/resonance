@@ -39,4 +39,5 @@ Full local release runner: 44/44 checks passed on 6 October 2026. Includes all s
 
 ## 0.9.8 verification
 Full local release runner: 47/47 checks passed on 13 October 2026, including the new site-bar.test.cjs (shared bar on seven pages, unit info toggle, TR labels, 320px width, WebP pass preview and an academy-size guard). dashboard.test.cjs now waits for the saved-plan link to finish loading before it touches the tool page; the previous race failed consistently on faster machines. Calculation engines, gates, approvals, wallet calls and contract code are unchanged. No real wallet or live-service acceptance is claimed.
+Guide features (tour, Terms panel, term marks, one-sentence results with PNG cards, folded fine print): 48/48 local checks passed on 13 October 2026 with the new guide-tools.test.cjs. It covers the four starters ending in a sentence and a downloadable card (EN/TR, hidden after revision), the served-build portrait card, term marks that leave label text and accessible names unchanged, the Terms panel, and tours on six pages with keyboard control at 320px. The tour is confirmed not to change simulation balances.
 

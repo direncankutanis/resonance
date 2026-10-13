@@ -10,8 +10,8 @@ DEST.mkdir(parents=True,exist_ok=True)
 PUBLIC=DEST/'public'
 if PUBLIC.exists(): shutil.rmtree(PUBLIC)
 PUBLIC.mkdir()
-files=['site-bar.js','favicon.svg','i18n/tr.js','i18n/i18n.js','my/index.html','my/dashboard.css','my/dashboard.js','demo-unit.js','resonance-playable-v1.html','nft-artwork.js','diren.jpg','ece.jpg','ade.jpg','eric.jpg','deploy/ethers.umd.min.js','nft/diren.webp','nft/ece.webp','nft/eric.webp','nft/ade.webp','mint/index.html','mint/mint.js','mint/mint-config.js']
-files += ['vault/'+name for name in ['index.html','gate.js','policy.js','progress.js','vault.js','lesson-bridge.js','latch-check.js','ai-guide.js','outcome.js','scenarios.js','entry.js','protection.html','protection.css','protection.js','protection-engine.js','protection-ai.js','journey.js','price-sequence.js','scenario-library.js','experience.js','ade.html','ade.js','ade-engine.js','eric.html','eric.js','eric-engine.js','orientation.js','form-feedback.js','workspace-ui.js','workspace-ui.css']]
+files=['site-bar.js','glossary.js','tour.js','favicon.svg','i18n/tr.js','i18n/i18n.js','my/index.html','my/dashboard.css','my/dashboard.js','demo-unit.js','resonance-playable-v1.html','nft-artwork.js','diren.jpg','ece.jpg','ade.jpg','eric.jpg','deploy/ethers.umd.min.js','nft/diren.webp','nft/ece.webp','nft/eric.webp','nft/ade.webp','mint/index.html','mint/mint.js','mint/mint-config.js']
+files += ['vault/'+name for name in ['index.html','gate.js','policy.js','progress.js','vault.js','lesson-bridge.js','latch-check.js','ai-guide.js','outcome.js','scenarios.js','entry.js','protection.html','protection.css','protection.js','protection-engine.js','protection-ai.js','journey.js','price-sequence.js','scenario-library.js','experience.js','ade.html','ade.js','ade-engine.js','eric.html','eric.js','eric-engine.js','orientation.js','form-feedback.js','workspace-ui.js','workspace-ui.css','result-card.js']]
 for name in files:
  target=PUBLIC/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(SOURCE/name,target)
 # Credential-backed UI is opt-in; deployment must configure the guarded endpoints first.

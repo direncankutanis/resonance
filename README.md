@@ -12,6 +12,7 @@ An anime-inspired learning adventure connecting reactive transaction concepts to
 - Ece's Reserve Studio: shared weekly cap, reserve floor and data-age checks, three stress scenarios, protected/unprotected comparisons, downloadable local reports, browser-saved settings and comparisons between completed policies.
 - Ade’s NFT-gated Plan Lab: audit two policies on identical hypothetical price paths, compare cash/asset value/fees, and explore compound growth in a separate assumption-based calculator.
 - Guided experiments, a visible rule timeline and explanations that connect outcomes to the lesson.
+- A guided tour and a Terms panel on every page, and a one-sentence result with a downloadable image card in each tool.
 - Hosted Gemini drafts for Diren and Ece, plus Diren’s Latch proposal checks with a persistent shared free-preview quota. Credentials remain on the server; applying a draft and confirming the simulation are separate actions.
 
 NFT minting is on Sepolia, not Rialo. Purchases and balances in the vault are fictional. The test NFT contract does not verify gameplay; local completion gates only the app's mint flow. Eric's scheduled tool is an experimental implementation with development currently paused.

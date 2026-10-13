@@ -134,5 +134,53 @@
   [
     "^Price: (.+?) ≤ (.+?)\\. Quote age: (.+?) ≤ (.+?) minutes\\. Weekly total if accepted: (.+?) \\+ (.+?) = (.+?) ≤ (.+?)\\. Balance if accepted: (.+?) − (.+?) = (.+?) ≥ (.+?) reserve\\. All four comparisons must be true\\. The order cost already includes the fee\\.$",
     "Fiyat: $1 ≤ $2. Veri yaşı: $3 ≤ $4 dakika. Kabul edilirse haftalık toplam: $5 + $6 = $7 ≤ $8. Kabul edilirse bakiye: $9 − $10 = $11 ≥ $12 rezerv. Dört karşılaştırma da doğru olmalıdır. Emir maliyetine ücret zaten dahildir."
+  ],
+  [
+    "^Diren’s rule bought ([\\d.]+) demo units for ([\\d.]+) Demo RLO, within the ([\\d.]+) price limit\\.$",
+    "Diren’in kuralı $2 Demo RLO karşılığında $1 demo birim aldı; $3 fiyat sınırının içinde kaldı."
+  ],
+  [
+    "^Diren’s rule bought ([\\d.]+) demo units for ([\\d.]+) Demo RLO\\.$",
+    "Diren’in kuralı $2 Demo RLO karşılığında $1 demo birim aldı."
+  ],
+  [
+    "^Diren’s limits stopped the purchase and returned ([\\d.]+) Demo RLO\\.$",
+    "Diren’in sınırları alımı durdurdu ve $1 Demo RLO iade etti."
+  ],
+  [
+    "^Diren’s rule expired at step (\\d+) without buying and returned ([\\d.]+) Demo RLO\\.$",
+    "Diren’in kuralı $1. adımda alım yapmadan sona erdi ve $2 Demo RLO iade etti."
+  ],
+  [
+    "^Diren’s rule was cancelled before buying and returned ([\\d.]+) Demo RLO\\.$",
+    "Diren’in kuralı alımdan önce iptal edildi ve $1 Demo RLO iade etti."
+  ],
+  [
+    "^Ece’s rules stopped (\\d+) of (\\d+) proposed orders and left ([\\d.]+) Demo RLO, including the ([\\d.]+) reserve\\.$",
+    "Ece’nin kuralları $2 önerilen emirden $1 tanesini durdurdu ve $4 rezerv dahil $3 Demo RLO bıraktı."
+  ],
+  [
+    "^Your protected reserve is ([\\d.]+) Demo RLO short, so new goal allocations are paused\\.$",
+    "Korunan rezervinde $1 Demo RLO eksik var; bu yüzden hedeflere yeni pay ayrılmıyor."
+  ],
+  [
+    "^(\\d+) of (\\d+) expenses remain unfunded, so new goal allocations are paused\\.$",
+    "$2 giderden $1 tanesi karşılanamıyor; bu yüzden hedeflere yeni pay ayrılmıyor."
+  ],
+  [
+    "^(\\d+) of (\\d+) expenses are covered, ([\\d.]+) Demo RLO goes to goals and ([\\d.]+) Demo RLO stays as operating cash\\.$",
+    "$2 giderden $1 tanesi karşılanıyor; hedeflere $3 Demo RLO ayrılıyor ve $4 Demo RLO kullanım nakdi olarak kalıyor."
+  ],
+  [
+    "^No expenses in this proposal; ([\\d.]+) Demo RLO goes to goals\\.$",
+    "Bu öneride gider yok; hedeflere $1 Demo RLO ayrılıyor."
+  ],
+  [
+    "^On the (.+) path, Plans A and B end with the same modeled total value: ([\\d.]+) Demo RLO\\.$",
+    "$1 yolunda A ve B planları aynı modellenmiş toplam değerle bitiyor: $2 Demo RLO."
+  ],
+  [
+    "^On the (.+) path, Plan ([AB]) ends ([\\d.]+) Demo RLO higher in modeled total value than Plan ([AB]) \\(A: ([\\d.]+), B: ([\\d.]+)\\)\\.$",
+    "$1 yolunda Plan $2, modellenmiş toplam değerde diğer plandan $3 Demo RLO yüksek bitiyor (A: $5, B: $6)."
   ]
 ]

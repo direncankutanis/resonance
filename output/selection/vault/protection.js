@@ -17,7 +17,7 @@
   }
   function sentence(p){return `Keep ${money(p.floor)} Demo RLO untouched. Spend at most ${money(p.weekly)} per demo week, in ${money(p.order)} RLO orders including fees. Buy only at ${money(p.limit)} or below, using quotes no older than ${p.freshness} minutes.`;}
   function clearOutcome(){
-    $('result-summary').hidden=true;$('download-report').hidden=true;$('ece-impact')?.remove();
+    $('result-summary').hidden=true;$('download-report').hidden=true;$('ece-impact')?.remove();window.ResonanceResultCard?.hide();
     $('policy-comparison').hidden=true;$('decision-summary').hidden=true;comparison=null;
   }
   function preview(){try{const policy=values();if(mode==='draft')chart(engine.create(policy));$('policy-preview').textContent=sentence(policy);$('form-error').textContent='';}catch(e){$('policy-preview').textContent='Adjust your boundaries to see the plan.';$('form-error').textContent=e.message;}}
@@ -147,6 +147,7 @@
     $('run-status').textContent=`Day ${state.day} complete. Each order used the updated shared balance and budget.`;
     if(cursor===selected.events.length){mode='finished';$('run-status').textContent='Rehearsal complete. Change your boundaries to compare a different policy.';$('result-summary').hidden=false;$('download-report').hidden=false;
       $('result-summary').textContent=`${state.blocked} orders stopped. ${money(state.baselineSpent-state.spent)} Demo RLO not spent compared with the unprotected run. You bought ${state.units.toFixed(4)} demo assets vs ${state.baselineUnits.toFixed(4)} without Ece. Fees paid with Ece: ${money(state.fees)} RLO. This is a policy comparison, not a profit estimate.`;
+      const totals=engine.summarize(state);window.ResonanceResultCard?.show($('result-summary').closest('section'),{headline:`Ece’s rules stopped ${totals.rejected} of ${totals.total} proposed orders and left ${money(state.balance)} Demo RLO, including the ${money(state.policy.floor)} reserve.`,facts:[['Orders stopped',totals.rejected+' / '+totals.total],['Left with Ece · Demo RLO',money(state.balance)],['Left without Ece · Demo RLO',money(state.baseline)],['Protected reserve · Demo RLO',money(state.policy.floor)]]});
       const metrics=document.createElement('div');metrics.id='ece-impact';metrics.className='ledger';
       for(const [label,value] of [['Cash retained with Ece',money(state.balance)+' RLO'],['Cash retained without Ece',money(state.baseline)+' RLO'],['Extra cash retained, not profit',money(state.balance-state.baseline)+' RLO'],['Assets acquired with Ece',state.units.toFixed(4)],['Assets acquired without Ece',state.baselineUnits.toFixed(4)]]){const item=document.createElement('article'),h=document.createElement('h3'),v=document.createElement('p');h.textContent=label;v.textContent=value;item.append(h,v);metrics.append(item);}
       $('ece-impact')?.remove();$('result-summary').after(metrics);
