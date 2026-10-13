@@ -74,3 +74,50 @@
 .result-headline-actions button{margin:0}
 #result-card-status{font-size:13px;color:#c3d2cd}
 #result-card-status:empty{display:none}
+/* 0.9.8 effects: motion only explains what changed; values, text and controls are untouched. */
+.vfx-layer{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:35}
+.vfx-layer canvas{position:absolute;inset:0;width:100%;height:100%}
+.vfx-token,.vfx-chip{position:absolute;padding:5px 10px;border-radius:999px;font:700 13px/1 system-ui,sans-serif;white-space:nowrap;box-shadow:0 6px 18px #0008}
+.vfx-token.gold{background:linear-gradient(135deg,#ffe3a8,#e2b867);color:#2a1d07}
+.vfx-token.mint{background:linear-gradient(135deg,#d6fff0,#8fd8bd);color:#0d2a20}
+.vfx-chip{transform:translate(-50%,-100%);background:rgba(12,22,30,.92);border:1px solid #e2c48b;color:#ffd99a;animation:vfx-rise 1.5s ease-out forwards}
+.workspace-page .vfx-up{animation:vfx-up .9s ease-out}
+.workspace-page .vfx-back{animation:vfx-back .9s ease-out}
+.workspace-page #state.vfx-armed{animation:vfx-armed 1.4s ease-in-out infinite}
+.workspace-page #state.vfx-shake{animation:vfx-shake .45s ease-out}
+.workspace-page #rule-progress li{transition:background-color .35s,border-color .35s,box-shadow .35s,color .35s}
+.workspace-page #rule-progress li[aria-current=step]{box-shadow:0 0 0 1px #b6dfcc,0 0 14px rgba(182,223,204,.4);animation:vfx-chip 2.2s ease-in-out infinite}
+.workspace-page #rule-progress li:has(~ li[aria-current=step])::before{content:'\2713  ';color:#b6dfcc}
+.workspace-page #history li:last-child{animation:vfx-in .4s ease-out}
+.workspace-page :is(#vault-outcome,#review-box,#policy-review,#decision-summary,#policy-comparison):not([hidden]){animation:vfx-fade .4s ease-out}
+.workspace-page #result-headline:not([hidden]){animation:vfx-glow 1.4s ease-out}
+.workspace-page #example-next:not(:disabled){animation:vfx-next 2.2s ease-in-out infinite}
+.workspace-page input[aria-invalid=true]{animation:vfx-nudge .3s ease-out;box-shadow:0 0 0 2px rgba(255,143,122,.55)}
+.workspace-page .field-error{animation:vfx-fade .3s ease-out}
+.workspace-page .decision-event{animation:vfx-in .45s ease-out}
+.workspace-page .decision-row .pill{animation:vfx-ok .7s ease-out}
+.workspace-page .decision-row .pill.stop{animation:vfx-stop .7s ease-out}
+.workspace-page .bar i{background-image:linear-gradient(90deg,transparent,rgba(255,255,255,.32),transparent);background-size:35% 100%;background-repeat:no-repeat;animation:vfx-sheen 3s linear infinite}
+.workspace-page .bar b{box-shadow:0 0 8px rgba(229,169,171,.75)}
+.workspace-page :is(#ece-impact,#totals,#decisions,#ade-capacity) > article{animation:vfx-in .4s ease-out both}
+.workspace-page :is(#ece-impact,#totals,#decisions,#ade-capacity) > article:nth-child(2){animation-delay:.06s}
+.workspace-page :is(#ece-impact,#totals,#decisions,#ade-capacity) > article:nth-child(3){animation-delay:.12s}
+.workspace-page :is(#ece-impact,#totals,#decisions,#ade-capacity) > article:nth-child(n+4){animation-delay:.18s}
+.workspace-page #proposal-summary[data-fx-tone=warn]{animation:vfx-warn 1.4s ease-out}
+.workspace-page #proposal-summary[data-fx-tone=ok]{animation:vfx-glow 1.2s ease-out}
+@keyframes vfx-rise{0%{opacity:0;transform:translate(-50%,-60%)}15%{opacity:1;transform:translate(-50%,-110%)}75%{opacity:1}100%{opacity:0;transform:translate(-50%,-190%)}}
+@keyframes vfx-up{0%{color:#fff3d0;text-shadow:0 0 14px rgba(255,217,154,.9)}100%{text-shadow:0 0 0 transparent}}
+@keyframes vfx-back{0%{color:#e4fff4;text-shadow:0 0 14px rgba(182,223,204,.9)}100%{text-shadow:0 0 0 transparent}}
+@keyframes vfx-armed{0%,100%{box-shadow:0 0 0 1px rgba(255,210,122,.45)}50%{box-shadow:0 0 0 2px rgba(255,210,122,.95),0 0 16px rgba(255,210,122,.5)}}
+@keyframes vfx-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
+@keyframes vfx-nudge{0%,100%{transform:translateX(0)}30%{transform:translateX(-3px)}60%{transform:translateX(3px)}}
+@keyframes vfx-chip{0%,100%{box-shadow:0 0 0 1px #b6dfcc,0 0 8px rgba(182,223,204,.25)}50%{box-shadow:0 0 0 1px #b6dfcc,0 0 18px rgba(182,223,204,.55)}}
+@keyframes vfx-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes vfx-fade{from{opacity:.2}to{opacity:1}}
+@keyframes vfx-glow{0%{box-shadow:0 0 0 0 rgba(255,217,154,.7)}100%{box-shadow:0 0 0 16px rgba(255,217,154,0)}}
+@keyframes vfx-next{0%,100%{box-shadow:0 0 0 0 rgba(182,223,204,0)}50%{box-shadow:0 0 0 3px rgba(182,223,204,.35),0 0 18px rgba(182,223,204,.3)}}
+@keyframes vfx-ok{0%{box-shadow:0 0 0 0 rgba(181,218,199,.9)}100%{box-shadow:0 0 0 8px rgba(181,218,199,0)}}
+@keyframes vfx-stop{0%{box-shadow:0 0 0 0 rgba(244,183,178,.95);transform:translateX(0)}20%{transform:translateX(-3px)}40%{transform:translateX(3px)}60%{transform:translateX(0)}100%{box-shadow:0 0 0 10px rgba(244,183,178,0)}}
+@keyframes vfx-sheen{0%{background-position:-60% 0}100%{background-position:160% 0}}
+@keyframes vfx-warn{0%,60%{box-shadow:0 0 0 2px rgba(255,143,122,.7),0 0 22px rgba(255,143,122,.35)}100%{box-shadow:0 0 0 0 transparent}}
+@media(prefers-reduced-motion:reduce){.vfx-layer{display:none}.workspace-page *{animation:none!important}}
