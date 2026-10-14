@@ -35,6 +35,8 @@ function inspectPath(){
 }
 function explainComparison(selected){
  const [a,b]=selected.map(r=>r.run),box=$('ade-explanation');box.replaceChildren();
+ const gap=b.ending.equity-a.ending.equity,path=selected[0].scenario;
+ window.ResonanceResultCard?.show($('ade-results'),{headline:gap===0?'On the '+path+' path, Plans A and B end with the same modeled total value: '+money(a.ending.equity)+' Demo RLO.':'On the '+path+' path, Plan '+(gap>0?'B':'A')+' ends '+money(Math.abs(gap))+' Demo RLO higher in modeled total value than Plan '+(gap>0?'A':'B')+' (A: '+money(a.ending.equity)+', B: '+money(b.ending.equity)+').',facts:[['Plan A total · Demo RLO',money(a.ending.equity)],['Plan B total · Demo RLO',money(b.ending.equity)],['Orders accepted A / B',a.summary.accepted+' / '+b.summary.accepted]]});
  const paragraph=text=>{const p=document.createElement('p');p.textContent=text;box.append(p);};
  paragraph('Plan A is your first set of rules; Plan B is the alternative. Both face the same prices and requests. A difference in total value includes the modeled value of unsold assets, not realized profit.');
  const changed=keys.filter(k=>a.policy[k]!==b.policy[k]);
