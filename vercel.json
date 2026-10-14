@@ -21,7 +21,7 @@
       ]
     },
     {
-      "source": "/((?!api/|nft/|deploy/).*)",
+      "source": "/((?!api/|nft/|deploy/|fonts/).*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -30,7 +30,7 @@
       ]
     },
     {
-      "source": "/(nft|deploy)/(.*)",
+      "source": "/(nft|deploy|fonts)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
