@@ -6,20 +6,20 @@ const idle=p=>p.waitForFunction(()=>document.querySelector('#chapter').dataset.v
 const draws=p=>p.evaluate(()=>new Promise(r=>{const c=document.querySelector('.tutorial-canvas'),g=c.getContext('2d'),orig=g.drawImage;let n=0;g.drawImage=function(...a){n++;return orig.apply(this,a);};setTimeout(()=>{g.drawImage=orig;r(n);},700);}));
 let p=await page({viewport:{width:1280,height:900}});await p.goto(G);await p.click('#rs-start');await p.click('#enter');await p.locator('.tutorial-canvas').scrollIntoViewIfNeeded();
 assert(await draws(p)>3,'idle scene keeps moving');
-await p.selectOption('#condition','low');await p.selectOption('#amount','20');await p.click('#register');assert.equal(await p.locator('#chapter').getAttribute('data-fx-phase'),'ready');
+await p.selectOption('#condition','low');await p.selectOption('#amount','20');await p.click('#register');await p.waitForSelector('#chapter[data-fx-phase=ready]',{timeout:2000});
 await p.click('#next');assert.equal(await p.locator('#shield').textContent(),'25','state is final right after the click');await idle(p);
 assert.equal(await p.locator('.node:has(#shield)').getAttribute('data-fx-delta'),'−15');assert.equal(await p.locator('#chapter').getAttribute('data-fx-phase'),'queued');
-await p.click('#next');await idle(p);assert.equal(await p.locator('.node:has(#reserve)').getAttribute('data-fx-delta'),'−20');assert.equal(await p.locator('#shield').textContent(),'45');
+await p.click('#next');await idle(p);assert.equal(await p.locator('.node:has(#reserve)').getAttribute('data-fx-delta'),'−20');assert.match(await p.locator('.node:has(#reserve)').getAttribute('class'),/fx-spend/,'spending reserve is gold, not a loss');assert.equal(await p.locator('#shield').textContent(),'45');assert.equal(await p.locator('#chapter').getAttribute('data-fx-phase'),'executed');
 assert.equal(await p.evaluate(()=>document.body.firstElementChild.id),'site-bar');
 // Retry during a block releases the busy state instead of leaving results hidden.
 await p.click('#retry');await p.selectOption('#condition','low');await p.selectOption('#amount','20');await p.click('#register');await p.click('#next');await p.waitForTimeout(300);await p.click('#retry');await p.waitForTimeout(250);
-assert.equal(await p.locator('#chapter').getAttribute('data-visual-busy'),null);
+assert.equal(await p.locator('#chapter').getAttribute('data-visual-busy'),null);await p.waitForTimeout(1700);assert.equal(await p.locator('.node[data-fx-delta]').count(),0,'Retry makes no fake pops');
 // Turkish: a transfer-only block plays the transfer, not a fake 15-energy wave (about 1.25 s, not 3.25 s).
 await p.selectOption('#resonance-language','tr');await p.selectOption('#condition','low');await p.selectOption('#amount','20');await p.click('#register');await p.click('#next');await idle(p);
 const t0=Date.now();await p.click('#next');await idle(p);assert(Date.now()-t0<2300,'TR transfer block took '+(Date.now()-t0)+' ms');await p.selectOption('#resonance-language','en');
 // Replay after reload: state restores with no celebrations, toasts or pops.
 await p.reload();await p.click('#save-continue');await p.waitForSelector('#next');await p.waitForTimeout(400);
-assert.equal(await p.locator('.fx-layer > *').count(),0);assert.equal(await p.locator('.node[data-fx-delta]').count(),0);await p.close();
+assert.equal(await p.locator('.fx-layer > *').count(),0);assert.equal(await p.locator('.node[data-fx-delta]').count(),0);assert(!/executed|failed|survived/.test(await p.locator('#chapter').getAttribute('data-fx-phase')||''),'no outcome mood on replay');await p.close();
 // Reduced motion: no ambient loop, instant blocks, no effect layer.
 p=await page({viewport:{width:390,height:844},reducedMotion:'reduce'});await p.goto(G);await p.click('#rs-start');await p.click('#enter');await p.locator('.tutorial-canvas').scrollIntoViewIfNeeded();
 assert.equal(await draws(p),0,'no ambient frames under reduced motion');await p.selectOption('#condition','low');await p.selectOption('#amount','20');await p.click('#register');await p.click('#next');
@@ -35,4 +35,4 @@ assert.equal(await p.locator('#owned').textContent(),'2.4875');assert.equal(awai
 await open('ade.html');await p.click('#example-next');await p.click('#ade-form button[type=submit]');assert.equal(await p.locator('#ade-chart polyline').count(),2);assert.equal(await p.locator('#ade-chart polyline').nth(1).getAttribute('stroke-dasharray'),'8 5');
 await open('eric.html');await p.click('#example-next');await p.click('#budget-form button[type=submit]');assert.equal(await p.locator('#proposal-summary').getAttribute('data-fx-tone'),'ok');
 await p.evaluate(()=>{document.getElementById('workspace').hidden=true;});await p.waitForTimeout(50);assert.equal(await p.locator('.vfx-layer > *').count(),0);await p.close();
-assert.deepEqual(errors,[]);console.log('PASS idle scene, ready/queued moods, number pops, retry releases busy, TR transfer timing, silent replay and reduced motion, phone toast, vault token/burst/armed badge, Ade dash kept, Eric tone.');}finally{await b.close();}})().catch(e=>{console.error(e);process.exit(1);});
+assert.deepEqual(errors,[]);console.log('PASS idle scene, ready/queued/executed moods, number pops (gold reserve spend), no pops after Retry, retry releases busy, TR transfer timing, silent replay and reduced motion, phone toast, vault token/burst/armed badge, Ade dash kept, Eric tone.');}finally{await b.close();}})().catch(e=>{console.error(e);process.exit(1);});
